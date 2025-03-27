@@ -1,0 +1,66 @@
+// Comment in or Uncomment out the following themes to use them 
+
+// Dark themes
+//@import "minima/leaf/_leaf";  //Leaf theme
+//@import "minima/hacker/jekyll-theme-hacker"; //Hacker theme 
+//@import "minima/dracula/_dracula";
+
+// Light themes
+//@import "minima/hamilton/main"; //Hamilton theme
+@import "minima/monophase/main"; //Monophase theme 
+//@import "minima/minimal-mistakes/__minimal-mistakes"; //Minimal Mistakes theme 
+// Mix Light themes with this if your eyes are bleeding 
+@import "minima/dracula/dark-mode";
+
+// Styles for nighthawk theme, do not remove
+@import "nighthawk/main";
+
+/* Stacked buttons */
+.filters {
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 10px; /* Add spacing between buttons */
+}
+
+.filter-btn {
+    width: 100%;
+    background: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: left; /* Align text to the left for better aesthetics */
+}
+
+.filter-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Dropdown content */
+.dropdown {
+    position: relative; /* Ensures the dropdown is positioned relative to its button */
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 100%; /* Ensure the dropdown opens below the button */
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 1000; /* Ensure the dropdown appears above the map */
+    width: 100%; /* Match the width of the button */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-content .dropdown-item {
+    padding: 10px;
+    cursor: pointer;
+    color: #007bff;
+}
+
+.dropdown-content .dropdown-item:hover {
+    background-color: #ddd;
+}

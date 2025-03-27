@@ -1,0 +1,113 @@
+/* style.css */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #FDF5E6;
+}
+.header {
+    background: black;
+    color: #add8e6;
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.form-container {
+    margin: 20px 0;
+    padding: 15px;
+    border: 2px solid #add8e6;
+    border-radius: 8px;
+    background: black;
+    color: white;
+}
+.form-container h2 {
+    margin-bottom: 15px;
+}
+.form-container label {
+    display: block;
+    margin-bottom: 8px;
+}
+.form-container input,
+.form-container select,
+.form-container textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #add8e6;
+    border-radius: 5px;
+}
+.form-container button {
+    padding: 10px 20px;
+    background-color: #FFD700;
+    border: none;
+    color: black;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.form-container button:hover {
+    background-color: #C5B358;
+}
+.budget-summary {
+    margin: 20px 0;
+    padding: 15px;
+    border: 2px solid #add8e6;
+    border-radius: 8px;
+    background: black;
+    color: white;
+}
+.budget-summary h3 {
+    color: #add8e6;
+}
+.category {
+    margin: 20px 0;
+    padding: 15px;
+    border: 2px solid #add8e6;
+    border-radius: 8px;
+    background: black;
+    color: white;
+}
+.post-item {
+    border: 1px solid #add8e6;
+    border-radius: 15px;
+    background-color: #073461;
+    margin-bottom: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+    color: white;
+}
+.post-item:hover {
+    transform: scale(1.02);
+}
+.post-item h3 {
+    margin-top: 0;
+    color: #add8e6;
+    border-bottom: 1px solid #add8e6;
+    padding-bottom: 5px;
+}
+.post-item p {
+    margin: 10px 0;
+    color: #E6E6FA;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+th, td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #add8e6;
+}
+th {
+    background-color: #add8e6;
+    color: black;
+}
+td {
+    background-color: #073461;
+    color: white;
+}

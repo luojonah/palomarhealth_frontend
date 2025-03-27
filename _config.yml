@@ -1,0 +1,24 @@
+title: Sunken Titanic
+description: 
+owner_name: Shawn Ray
+github_username: ShawnRay09
+github_repo: "sunken-titanic" 
+baseurl: "/sunken_titanic"
+future: true
+remote_theme: jekyll/minima
+minima:
+  skin: dark
+# remote_theme: pages-themes/midnight@v0.2.0
+# remote_theme: pages-themes/dinky@v0.2.0
+# remote_theme: pages-themes/minimal@v0.2.0
+# remote_theme: pages-themes/cayman@v0.2.0
+# remote_theme: pages-themes/time-machine@v0.2.0
+plugins:
+  - jekyll-remote-theme
+header_pages:
+  # - navigation/travel/hong_kong/hong_kong.md
+  # - navigation/travel/new_york/new_york.md
+  # - navigation/travel/mumbai/mumbai.md
+  - navigation/travel/paris/paris.md
+  # - navigation/travel/london/london.md
+  - navigation/blog.md

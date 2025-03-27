@@ -1,0 +1,725 @@
+.waypointsnguess-container {
+    font-family: Arial, sans-serif;
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 800px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    background-color: #1c1c1c; /* Dark background */
+    border: 2px solid #add8e6; /* Light blue border */
+}
+
+
+
+h1 {
+    font-size: 2em;
+    color: #add8e6; /* Light blue color */
+    text-shadow: 1px 1px 5px rgba(173, 216, 230, 0.4); /* Light blue shadow */
+}
+
+
+.guess-box label {
+    font-size: 1.5em;
+    color: #add8e6; /* Light blue color */
+    text-shadow: 1px 1px 5px rgba(173, 216, 230, 0.4); /* Light blue shadow */
+}
+
+
+.explanation-box label {
+    font-size: 1.5em;
+    color: #add8e6; /* Light blue color */
+    text-shadow: 1px 1px 5px rgba(173, 216, 230, 0.4); /* Light blue shadow */
+}
+
+
+.submit-button {
+    font-size: 1.5em;
+    color: #ffffff; /* White color */
+    background-color: #FFD700; /* Gold background */
+    text-shadow: 1px 1px 5px rgba(173, 216, 230, 0.4); /* Light blue shadow */
+}
+
+.waypoints-image-section,
+.explanation-box,
+#feedback-section,
+#leaderboard-section {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #1c1c1c; /* Dark background */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(173, 216, 230, 0.2); /* Light blue shadow */
+    border: 2px solid #add8e6; /* Light blue border */
+}
+
+
+.waypoints-image-box {
+    display: inline-block;
+    box-shadow: 0 4px 8px rgba(173, 216, 230, 0.3); /* Light blue shadow */
+}
+
+
+.feedback-button label {
+    font-size: 1.5em;
+    color: #add8e6; /* Light blue color */
+    text-shadow: 1px 1px 5px rgba(173, 216, 230, 0.4); /* Light blue shadow */
+}
+
+
+.feedback-button {
+    font-size: 1.5em;
+    color: #ffffff; /* White color */
+    background-color: #FFD700; /* Gold background */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(173, 216, 230, 0.3); /* Light blue shadow */
+    transition: box-shadow 0.3s ease;
+}
+
+
+.feedback-button:hover {
+    box-shadow: 0 6px 12px rgba(173, 216, 230, 0.4); /* Stronger shadow on hover */
+}
+
+.waypoints-image {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+
+.submit-button label {
+    font-size: 1.5em;
+    color: #add8e6; /* Light blue color */
+    text-shadow: 1px 1px 5px rgba(173, 216, 230, 0.4); /* Light blue shadow */
+}
+
+.submit-button {
+    width: 100%;
+    background-color: #FFD700; /* Gold background */
+    color: #ffffff; /* White color */
+    font-size: 18px;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s ease;
+    margin-top: 10px;
+    box-shadow: 0px 4px 10px rgba(173, 216, 230, 0.5); /* Light blue shadow */
+}
+
+
+.submit-button:hover {
+    background-color: #C5B358; /* Darker gold on hover */
+    transform: scale(1.03);
+    box-shadow: 0px; 
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 60px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 255, 0.3);
+    /* Blue shadow for modal */
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+    text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4);
+    /* Blue shadow effect */
+}
+
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#feedback-modal .modal-content {
+    font-size: 1.5em;
+    /* Make the font size larger */
+    color: #333333;
+    /* Dark grey text color for all modal content */
+    text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4);
+    /* Blue text shadow */
+}
+
+
+#feedback-modal h2 {
+    font-size: 2em;
+    /* Larger font size for the heading */
+    color: #333333;
+    /* Dark grey text color */
+    text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4);
+    /* Blue text shadow for heading */
+}
+
+
+#feedback-modal p {
+    font-size: 1.2em;
+    /* Slightly larger font size for paragraph text */
+    color: #333333;
+    /* Dark grey text color */
+    text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4);
+    /* Blue text shadow for paragraph */
+}
+
+
+#feedback-modal .close-button {
+    font-size: 1.5em;
+    /* Font size for the close button */
+    color: #333333;
+    /* Dark grey text color */
+    text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4);
+    /* Blue text shadow for close button */
+    cursor: pointer;
+    /* Pointer cursor for better interactivity */
+}
+
+
+.info-box label {
+    font-size: 1.5em;
+    /* Make the font size larger */
+    color: #333333;
+    /* Dark grey color */
+    text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4);
+    /* Blue shadow for label */
+}
+
+
+#feedback-section .info-box {
+    font-size: 1.5em;
+    /* Make the font size larger */
+    color: #333333;
+    /* Dark grey text color for all modal content */
+    text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4);
+    /* Blue text shadow */
+}
+
+
+.container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+    width: 100%;
+    background-color: #050505;
+    padding: 20px;
+    border: 2px solid #add8e6;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: #ECF0F1;
+}
+
+.form-container label {
+    margin-bottom: 5px;
+    color: #ECF0F1;
+}
+
+.form-container input,
+.form-container textarea,
+.form-container select {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    width: 100%;
+}
+
+.form-container button {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #34495E;
+    color: #ECF0F1;
+    cursor: pointer;
+}
+
+/* General container for Zoom N Guess game */
+.waypointsnguess-container {
+    width: 80%;
+    max-width: 600px;
+    background-color: rgba(0, 0, 0, 0.9);
+    border: 2px solid #007BFF;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 15px rgba(0, 123, 255, 0.5);
+    margin: 20px auto;
+    text-align: center;
+    color: #007BFF;
+}
+
+h1,
+h2 {
+    color: #007BFF;
+    text-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
+}
+
+p,
+label,
+.info-box,
+.leaderboard-box li {
+    color: #333;
+}
+
+/* Image of the Day Text */
+.image-of-day-text {
+    font-size: 2em;
+    color: rgb(28, 44, 218);
+    margin-bottom: 15px;
+    text-align: center;
+    color: #007BFF;
+}
+
+/* Zoom Image Display Section */
+.waypoints-image-section {
+    margin-bottom: 15px;
+}
+
+.waypoints-image-box {
+    border: 2px solid #007BFF;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.3);
+}
+
+/* Additional styles omitted for brevity */
+
+
+/* Guess Input Box */
+.guess-box {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.guess-box input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #007BFF;
+    border-radius: 5px;
+    color: #007BFF;
+    /* Text color to stand out against white */
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.guess-box input:focus {
+    border-color: #0056b3;
+    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.6);
+    /* Blue glow on focus */
+}
+
+/* Explanation Box */
+.explanation-box {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.explanation-box textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #2c6bb3;
+    border-radius: 5px;
+    resize: vertical;
+    height: 80px;
+    color: #2874a7;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.explanation-box textarea:focus {
+    border-color: #216088;
+    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.5);
+}
+
+/* Submit Button */
+.submit-button {
+    width: 100%;
+    background-color: #007BFF;
+    color: #ffffff;
+    font-size: 18px;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s ease;
+    margin-top: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.5);
+    /* Glowing shadow */
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.03);
+    box-shadow: 0px 6px 12px rgba(0, 123, 255, 0.6);
+}
+
+/* Feedback Button */
+.feedback-button {
+    width: 100%;
+    background-color: #007BFF;
+    color: #ffffff;
+    font-size: 18px;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s ease;
+    margin-top: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.5);
+}
+
+.feedback-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.03);
+    box-shadow: 0px 6px 12px rgba(0, 123, 255, 0.6);
+}
+
+/* Comment Button */
+.Comment-button {
+    width: 100%;
+    background-color: #007BFF;
+    color: #ffffff;
+    font-size: 18px;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s ease;
+    margin-top: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.5);
+}
+
+.Comment-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.03);
+    box-shadow: 0px 6px 12px rgba(0, 123, 255, 0.6);
+}
+
+/* Feedback Section */
+#feedback-section {
+    margin-top: 20px;
+}
+
+#feedback-display {
+    width: 100%;
+    padding: 15px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #e6d6d6;
+    color: #d9534f;
+    /* Red color for feedback text */
+    font-weight: bold;
+    box-shadow: 0px 2px 6px rgba(217, 83, 79, 0.5);
+    /* Red shadow */
+}
+
+/* Leaderboard Styling */
+.leaderboard-box {
+    list-style-type: none;
+    padding: 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.leaderboard-box li {
+    padding: 5px 0;
+    border-bottom: 1px solid #e0e0e0;
+    color: #333;
+}
+
+.leaderboard-box li:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+/* Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    margin: 5% auto;
+    padding: 20px;
+    border: 2px solid #007BFF;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    color: #ffffff;
+}
+
+.close-button {
+    color: #ffffff;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-button:hover {
+    color: #007BFF;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f5f5f5;
+    color: #333;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Accordion Section */
+.accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.accordion-item {
+    background: #007bff;
+    color: white;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.accordion-btn {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 10px;
+    text-align: left;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+}
+
+.accordion-btn:hover {
+    background-color: #0056b3;
+}
+
+.accordion-content {
+    display: none;
+    background: white;
+    color: #333;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+
+.accordion-item-content {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.accordion-item-content:hover {
+    background-color: #f0f0f0;
+}
+
+/* Map Section */
+#map {
+    height: 400px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 20px;
+    background: #007bff;
+    color: white;
+    padding: 10px;
+}
+
+.search-result {
+    margin-top: 10px;
+    font-weight: bold;
+    border: 2px solid #add8e6;
+    color: #0d0d0d;
+}
+
+/* Dropdown Styling */
+select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+  .compact-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 14px;
+  }
+
+  .compact-table th, .compact-table td {
+    border: 1px solid #0a0a0a;
+    padding: 8px;
+    text-align: left;
+  }
+
+  .compact-table th {
+    background-color: #000000;
+    font-weight: bold;
+  }
+
+  .compact-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+  .compact-table tr:hover {
+    background-color: #f1f1f1;
+  }
+
+  .like-button {
+    background-color: #e0e0e0;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .like-button:hover {
+    background-color: #d0d0d0;
+  }
+
+  .like-button:active {
+    background-color: #ccc;
+  }
+
+  .checkout-button {
+    background-color: #e0e0e0;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .checkout-button:hover {
+    background-color: #d0d0d0;
+  }
+
+  .checkout-button:active {
+    background-color: #ccc;
+  }
+
+  .rating-star {
+    font-size: 1.0em;
+    cursor: pointer;
+    padding: 0 1px;
+    transition: color 0.3s ease;
+}
+
+.rating-star.active {
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.rating-star.red {
+    color: red;
+}
+
+.rating-star.yellow {
+    color: gold;
+}
+
+.rating-star.green {
+    color: green;
+}
+
+.raw-rating-star-readonly {
+    color: gray; /* Default */
+}
+  
+.raw-rating-star-readonly.active {
+    color: gold; /* General active color */
+}
+  
+.raw-rating-star-readonly.red {
+    color: red; /* 1-2 stars */
+}
+  
+.raw-rating-star-readonly.yellow {
+    color: orange; /* 3-4 stars */
+}
+  
+.raw-rating-star-readonly.green {
+    color: green; /* 5 stars */
+}

@@ -1,0 +1,163 @@
+---
+layout: post
+title: 
+search_exclude: true
+permalink: /game/
+show_reading_time: false
+---
+
+<h1>Computing Bias Matching Game</h1>
+<p>Match each type of bias with its corresponding example! You have 3 lives.</p>
+<p id="lives">Lives: 3</p>
+<p id="winMessage" style="display: none; font-size: 20px; font-weight: bold; color: green;">You Won!</p>
+<div class="game-container" id="gameBoard">
+    <div id="biasTypes" class="bias-container"></div>
+    <hr style="width: 80%; margin: 20px auto; border: 1px solid #ccc;">
+    <div id="biasExamples" class="bias-container"></div>
+</div>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+    .game-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: auto;
+    }
+    .bias-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        max-width: 600px;
+        margin-top: 20px;
+    }
+    .card {
+        width: 120px;
+        height: 150px;
+        margin: 10px;
+        background-color: #f2f2f2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-weight: bold;
+        border-radius: 10px;
+        user-select: none;
+        color: #333;
+        font-size: 14px;
+        text-align: center;
+        padding: 10px;
+        transition: background-color 0.3s ease-in-out;
+    }
+    .hidden {
+        color: transparent;
+        background-color: #ddd;
+    }
+    .matched {
+        background-color: #90ee90;
+        position: relative;
+    }
+    .matched::after {
+        content: '\2713';
+        font-size: 24px;
+        color: white;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+    h1, p {
+        font-size: 18px;
+    }
+</style>
+<script>
+    const biasTypes = [
+        "Pre-existing Bias", 
+        "Technical Bias", 
+        "Emergent Bias"
+    ];
+
+    const biasExamples = [
+        { text: "Amazon AI favors men", type: "Pre-existing Bias" },
+        { text: "Google Translate stereotypes", type: "Technical Bias" },
+        { text: "Tay chatbot learns hate", type: "Emergent Bias" },
+        { text: "AI recognizes faces better for lighter skin", type: "Pre-existing Bias" },
+        { text: "Bias in facial recognition technologies", type: "Technical Bias" },
+        { text: "Machine learning algorithms reinforce stereotypes", type: "Emergent Bias" }
+    ];
+
+    let shuffledExamples = biasExamples.sort(() => 0.5 - Math.random());
+    let selectedCards = [];
+    let lives = 3;
+    let matches = 0;
+
+    const livesDisplay = document.getElementById("lives");
+    const winMessage = document.getElementById("winMessage");
+
+    function createCard(text, type, isExample = false) {
+        let card = document.createElement("div");
+        card.classList.add("card");
+        card.textContent = text;
+        card.dataset.value = type;
+        card.dataset.type = isExample ? "example" : "type";
+        if (isExample) {
+            card.addEventListener("click", () => handleCardClick(card));
+        } else {
+            card.addEventListener("click", () => handleBiasClick(card));
+        }
+        return card;
+    }
+
+    function handleCardClick(card) {
+        if (selectedCards.length >= 2 || card.classList.contains("hidden")) return;
+        selectedCards.push(card);
+        card.style.backgroundColor = "#add8e6";
+
+        if (selectedCards.length === 2) {
+            setTimeout(checkMatch, 500);
+        }
+    }
+
+    function handleBiasClick(card) {
+        if (selectedCards.length === 1 && selectedCards[0].dataset.type === "example") {
+            selectedCards.push(card);
+            setTimeout(checkMatch, 500);
+        }
+    }
+
+    function checkMatch() {
+        if (selectedCards.length !== 2) return;
+        
+        const [exampleCard, biasCard] = selectedCards;
+        if (exampleCard.dataset.value === biasCard.dataset.value) {
+            exampleCard.classList.add("matched");
+            setTimeout(() => exampleCard.remove(), 500);
+            matches++;
+            if (matches === biasExamples.length) {
+                winMessage.style.display = "block";
+            }
+        } else {
+            exampleCard.style.backgroundColor = "";
+            lives--;
+            livesDisplay.textContent = "Lives: " + lives;
+            if (lives === 0) {
+                alert("Try again! You ran out of lives.");
+                location.reload();
+            }
+        }
+        selectedCards = [];
+    }
+
+    // Add bias types (top, non-disappearing)
+    biasTypes.forEach(type => {
+        const card = createCard(type, type, false);
+        document.getElementById("biasTypes").appendChild(card);
+    });
+
+    // Add bias examples (bottom, removable on match)
+    shuffledExamples.forEach(example => {
+        const card = createCard(example.text, example.type, true);
+        document.getElementById("biasExamples").appendChild(card);
+    });
+</script>
