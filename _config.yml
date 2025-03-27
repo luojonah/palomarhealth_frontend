@@ -1,9 +1,9 @@
-title: Sunken Titanic
+title: Palomar Health 
 description: 
-owner_name: Shawn Ray
-github_username: ShawnRay09
-github_repo: "sunken-titanic" 
-baseurl: "/sunken_titanic"
+owner_name: Jonah Luo
+github_username: luojonah
+github_repo: "palomarhealth_frontend" 
+baseurl: "/palomarhealth_frontend"
 future: true
 remote_theme: jekyll/minima
 minima:
