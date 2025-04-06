@@ -7,108 +7,175 @@ search_exclude: true
 show_reading_time: false
 ---
 
-<div id="cards" style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: center;"></div>
-
 <script>
-    async function fetchTeamInfo() {
-        try {
-            const responses = await Promise.all([
-                fetch('http://127.0.0.1:8101/api/people/derek'),
-                fetch('http://127.0.0.1:8101/api/people/kiruthic'),
-                fetch('http://127.0.0.1:8101/api/people/tarun'),
-                fetch('http://127.0.0.1:8101/api/people/aadi'),
-                fetch('http://127.0.0.1:8101/api/people/aaditya'),
-                fetch('http://127.0.0.1:8101/api/people/arhaan'),
-                fetch('http://127.0.0.1:8101/api/people/rohan')
-            ]);
-            const data = await Promise.all(responses.map(response => response.json()));
-            data.forEach(member => displayTeamInfo(member));
-
-        } catch (error) {
-            console.error('Error fetching team info:', error);
-        }
-    }
-
-function displayTeamInfo(member) {
-    const container = document.getElementById('cards');
-    
-    const card = document.createElement('div');
-    card.className = 'card';
-
-    const name = document.createElement('h3');
-    name.textContent = member.name;
-    card.appendChild(name);
-
-    const age = document.createElement('p');
-    age.textContent = `Age: ${member.age}`;
-    card.appendChild(age);
-
-    const classesSection = document.createElement('div');
-    const classesLabel = document.createElement('p');
-    classesLabel.textContent = 'Classes:';
-    classesSection.appendChild(classesLabel);
-    
-    const classList = document.createElement('ul');
-    member.classes.forEach(classItem => {
-        const li = document.createElement('li');
-        li.textContent = classItem;
-        classList.appendChild(li);
-    });
-    classesSection.appendChild(classList);
-    card.appendChild(classesSection);
-
-    const favoriteColor = document.createElement('p');
-    favoriteColor.textContent = `Favorite Color: ${member.favorite.color}`;
-    card.appendChild(favoriteColor);
-
-    const favoriteFood = document.createElement('p');
-    favoriteFood.textContent = `Favorite Food: ${member.favorite.food}`;
-    card.appendChild(favoriteFood);
-
-    container.appendChild(card);
-}
-
-fetchTeamInfo();
+<div class="menu">
+  <div class="item">
+    <a href="#" class="link">
+      <span> Our Services </span>
+      <svg viewBox="0 0 360 360" xml:space="preserve">
+        <g id="SVGRepo_iconCarrier">
+          <path
+            id="XMLID_225_"
+            d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393 c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393 s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"
+          ></path>
+        </g>
+      </svg>
+    </a>
+    <div class="submenu">
+      <div class="submenu-item">
+        <a href="#" class="submenu-link"> Development </a>
+      </div>
+      <div class="submenu-item">
+        <a href="#" class="submenu-link"> Design </a>
+      </div>
+      <div class="submenu-item">
+        <a href="#" class="submenu-link"> Marketing </a>
+      </div>
+      <div class="submenu-item">
+        <a href="#" class="submenu-link"> SEO </a>
+      </div>
+    </div>
+  </div>
+</div>
 </script>
 
 <style>
-    #cards {
-        font-family: 'Verdana', sans-serif;
-        margin: 40px auto;
-        padding: 20px;
-    }
+.menu {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #000000;
+  width: fit-content;
+  display: flex;
+  list-style: none;
+}
 
-    .card {
-        background: linear-gradient(145deg, #1c9b7b, #2c96ac);
-        border-radius: 12px;
-        color: #fff;
-        padding: 25px;
-        width: 350px;
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-        text-align: center;
-        transition: transform 0.2s ease-in-out;
-    }
+.menu a {
+  text-decoration: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
 
-    .card:hover {
-        transform: scale(1.05);
-    }
+.menu .link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 36px;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+}
 
-    .card h3 {
-        margin-bottom: 15px;
-        font-size: 1.6em;
-        color: #f0f8ff;
-    }
+.menu .link::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #0a3cff;
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+}
 
-    .card p {
-        margin: 8px 0;
-        font-size: 1.1em;
-        color: #f3f3f3;
-    }
+.menu .link svg {
+  width: 14px;
+  height: 14px;
+  fill: #000000;
+  transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+}
 
-    .card ul {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-        font-size: 1em;
-    }
+.menu .item {
+  position: relative;
+}
+
+.menu .item .submenu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 100%;
+  border-radius: 0 0 16px 16px;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid #cccccc;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-12px);
+  transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: 1;
+  pointer-events: none;
+  list-style: none;
+}
+
+.menu .item:hover .submenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+  border-top: transparent;
+  border-color: #0a3cff;
+}
+
+.menu .item:hover .link {
+  color: #ffffff;
+  border-radius: 16px 16px 0 0;
+}
+
+.menu .item:hover .link::after {
+  transform: scaleX(1);
+  transform-origin: right;
+}
+
+.menu .item:hover .link svg {
+  fill: #ffffff;
+  transform: rotate(-180deg);
+}
+
+.submenu .submenu-item {
+  width: 100%;
+  transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.submenu .submenu-link {
+  display: block;
+  padding: 12px 24px;
+  width: 100%;
+  position: relative;
+  text-align: center;
+  transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.submenu .submenu-item:last-child .submenu-link {
+  border-bottom: none;
+}
+
+.submenu .submenu-link::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: scaleX(0);
+  width: 100%;
+  height: 100%;
+  background-color: #0a3cff;
+  z-index: -1;
+  transform-origin: left;
+  transition: transform 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.submenu .submenu-link:hover:before {
+  transform: scaleX(1);
+  transform-origin: right;
+}
+
+.submenu .submenu-link:hover {
+  color: #ffffff;
+}
 </style>
