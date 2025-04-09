@@ -1,6 +1,6 @@
 ---
 layout: bootstrap
-title: Palomar Health  
+title: Viralyze 
 search_exclude: true
 description: 
 hide: true
