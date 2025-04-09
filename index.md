@@ -91,7 +91,7 @@ menu: nav/home.html
 
     <textarea class="textarea-custom" placeholder="Enter Content Here"></textarea>
 
-    <button class="btn-custom">Generate Analytics</button>
+<button class="btn-custom" onclick="window.location.href='/palomarhealth_frontend/analytics'">Generate Analytics</button>
 
 
 </div>
