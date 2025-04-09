@@ -2,7 +2,7 @@
 layout: bootstrap
 title: Viralyze 
 search_exclude: true
-description: 
+description: Viralyze social media content generator
 hide: true
 menu: nav/home.html
 ---
@@ -23,7 +23,7 @@ menu: nav/home.html
 <style>
     body {
         background: linear-gradient(to right, #1b2e4f, #4a9eda);
-        font-family: 'Segoe UI', sans-serif;
+        font-family: 'Poppins', sans-serif;
         color: white;
         margin: 0;
         padding: 0;
@@ -41,6 +41,8 @@ menu: nav/home.html
         justify-content: center;
         align-items: center;
         z-index: 9999;
+        opacity: 1;
+        transition: opacity 1s ease;
     }
 
     .loading-content {
@@ -70,7 +72,6 @@ menu: nav/home.html
         }
     }
 
-    /* Glitch Effect for Loading Text */
     h1 {
         font-family: 'Poppins', sans-serif;
         font-weight: 700;
@@ -91,13 +92,11 @@ menu: nav/home.html
         animation: spin 1.5s linear infinite;
     }
 
-    /* Spin the Loading Icon */
     @keyframes spin {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
 
-    /* Smooth Fade-in for Main Title */
     .main-title {
         opacity: 0;
         animation: fadeIn 1.5s forwards;
@@ -108,14 +107,12 @@ menu: nav/home.html
         color: white;
     }
 
-    /* Fade-In Animation for Main Title */
     @keyframes fadeIn {
         100% {
             opacity: 1;
         }
     }
 
-    /* Main Content Styling */
     .container-custom {
         display: flex;
         flex-direction: column;
@@ -146,7 +143,6 @@ menu: nav/home.html
         filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
     }
 
-    /* Pop-In Animation for Logo and Title */
     @keyframes popIn {
         to {
             opacity: 1;
@@ -154,7 +150,6 @@ menu: nav/home.html
         }
     }
 
-    /* Form Input Styling */
     .input-custom, .dropdown-custom, .textarea-custom {
         background-color: white;
         color: black;
@@ -197,7 +192,6 @@ menu: nav/home.html
         background-color: #3a54c6;
     }
 
-    /* Select and Textarea Styling */
     select, .textarea-custom {
         width: 300px;
     }
@@ -254,12 +248,14 @@ menu: nav/home.html
     </div>
 
     <script>
-        // Delay the hiding of the loading screen for 5 seconds
         window.onload = function() {
             setTimeout(function() {
                 const loadingScreen = document.getElementById('loadingScreen');
-                loadingScreen.style.display = 'none';
-            }, 5000); // 5000 milliseconds = 5 seconds
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 1000); // Fade out transition
+            }, 1000); // 5 seconds
         };
 
         function showAnalytics() {
