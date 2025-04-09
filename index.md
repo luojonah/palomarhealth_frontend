@@ -67,7 +67,7 @@ menu: nav/home.html
 </style>
 
 <div class="container-custom">
-    <img src="https://www.palomarhealth.org/wp-content/uploads/2021/08/logo-color.png" alt="Palomar Health Logo" class="logo">
+    
 
     <input type="text" class="input-custom" placeholder="Enter Post Caption">
 
@@ -93,6 +93,6 @@ menu: nav/home.html
 
     <button class="btn-custom">Generate Analytics</button>
 
-    <img src="https://img.icons8.com/ios-filled/100/medical-mobile-app.png" alt="Health App Icon" class="icon-img">
+
 </div>
 
