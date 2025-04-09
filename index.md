@@ -15,6 +15,8 @@ menu: nav/home.html
 
 <!-- Font Awesome -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -28,10 +30,11 @@ menu: nav/home.html
     }
 
     h1 {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 700;
+        font-size: 2.4rem;
+        margin: 0;
         color: black;
-        font-weight: bold;
-        text-align: center;
-        margin-bottom: 20px;
     }
 
     .btn-custom {
@@ -78,15 +81,10 @@ menu: nav/home.html
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
-        height: 100vh;
+        justify-content: flex-start;
+        min-height: 100vh;
+        padding-top: 30px;
         text-align: center;
-        padding-top: 20px;
-    }
-
-    .icon-img {
-        width: 90px;
-        margin-top: 20px;
     }
 
     #analyticsSection {
@@ -96,20 +94,24 @@ menu: nav/home.html
         display: none;
     }
 
-    .logo-wrapper {
+    .header-wrapper {
         display: flex;
-        justify-content: center;
         align-items: center;
-        padding-top: 30px;
-        animation: popIn 1.5s ease-out forwards;
+        justify-content: center;
+        gap: 20px;
+        margin-bottom: 30px;
+        animation: popIn 1.2s ease-out forwards;
         opacity: 0;
-        transform: scale(0.8);
-        animation-delay: 0.3s;
+        transform: scale(0.95);
+        animation-delay: 0.2s;
         animation-fill-mode: forwards;
     }
 
     .logo {
-        width: 300px;
+        width: 70px;
+        max-width: 20vw;
+        transition: all 0.3s ease;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
     }
 
     @keyframes popIn {
@@ -122,14 +124,13 @@ menu: nav/home.html
 
 <body>
 
-    <!-- Animated Logo at the Top -->
-    <div class="logo-wrapper">
+    <!-- Header with Logo and Title -->
+    <div class="header-wrapper">
         <img src="{{site.baseurl}}/images/image.png" alt="Palomar Health Logo" class="logo" />
+        <h1>Palomar Health Post Generator</h1>
     </div>
 
     <div class="container-custom">
-        <h1>Palomar Health Post Generator</h1>
-
         <input type="text" class="input-custom" placeholder="Enter Post Caption">
 
         <select class="dropdown-custom">
@@ -156,7 +157,7 @@ menu: nav/home.html
         <button class="btn-custom" onclick="showAnalytics()">Generate Analytics</button>
 
         <div id="analyticsSection">
-            <h3 class="text-center" style="color: white; margin-bottom: 20px;">Tester Data - Our real analytic data will go here</h3>
+            <h3 class="text-center" style="color: black; margin-bottom: 20px;">Tester Data - Our real analytic data will go here</h3>
             <canvas id="analyticsChart"></canvas>
         </div>
     </div>
@@ -183,9 +184,24 @@ menu: nav/home.html
                     }]
                 },
                 options: {
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: 'black'
+                            }
+                        }
+                    },
                     scales: {
+                        x: {
+                            ticks: {
+                                color: 'black'
+                            }
+                        },
                         y: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            ticks: {
+                                color: 'black'
+                            }
                         }
                     }
                 }
