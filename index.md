@@ -48,7 +48,7 @@ menu: nav/home.html
         color: white;
     }
 
-    /* Glitch Effect for Text */
+    /* Glitch Effect for Loading Text */
     @keyframes glitchText {
         0% {
             text-shadow: 2px 2px 0px rgba(255, 0, 0, 0.6), -2px -2px 0px rgba(0, 255, 0, 0.6), 2px -2px 0px rgba(0, 0, 255, 0.6);
@@ -97,6 +97,24 @@ menu: nav/home.html
         100% { transform: rotate(360deg); }
     }
 
+    /* Smooth Fade-in for Main Title */
+    .main-title {
+        opacity: 0;
+        animation: fadeIn 1.5s forwards;
+        text-align: center;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 700;
+        font-size: 3.5rem;
+        color: white;
+    }
+
+    /* Fade-In Animation for Main Title */
+    @keyframes fadeIn {
+        100% {
+            opacity: 1;
+        }
+    }
+
     /* Main Content Styling */
     .container-custom {
         display: flex;
@@ -108,22 +126,36 @@ menu: nav/home.html
         text-align: center;
     }
 
-    .btn-custom {
-        background-color: #546bff;
-        color: white;
-        border: none;
-        padding: 12px 24px;
-        font-weight: bold;
-        border-radius: 30px;
-        margin: 10px;
-        box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+    .header-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        margin-bottom: 30px;
+        animation: popIn 1.2s ease-out forwards;
+        opacity: 0;
+        transform: scale(0.95);
+        animation-delay: 0.2s;
+        animation-fill-mode: forwards;
     }
 
-    .btn-custom:hover {
-        background-color: #3a54c6;
+    .logo {
+        width: 70px;
+        max-width: 20vw;
+        transition: all 0.3s ease;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
     }
 
-    .dropdown-custom, .input-custom, .textarea-custom {
+    /* Pop-In Animation for Logo and Title */
+    @keyframes popIn {
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    /* Form Input Styling */
+    .input-custom, .dropdown-custom, .textarea-custom {
         background-color: white;
         color: black;
         border: 2px solid #546bff;
@@ -135,6 +167,7 @@ menu: nav/home.html
         width: 250px;
         text-align: center;
         appearance: none;
+        transition: all 0.3s ease;
     }
 
     .input-custom::placeholder,
@@ -146,6 +179,27 @@ menu: nav/home.html
     .textarea-custom {
         resize: none;
         height: 100px;
+    }
+
+    .btn-custom {
+        background-color: #546bff;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        font-weight: bold;
+        border-radius: 30px;
+        margin: 10px;
+        box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+
+    .btn-custom:hover {
+        background-color: #3a54c6;
+    }
+
+    /* Select and Textarea Styling */
+    select, .textarea-custom {
+        width: 300px;
     }
 </style>
 
@@ -163,6 +217,12 @@ menu: nav/home.html
 
     <!-- Main Content -->
     <div class="container-custom">
+        <!-- Header with Logo and Title -->
+        <div class="header-wrapper">
+            <img src="{{site.baseurl}}/images/image.png" alt="Viralyze Logo" class="logo" />
+            <h1 class="main-title">Viralyze</h1>
+        </div>
+
         <input type="text" class="input-custom" placeholder="Enter Post Caption">
 
         <select class="dropdown-custom">
@@ -199,7 +259,7 @@ menu: nav/home.html
             setTimeout(function() {
                 const loadingScreen = document.getElementById('loadingScreen');
                 loadingScreen.style.display = 'none';
-            }, 2000); 
+            }, 5000); // 5000 milliseconds = 5 seconds
         };
 
         function showAnalytics() {
