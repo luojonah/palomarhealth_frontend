@@ -29,12 +29,83 @@ menu: nav/home.html
         padding: 0;
     }
 
+    /* Loading Screen Styling */
+    #loadingScreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    .loading-content {
+        text-align: center;
+        color: white;
+    }
+
+    /* Glitch Effect for Text */
+    @keyframes glitchText {
+        0% {
+            text-shadow: 2px 2px 0px rgba(255, 0, 0, 0.6), -2px -2px 0px rgba(0, 255, 0, 0.6), 2px -2px 0px rgba(0, 0, 255, 0.6);
+        }
+        20% {
+            text-shadow: -3px 3px 0px rgba(255, 0, 0, 0.8), 3px -3px 0px rgba(0, 255, 0, 0.8), -3px -3px 0px rgba(0, 0, 255, 0.8);
+        }
+        40% {
+            text-shadow: 3px 3px 0px rgba(255, 0, 0, 1), -3px -3px 0px rgba(0, 255, 0, 1), 3px -3px 0px rgba(0, 0, 255, 1);
+        }
+        60% {
+            text-shadow: -3px -3px 0px rgba(255, 0, 0, 0.6), 3px 3px 0px rgba(0, 255, 0, 0.6), -3px 3px 0px rgba(0, 0, 255, 0.6);
+        }
+        80% {
+            text-shadow: 0 0 0px rgba(255, 0, 0, 0.5), 0 0 0px rgba(0, 255, 0, 0.5), 0 0 0px rgba(0, 0, 255, 0.5);
+        }
+        100% {
+            text-shadow: 2px 2px 0px rgba(255, 0, 0, 0.6), -2px -2px 0px rgba(0, 255, 0, 0.6), 2px -2px 0px rgba(0, 0, 255, 0.6);
+        }
+    }
+
+    /* Glitch Effect for Loading Text */
     h1 {
         font-family: 'Poppins', sans-serif;
         font-weight: 700;
-        font-size: 2.4rem;
-        margin: 0;
-        color: black;
+        font-size: 5rem; /* Increased size for better visibility */
+        color: white;
+        text-transform: uppercase;
+        animation: glitchText 1.5s infinite linear;
+    }
+
+    /* Loading Spinner */
+    .loading-icon {
+        width: 60px;
+        height: 60px;
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #4a9eda;
+        border-radius: 50%;
+        margin-top: 20px;
+        animation: spin 1.5s linear infinite;
+    }
+
+    /* Spin the Loading Icon */
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Main Content Styling */
+    .container-custom {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        min-height: 100vh;
+        padding-top: 30px;
+        text-align: center;
     }
 
     .btn-custom {
@@ -76,60 +147,21 @@ menu: nav/home.html
         resize: none;
         height: 100px;
     }
-
-    .container-custom {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        min-height: 100vh;
-        padding-top: 30px;
-        text-align: center;
-    }
-
-    #analyticsSection {
-        margin-top: 50px;
-        width: 80%;
-        max-width: 700px;
-        display: none;
-    }
-
-    .header-wrapper {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 20px;
-        margin-bottom: 30px;
-        animation: popIn 1.2s ease-out forwards;
-        opacity: 0;
-        transform: scale(0.95);
-        animation-delay: 0.2s;
-        animation-fill-mode: forwards;
-    }
-
-    .logo {
-        width: 70px;
-        max-width: 20vw;
-        transition: all 0.3s ease;
-        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-    }
-
-    @keyframes popIn {
-        to {
-            opacity: 1;
-            transform: scale(1);
-        }
-    }
 </style>
 
 <body>
 
-    <!-- Header with Logo and Title -->
-    <div class="header-wrapper">
-        <img src="{{site.baseurl}}/images/image.png" alt="Palomar Health Logo" class="logo" />
-        <h1>Palomar Health Post Generator</h1>
+    <!-- Loading Screen -->
+    <div id="loadingScreen">
+        <div class="loading-content">
+            <!-- Glitching Text -->
+            <h1>Viralyze</h1>
+            <!-- Loading Spinner -->
+            <div class="loading-icon"></div>
+        </div>
     </div>
 
+    <!-- Main Content -->
     <div class="container-custom">
         <input type="text" class="input-custom" placeholder="Enter Post Caption">
 
@@ -143,7 +175,6 @@ menu: nav/home.html
             <option>Motivational</option>
             <option>Product Promotion</option>
             <option>Event Announcement</option>
-            <option>Behind the Scenes</option>
             <option>User Generated Content</option>
         </select>
 
@@ -163,6 +194,14 @@ menu: nav/home.html
     </div>
 
     <script>
+        // Delay the hiding of the loading screen for 5 seconds
+        window.onload = function() {
+            setTimeout(function() {
+                const loadingScreen = document.getElementById('loadingScreen');
+                loadingScreen.style.display = 'none';
+            }, 2000); 
+        };
+
         function showAnalytics() {
             document.getElementById('analyticsSection').style.display = 'block';
 
