@@ -1,4 +1,4 @@
-title: Palomar Health 
+title: Viralyze
 description: Palomar Health
 owner_name: Jonah Luo
 github_username: luojonah
@@ -19,6 +19,6 @@ header_pages:
   # - navigation/travel/hong_kong/hong_kong.md
   # - navigation/travel/new_york/new_york.md
   # - navigation/travel/mumbai/mumbai.md
-  - navigation/travel/paris/paris.md
+#  - navigation/travel/paris/paris.md
   # - navigation/travel/london/london.md
-  - navigation/blog.md
+#  - navigation/blog.md
