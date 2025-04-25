@@ -1,0 +1,238 @@
+---
+layout: bootstrap
+title: Engagement Rate
+search_exclude: true
+description: Viralyze social media content generator
+hide: true
+permalink: /engagement/
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Engagement Rate Calculator</title>
+    <style>
+        /* General body styles for both dark and light mode */
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #141e30, #243b55);
+            font-family: 'Segoe UI', sans-serif;
+            color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        /* Main title */
+        h1.main-title {
+            color: #fff;
+            font-size: 2.5rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        /* Card styles */
+        .card {
+            background-color: #1e2a38;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+            max-width: 450px;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        /* Heading inside the card */
+        h1 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+        }
+
+        /* Label styling */
+        label {
+            display: block;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            color: #b0c7e4;
+        }
+
+        /* Input styling */
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 10px;
+            border: none;
+            background-color: #32465a;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        /* Button styling */
+        button {
+            margin-top: 1.5rem;
+            width: 100%;
+            padding: 0.8rem;
+            font-size: 1rem;
+            background-color: #00b894;
+            border: none;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #00a07c;
+        }
+
+        /* Circle container */
+        .circle-container {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Circle design with conic-gradient */
+        .circle {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: conic-gradient(#00cec9 0%, #0984e3 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 0 20px rgba(0, 206, 201, 0.5);
+            border: 6px solid #ffffff; /* Sharp border for visibility */
+        }
+
+        /* Circle overlay */
+        .circle::before {
+            content: '';
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            background: #1e2a38;
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        .circle .percentage {
+            z-index: 3;
+        }
+
+        /* Specific styles to handle dark/light mode conflict */
+        @media (prefers-color-scheme: light) {
+            body {
+                background: linear-gradient(to right, #f0f0f0, #e0e0e0);
+                color: #000;
+            }
+
+            .card {
+                background-color: #ffffff;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            }
+
+            label {
+                color: #333;
+            }
+
+            input {
+                background-color: #f1f1f1;
+                color: #333;
+            }
+
+            button {
+                background-color: #2d9cdb;
+                color: white;
+            }
+
+            button:hover {
+                background-color: #1f79b3;
+            }
+
+            .circle {
+                background: conic-gradient(#0984e3 0%, #00cec9 100%);
+                box-shadow: 0 0 20px rgba(0, 206, 201, 0.3);
+            }
+        }
+
+        /* Remove any Bootstrap navbar or unnecessary bars that might appear */
+        .navbar, .navbar-collapse, .navbar-toggler, .navbar-nav {
+            display: none !important;
+        }
+
+        /* Ensure there's no padding/margin left from navbar elements */
+        body {
+            padding-top: 0 !important;
+        }
+
+        /* Ensure content fills entire page without interference from bars */
+        .container {
+            margin-top: 0 !important;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="main-title">Engagement Rate Calculator</h1>
+
+    <div class="card">
+        <h1>Engagement Rate</h1>
+        <label>Likes</label>
+        <input type="number" id="likes" value="120" />
+
+        <label>Comments</label>
+        <input type="number" id="comments" value="45" />
+
+        <label>Shares</label>
+        <input type="number" id="shares" value="30" />
+
+        <label>Followers</label>
+        <input type="number" id="followers" value="1000" />
+
+        <label>Reach</label>
+        <input type="number" id="reach" value="850" />
+
+        <button onclick="calculate()">Calculate</button>
+
+        <div class="circle-container">
+            <div class="circle" id="circle">
+                <span class="percentage" id="result">--%</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculate() {
+            const likes = parseInt(document.getElementById("likes").value);
+            const comments = parseInt(document.getElementById("comments").value);
+            const shares = parseInt(document.getElementById("shares").value);
+            const followers = parseInt(document.getElementById("followers").value);
+            const reach = parseInt(document.getElementById("reach").value);
+
+            if (reach === 0 || followers === 0) {
+                document.getElementById("result").textContent = "N/A";
+                return;
+            }
+
+            const engagement = ((likes + comments + shares) / (followers / reach)) * 100;
+            document.getElementById("result").textContent = `${engagement.toFixed(1)}%`;
+
+            // Animate the circular progress bar
+            const circle = document.getElementById('circle');
+            const degree = (engagement / 100) * 360;
+            circle.style.background = `conic-gradient(#00cec9 ${degree}deg, #0984e3 ${degree}deg)`;
+        }
+    </script>
+</body>
+</html>
