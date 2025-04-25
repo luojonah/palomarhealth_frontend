@@ -209,6 +209,9 @@ menu: nav/home.html
              <a href="/palomarhealth_frontend/engagement" style="color: white; font-weight: bold; text-decoration: none; margin-left: 20px;">
                 Engagement Rate
             </a>
+             <a href="/palomarhealth_frontend/analytic" style="color: white; font-weight: bold; text-decoration: none; margin-left: 50px;">
+                Analytics Generator
+            </a>
         </div>
 
         <input type="text" class="input-custom" placeholder="Enter Post Caption">
