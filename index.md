@@ -7,17 +7,13 @@ hide: true
 menu: nav/home.html
 ---
 
-<!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" 
       rel="stylesheet" 
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" 
       crossorigin="anonymous">
 
-<!-- Font Awesome -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
-<!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
@@ -199,22 +195,20 @@ menu: nav/home.html
 
 <body>
 
-    <!-- Loading Screen -->
     <div id="loadingScreen">
         <div class="loading-content">
-            <!-- Glitching Text -->
             <h1>Viralyze</h1>
-            <!-- Loading Spinner -->
             <div class="loading-icon"></div>
         </div>
     </div>
 
-    <!-- Main Content -->
     <div class="container-custom">
-        <!-- Header with Logo and Title -->
         <div class="header-wrapper">
             <img src="{{site.baseurl}}/images/image.png" alt="Viralyze Logo" class="logo" />
             <h1 class="main-title">Viralyze</h1>
+             <a href="/palomarhealth_frontend/engagement" style="color: white; font-weight: bold; text-decoration: none; margin-left: 20px;">
+                Engagement Rate
+            </a>
         </div>
 
         <input type="text" class="input-custom" placeholder="Enter Post Caption">
