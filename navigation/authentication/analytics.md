@@ -7,61 +7,49 @@ description:
 hide: true
 menu: nav/home.html
 ---
+---
+layout: bootstrap
+title: Palomar Health  
+search_exclude: true
+permalink: /analytics
+description: 
+hide: true
+menu: nav/home.html
+---
 
-<style>
-    body {
-        background: linear-gradient(to right, #1b2e4f, #4a9eda);
-        font-family: 'Segoe UI', sans-serif;
-        color: white;
-    }
-    .btn-custom {
-        background-color: #546bff;
-        color: white;
-        border: none;
-        padding: 12px 24px;
-        font-weight: bold;
-        border-radius: 30px;
-        margin: 10px;
-        box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
-    }
-    .btn-custom:hover {
-        background-color: #3a54c6;
-    }
-    .dropdown-custom, .input-custom, .textarea-custom {
-        background-color: #546bff;
-        color: white;
-        border: none;
-        padding: 12px 24px;
-        font-weight: bold;
-        border-radius: 30px;
-        margin: 10px;
-        box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
-        width: 250px;
-        text-align: center;
-    }
-    .input-custom::placeholder,
-    .textarea-custom::placeholder {
-        color: #ddd;
-        text-align: center;
-    }
-    .textarea-custom {
-        resize: none;
-        height: 100px;
-    }
-    .logo {
-        width: 250px;
-        margin-bottom: 30px;
-    }
-    .container-custom {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        text-align: center;
-    }
-    .icon-img {
-        width: 90px;
-        margin-top: 20px;
-    }
-</style>
+<!-- Full-Page Viralzye Form Styled with Bootstrap -->
+<div class="container-fluid d-flex flex-column justify-content-center align-items-center min-vh-100" style="background: linear-gradient(135deg, 
+#0f172a, 
+#38bdf8); font-family: 'Comic Sans MS', cursive, sans-serif;">
+
+  <!-- Title -->
+  <div class="mb-4 text-white fs-2 text-decoration-underline">Viralzye</div>
+
+  <!-- Form Inputs -->
+  <form method="POST" action="http://localhost:5000/api/analyze" class="d-flex flex-column align-items-center gap-3">
+
+  <!-- Post Caption -->
+  <input type="text" name="caption" class="form-control text-center bg-black text-white border-0 rounded-pill shadow" placeholder="Enter Post Caption" style="width: 250px; padding: 12px 24px;" />
+
+  <!-- Post Type Selector -->
+  <select name="post_type" class="form-select text-center bg-black text-white border-0 rounded-pill shadow" style="width: 250px; padding: 12px 24px;">
+      <option disabled selected>Select Post Type</option>
+      <option>Image</option>
+      <option>Video</option>
+      <option>Text</option>
+    </select>
+
+  <!-- Platform Selector -->
+   <select name="platform" class="form-select text-center bg-black text-white border-0 rounded-pill shadow" style="width: 250px; padding: 12px 24px;">
+      <option disabled selected>Twitter / X</option>
+      <option>Instagram</option>
+      <option>Facebook</option>
+    </select>
+
+  <!-- Content Area -->
+  <textarea name="content" rows="4" class="form-control text-center bg-black text-white border-0 rounded-4 shadow" placeholder="Enter Content Here" style="width: 250px; padding: 12px 24px;"></textarea>
+
+   <!-- Submit Button -->
+  <button type="submit" class="btn btn-dark rounded-pill shadow px-4 py-2">Generate Analytics</button>
+  </form>
+</div>
