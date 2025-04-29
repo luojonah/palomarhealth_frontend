@@ -168,14 +168,70 @@ menu: nav/home.html
             </div>
         </div>
         <br>
-        <p class="description-text">
-            Viralyze is a cutting-edge platform designed to empower content creators and businesses to maximize their impact on social media. We understand the challenges of creating engaging content that resonates with audiences and drives results. That's why we've developed a suite of tools to help you every step of the way.
-        </p>
-        <h2 class="mission-title">Our Mission</h2>
-        <p class="mission-text">
-            Our mission is to provide you with the insights and resources you need to create viral-worthy content. We believe that everyone should have the opportunity to connect with their audience in a meaningful way, and we're here to make that happen.
-        </p>
+        <section class="px-6 py-12 bg-white shadow-xl shadow-blue-200 rounded-3xl max-w-4xl mx-auto font-sans text-neutral-900">
+  <div class="mb-10">
+    <h1 class="text-4xl font-extrabold text-center text-blue-700 mb-4">Welcome to <span class="text-black">Viralyze</span></h1>
+    <p class="text-lg leading-relaxed text-center text-gray-800 max-w-2xl mx-auto">
+      <span class="inline-block text-2xl font-extrabold text-blue-600">Viralyze</span> is your all-in-one content intelligence platform, purpose-built for creators, influencers, and digital marketers seeking to take their social presence to the next level. In a world overflowing with content, breaking through the noise can be overwhelming — and that's where we come in.
+    </p>
+    <div class="flex justify-center mt-8">
+      <img src="/images/analytics-dashboard.svg" alt="Analytics Dashboard" class="w-3/4 md:w-1/2 drop-shadow-lg" />
     </div>
+  </div>
+
+  <section class="palomar-intro bg-white py-12 px-8">
+  <div class="max-w-6xl mx-auto text-center">
+    <img src="images/palomar-health-logo.png" alt="Palomar Health Logo" class="mx-auto mb-6 w-40">
+    <h1 class="text-4xl font-bold text-blue-800 mb-4">Optimizing Digital Wellness</h1>
+    <p class="description-text text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
+      The <strong>Palomar Health Social Media Optimization Initiative</strong> is a forward-thinking project built to transform how San Diego’s largest public healthcare system connects with its community online. As a trusted provider with cutting-edge facilities like <em>Palomar Medical Center Escondido</em> and <em>Poway</em>, and services reaching over half a million residents, Palomar Health stands at the forefront of patient care—and now, digital innovation.
+    </p>
+    <img src="images/hospital-community-engagement.jpg" alt="Palomar Health community engagement" class="rounded-xl shadow-md my-8 w-full max-w-4xl mx-auto">
+  </div>
+</section>
+
+<section class="palomar-features bg-blue-50 py-12 px-8">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl font-semibold text-center text-blue-900 mb-8">What We Offer</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 text-gray-700">
+      <div class="feature-card bg-white p-6 rounded-xl shadow">
+        <img src="images/data-insights-icon.svg" alt="Data Insights" class="w-12 mb-4">
+        <h3 class="text-xl font-bold text-blue-700 mb-2">Deep Data Insights</h3>
+        <p>We analyze thousands of social media posts across platforms to detect trends, optimize hashtags, and determine what truly engages Palomar’s audience—from health tips to behind-the-scenes hero moments.</p>
+      </div>
+      <div class="feature-card bg-white p-6 rounded-xl shadow">
+        <img src="images/ml-model-icon.svg" alt="ML Model" class="w-12 mb-4">
+        <h3 class="text-xl font-bold text-blue-700 mb-2">Predictive Machine Learning</h3>
+        <p>Our custom ML models forecast how content will perform before it's published—helping marketing teams craft posts that are not only informative but inspiring.</p>
+      </div>
+      <div class="feature-card bg-white p-6 rounded-xl shadow">
+        <img src="images/dashboard-icon.svg" alt="Dashboard" class="w-12 mb-4">
+        <h3 class="text-xl font-bold text-blue-700 mb-2">Interactive Engagement Dashboard</h3>
+        <p>Healthcare professionals can now explore performance metrics, community feedback, and improvement suggestions in a sleek, user-friendly interface.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="palomar-mission bg-white py-12 px-8 text-center">
+  <div class="max-w-5xl mx-auto">
+    <h2 class="mission-title text-3xl font-semibold text-blue-900 mb-4">Our Mission</h2>
+    <p class="mission-text text-lg text-gray-700 leading-relaxed mb-6">
+      Our mission is to bring Palomar Health’s compassionate, world-class care into the digital spotlight. We aim to empower its team with the tools and intelligence to tell stories that build trust, educate, and uplift our community—one post at a time. In a region as vibrant and diverse as San Diego, we believe that impactful healthcare communication must be personal, data-driven, and deeply human.
+    </p>
+    <img src="images/mission-image.jpg" alt="Mission image" class="rounded-xl shadow-md mx-auto mt-4 w-full max-w-3xl">
+  </div>
+</section>
+
+<section class="palomar-impact bg-blue-100 py-12 px-8">
+  <div class="max-w-6xl mx-auto text-center">
+    <h2 class="text-3xl font-semibold text-blue-900 mb-4">Why It Matters</h2>
+    <p class="text-lg text-gray-700 max-w-3xl mx-auto">
+      In an age where patients turn to Instagram for inspiration, Twitter for news, and TikTok for health tips, the way a hospital shows up online matters more than ever. Through our project, Palomar Health is setting a new standard—not just for digital healthcare communication in San Diego, but across the nation.
+    </p>
+    <img src="images/impact-visual.jpg" alt="Digital impact visualization" class="rounded-xl shadow-lg my-8 w-full max-w-4xl mx-auto">
+  </div>
+</section>
 
 <script>
     function togglePageNav() {
