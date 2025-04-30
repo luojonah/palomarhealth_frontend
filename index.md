@@ -190,48 +190,49 @@ menu: nav/home.html
   </div>
 </section>
 
-<section class="palomar-features bg-blue-50 py-12 px-8">
+<section class="palomar-features bg-blue-50 py-12 px-8 font-serif tracking-wide">
   <div class="max-w-6xl mx-auto">
-    <h2 class="text-3xl font-semibold text-center text-blue-900 mb-8">What We Offer</h2>
+    <h2 class="text-4xl font-bold text-center text-blue-900 mb-10">What We Offer at Palomar Health San Diego</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 text-gray-700">
-      <div class="feature-card bg-white p-6 rounded-xl shadow">
+      <div class="feature-card bg-white p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow">
         <img src="images/data-insights-icon.svg" alt="Data Insights" class="w-12 mb-4">
         <h3 class="text-xl font-bold text-blue-700 mb-2">Deep Data Insights</h3>
-        <p>We analyze thousands of social media posts across platforms to detect trends, optimize hashtags, and determine what truly engages Palomar’s audience—from health tips to behind-the-scenes hero moments.</p>
+        <p>We analyze thousands of social media posts across platforms to detect trends, optimize hashtags, and determine what truly engages Palomar Health San Diego’s audience—from health tips to behind-the-scenes hero moments.</p>
       </div>
-      <div class="feature-card bg-white p-6 rounded-xl shadow">
+      <div class="feature-card bg-white p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow">
         <img src="images/ml-model-icon.svg" alt="ML Model" class="w-12 mb-4">
         <h3 class="text-xl font-bold text-blue-700 mb-2">Predictive Machine Learning</h3>
-        <p>Our custom ML models forecast how content will perform before it's published—helping marketing teams craft posts that are not only informative but inspiring.</p>
+        <p>Our custom ML models forecast how content will perform before it's published—helping Palomar’s marketing teams craft posts that are not only informative but inspiring.</p>
       </div>
-      <div class="feature-card bg-white p-6 rounded-xl shadow">
+      <div class="feature-card bg-white p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow">
         <img src="images/dashboard-icon.svg" alt="Dashboard" class="w-12 mb-4">
         <h3 class="text-xl font-bold text-blue-700 mb-2">Interactive Engagement Dashboard</h3>
-        <p>Healthcare professionals can now explore performance metrics, community feedback, and improvement suggestions in a sleek, user-friendly interface.</p>
+        <p>Healthcare professionals at Palomar Health can now explore performance metrics, community feedback, and suggestions for improvement in a sleek, user-friendly interface.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="palomar-mission bg-white py-12 px-8 text-center">
+<section class="palomar-mission bg-white py-12 px-8 text-center font-serif tracking-wide">
   <div class="max-w-5xl mx-auto">
-    <h2 class="mission-title text-3xl font-semibold text-blue-900 mb-4">Our Mission</h2>
-    <p class="mission-text text-lg text-gray-700 leading-relaxed mb-6">
-      Our mission is to bring Palomar Health’s compassionate, world-class care into the digital spotlight. We aim to empower its team with the tools and intelligence to tell stories that build trust, educate, and uplift our community—one post at a time. In a region as vibrant and diverse as San Diego, we believe that impactful healthcare communication must be personal, data-driven, and deeply human.
+    <h2 class="text-4xl font-bold text-blue-900 mb-6">Our Mission</h2>
+    <p class="text-lg text-gray-700 leading-relaxed mb-6">
+      At Palomar Health San Diego, our mission is to bring compassionate, world-class care into the digital spotlight. We empower healthcare teams with intelligent tools to tell meaningful stories that build trust, educate the public, and uplift our diverse community—one post at a time.
     </p>
-    <img src="images/mission-image.jpg" alt="Mission image" class="rounded-xl shadow-md mx-auto mt-4 w-full max-w-3xl">
+    <img src="images/mission-image.jpg" alt="Mission image" class="rounded-2xl shadow-xl mx-auto mt-4 w-full max-w-3xl">
   </div>
 </section>
 
-<section class="palomar-impact bg-blue-100 py-12 px-8">
+<section class="palomar-impact bg-blue-100 py-12 px-8 font-serif tracking-wide">
   <div class="max-w-6xl mx-auto text-center">
-    <h2 class="text-3xl font-semibold text-blue-900 mb-4">Why It Matters</h2>
+    <h2 class="text-4xl font-bold text-blue-900 mb-6">Why It Matters</h2>
     <p class="text-lg text-gray-700 max-w-3xl mx-auto">
-      In an age where patients turn to Instagram for inspiration, Twitter for news, and TikTok for health tips, the way a hospital shows up online matters more than ever. Through our project, Palomar Health is setting a new standard—not just for digital healthcare communication in San Diego, but across the nation.
+      In an age where patients turn to Instagram for inspiration, Twitter for news, and TikTok for health tips, how a hospital shows up online truly matters. Through this initiative, Palomar Health San Diego is setting a new national benchmark for healthcare communication in the digital era.
     </p>
-    <img src="images/impact-visual.jpg" alt="Digital impact visualization" class="rounded-xl shadow-lg my-8 w-full max-w-4xl mx-auto">
+    <img src="images/impact-visual.jpg" alt="Digital impact visualization" class="rounded-2xl shadow-2xl my-8 w-full max-w-4xl mx-auto">
   </div>
 </section>
+
 
 <script>
     function togglePageNav() {
@@ -248,3 +249,37 @@ menu: nav/home.html
     }
 </script>
 </body>
+
+<style>
+.team-section {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.team-card {
+  max-width: 700px;
+  background-color: #f9f9f9;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  line-height: 1.6;
+  color: #333;
+  transition: transform 0.2s ease;
+}
+
+.team-card:hover {
+  transform: scale(1.02);
+}
+
+.team-card h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+}
+
+.team-card p {
+  font-size: 1.1rem;
+}
+</style>
