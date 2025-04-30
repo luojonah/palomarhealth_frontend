@@ -165,6 +165,7 @@ menu: nav/home.html
             <div id="pageNavBox">
                 <a href="/palomarhealth_frontend/engagement">Engagement Rate</a>
                 <a href="/palomarhealth_frontend/analytic">Analytics Generator</a>
+                <a href="/palomarhealth_frontend/feedback">Content Feedback Tool</a>
             </div>
         </div>
         <br>

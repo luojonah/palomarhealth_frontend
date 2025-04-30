@@ -1,0 +1,195 @@
+---
+layout: bootstrap
+title: Content Feedback
+search_exclude: true
+description: Insightful feedback for content ideas
+hide: true
+permalink: /feedback
+---
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Content Idea Assistant</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+          crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to right, #1b2e4f, #4a9eda);
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding-top: 30px;
+            box-sizing: border-box;
+            text-align: center;
+            position: relative;
+        }
+
+        .main-title {
+            color: white;
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+            animation: fadeIn 1.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            100% { opacity: 1; }
+        }
+
+        .card {
+            background-color: white;
+            color: black;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+            max-width: 550px;
+            width: 95%;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card h1 {
+           color: black;
+           font-size: 2rem;
+           margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            color: #888;
+            font-weight: bold;
+            text-align: left;
+            width: 100%;
+        }
+
+        input, textarea, select {
+            width: calc(100% - 24px);
+            padding: 0.75rem;
+            border-radius: 30px;
+            border: 2px solid #546bff;
+            background-color: white;
+            color: black;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+            border-radius: 20px;
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: #888;
+        }
+
+        button {
+            margin-top: 1.5rem;
+            width: 100%;
+            padding: 0.8rem;
+            font-size: 1rem;
+            background-color: #546bff;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background-color: #3a54c6;
+        }
+
+        .output-box {
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: #ffffff;
+            color: #333;
+            border-radius: 15px;
+            max-width: 550px;
+            width: 95%;
+            white-space: pre-wrap;
+            word-break: break-word;
+            box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <h1 class="main-title">Content Idea Assistant</h1>
+
+    <div class="card">
+        <h1>Generate Post Ideas</h1>
+
+        <label for="caption">Caption or Topic</label>
+        <input type="text" id="caption" placeholder="e.g., How to grow on Instagram"/>
+
+        <label for="postType">Post Type</label>
+        <select id="postType">
+            <option value="Reel">Reel</option>
+            <option value="Carousel">Carousel</option>
+            <option value="Story">Story</option>
+            <option value="Single Post">Single Post</option>
+        </select>
+
+        <label for="audience">Target Audience</label>
+        <input type="text" id="audience" placeholder="e.g., Small business owners, Gen Z, photographers"/>
+
+        <button onclick="generatePrompt()">Submit</button>
+
+        <div class="output-box" id="outputBox" style="display:none;">
+            <strong>Prompt to Gemini:</strong>
+            <div id="promptText"></div>
+        </div>
+    </div>
+
+    <script>
+        function generatePrompt() {
+            const caption = document.getElementById("caption").value.trim();
+            const postType = document.getElementById("postType").value;
+            const audience = document.getElementById("audience").value.trim();
+
+            if (!caption || !audience) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            const prompt = `You are a social media strategist. Generate content ideas based on the following:\n\n` +
+                `Topic: ${caption}\n` +
+                `Post Type: ${postType}\n` +
+                `Target Audience: ${audience}\n\n` +
+                `Provide 2-3 engaging content ideas and a compelling caption for each.`;
+
+            document.getElementById("outputBox").style.display = "block";
+            document.getElementById("promptText").textContent = prompt;
+
+            // Optional: send to backend here via fetch()
+            /*
+            fetch('/generate-ideas', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ prompt })
+            }).then(res => res.json())
+              .then(data => {
+                  // Show response from Gemini
+              });
+            */
+        }
+    </script>
+</body>
+</html>
