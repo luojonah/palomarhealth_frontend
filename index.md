@@ -18,7 +18,7 @@ menu: nav/home.html
     body {
         background: linear-gradient(to right, #1b2e4f, #4a9eda);
         font-family: 'Poppins', sans-serif;
-        color: white;
+        color: black;
         margin: 0;
         padding: 0;
     }
@@ -42,14 +42,14 @@ menu: nav/home.html
         font-size: 2.5rem;
         font-weight: 700;
         margin-bottom: 1rem;
-        color: #ffffff;
+        color: #000000;
     }
 
     .mission-text {
         font-size: 1.1rem;
         line-height: 1.8;
         margin-bottom: 2rem;
-        color: #eeeeee;
+        color: #000000;
         text-align: center;
         max-width: 80%;
     }
@@ -58,14 +58,14 @@ menu: nav/home.html
         font-size: 2rem;
         font-weight: 600;
         margin-bottom: 1rem;
-        color: #ffffff;
+        color: #000000;
     }
 
     .description-text {
         font-size: 1.1rem;
         line-height: 1.8;
         margin-bottom: 2rem;
-        color: #eeeeee;
+        color: #000000;
         text-align: center;
         max-width: 80%;
     }
@@ -95,7 +95,7 @@ menu: nav/home.html
     /* Button Styles */
     #pageNavBtn {
         background-color: transparent;
-        color: white;
+        color: black;
         padding: 10px 15px;
         font-size: 16px;
         border: 2px solid white;
@@ -266,7 +266,7 @@ menu: nav/home.html
   border-radius: 16px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
   line-height: 1.6;
-  color: #333;
+  color: #000000;
   transition: transform 0.2s ease;
 }
 
