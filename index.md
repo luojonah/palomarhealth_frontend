@@ -268,19 +268,17 @@ menu: nav/home.html
                     <span class="inline-block text-2xl font-extrabold text-blue-600">Viralyze</span> is your all-in-one content intelligence platform, purpose-built for creators, influencers, and digital marketers seeking to take their social presence to the next level. In a world overflowing with content, breaking through the noise can be overwhelming — and that's where we come in.
                 </p>
                 <div class="flex justify-center mt-8">
-                    <img src="/images/analytics-dashboard.svg" alt="Analytics Dashboard" class="w-3/4 md:w-1/2 drop-shadow-lg" />
                 </div>
             </div>
         </section>
 
 <section class="palomar-intro py-12 px-8">
             <div class="max-w-6xl mx-auto">
-                <img src="images/palomar-health-logo.png" alt="Palomar Health Logo" class="mx-auto mb-6 w-40">
+                <img src="images/palomar.png" alt="Palomar Health Logo" class="mx-auto mb-6 w-40">
                 <h1 class="text-4xl font-bold text-blue-800 mb-4">Optimizing Digital Wellness</h1>
                 <p class="description-text text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
                     The <strong>Palomar Health Social Media Optimization Initiative</strong> is a forward-thinking project built to transform how San Diego’s largest public healthcare system connects with its community online. As a trusted provider with cutting-edge facilities like <em>Palomar Medical Center Escondido</em> and <em>Poway</em>, and services reaching over half a million residents, Palomar Health stands at the forefront of patient care—and now, digital innovation.
                 </p>
-                <img src="images/hospital-community-engagement.jpg" alt="Palomar Health community engagement" class="rounded-xl shadow-md my-8 w-full max-w-4xl mx-auto">
             </div>
         </section>
 
@@ -289,17 +287,14 @@ menu: nav/home.html
                 <h2 class="text-4xl font-bold text-center text-blue-900 mb-10">What We Offer at Palomar Health San Diego</h2>
                 <div class="grid">
                     <div class="feature-card">
-                        <img src="images/data-insights-icon.svg" alt="Data Insights" class="w-12 mb-4">
                         <h3>Deep Data Insights</h3>
                         <p>We analyze thousands of social media posts across platforms to detect trends, optimize hashtags, and determine what truly engages Palomar Health San Diego’s audience—from health tips to behind-the-scenes hero moments.</p>
                     </div>
                     <div class="feature-card">
-                        <img src="images/ml-model-icon.svg" alt="ML Model" class="w-12 mb-4">
                         <h3>Predictive Machine Learning</h3>
                         <p>Our custom ML models forecast how content will perform before it's published—helping Palomar’s marketing teams craft posts that are not only informative but inspiring.</p>
                     </div>
                     <div class="feature-card">
-                        <img src="images/dashboard-icon.svg" alt="Dashboard" class="w-12 mb-4">
                         <h3>Interactive Engagement Dashboard</h3>
                         <p>Healthcare professionals at Palomar Health can now explore performance metrics, community feedback, and suggestions for improvement in a sleek, user-friendly interface.</p>
                     </div>
@@ -313,7 +308,6 @@ menu: nav/home.html
                 <p class="text-lg text-gray-700 leading-relaxed mb-6">
                     At Palomar Health San Diego, our mission is to bring compassionate, world-class care into the digital spotlight. We empower healthcare teams with intelligent tools to tell meaningful stories that build trust, educate the public, and uplift our diverse community—one post at a time.
                 </p>
-                <img src="images/mission-image.jpg" alt="Mission image" class="rounded-2xl shadow-xl mx-auto mt-4 w-full max-w-3xl">
             </div>
         </section>
 
@@ -323,7 +317,6 @@ menu: nav/home.html
                 <p class="text-lg text-gray-700 max-w-3xl mx-auto">
                     In an age where patients turn to Instagram for inspiration, Twitter for news, and TikTok for health tips, how a hospital shows up online truly matters. Through this initiative, Palomar Health San Diego is setting a new national benchmark for healthcare communication in the digital era.
                 </p>
-                <img src="images/impact-visual.jpg" alt="Digital impact visualization" class="rounded-2xl shadow-2xl my-8 w-full max-w-4xl mx-auto">
             </div>
         </section>
     </div>
