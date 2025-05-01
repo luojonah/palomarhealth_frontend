@@ -258,6 +258,7 @@ menu: nav/home.html
                 <a href="/palomarhealth_frontend/engagement">Engagement Rate</a>
                 <a href="/palomarhealth_frontend/analytic">Analytics Generator</a>
                 <a href="/palomarhealth_frontend/feedback">Content Feedback Tool</a>
+                <a href="/palomarhealth_frontend/socialMediaModel">Social Media Model</a>
             </div>
         </div>
         <br>
