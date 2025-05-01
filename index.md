@@ -1,15 +1,15 @@
 ---
 layout: bootstrap
-title: Viralyze 
+title: Viralyze
 search_exclude: true
 description: Viralyze social media content generator
 hide: true
 menu: nav/home.html
 ---
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" 
-      rel="stylesheet" 
-      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -18,7 +18,7 @@ menu: nav/home.html
     body {
         background: linear-gradient(to right, #1b2e4f, #4a9eda);
         font-family: 'Poppins', sans-serif;
-        color: black;
+        color: #f8f9fa; /* Light text color for overall body */
         margin: 0;
         padding: 0;
     }
@@ -34,112 +34,125 @@ menu: nav/home.html
     }
 
     .logo {
-        width: 150px;
-        margin-bottom: 2rem;
+        width: 120px;
+        margin-bottom: 1.5rem;
+    }
+
+    .main-title {
+        font-size: 2.8rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        color: #ffffff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     }
 
     .mission-title {
-        font-size: 2.5rem;
-        font-weight: 700;
+        font-size: 2.2rem;
+        font-weight: 600;
         margin-bottom: 1rem;
-        color: #000000;
+        color: #007bff; /* Accent color for section titles */
     }
 
     .mission-text {
         font-size: 1.1rem;
-        line-height: 1.8;
+        line-height: 1.7;
         margin-bottom: 2rem;
-        color: #000000;
+        color: #495057; /* Darker text for readability */
         text-align: center;
-        max-width: 80%;
+        max-width: 85%;
     }
 
     .description-title {
         font-size: 2rem;
         font-weight: 600;
         margin-bottom: 1rem;
-        color: #000000;
+        color: #007bff; /* Accent color for section titles */
     }
 
     .description-text {
         font-size: 1.1rem;
-        line-height: 1.8;
+        line-height: 1.7;
         margin-bottom: 2rem;
-        color: #000000;
+        color: #495057; /* Darker text for readability */
         text-align: center;
-        max-width: 80%;
+        max-width: 85%;
     }
 
     .header-wrapper {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        width: 100%;
-        padding: 10px 20px;
-        margin-bottom: 30px;
-        animation: popIn 1.2s ease-out forwards;
+        width: 95%;
+        padding: 15px 25px;
+        margin-bottom: 25px;
+        animation: slideInDown 1s ease-out forwards;
         opacity: 0;
-        transform: scale(0.95);
-        animation-delay: 0.2s;
+        transform: translateY(-20px);
+        animation-delay: 0.1s;
         animation-fill-mode: forwards;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         box-sizing: border-box;
     }
 
-    @keyframes popIn {
+    @keyframes slideInDown {
         to {
             opacity: 1;
-            transform: scale(1);
+            transform: translateY(0);
         }
     }
 
     /* Button Styles */
     #pageNavBtn {
-        background-color: transparent;
-        color: black;
-        padding: 10px 15px;
+        background-color: rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 10px 18px;
         font-size: 16px;
-        border: 2px solid white;
+        border: none;
         cursor: pointer;
-        border-radius: 5px;
+        border-radius: 8px;
         transition: background-color 0.3s ease;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
-    #pageNavBtn:hover, 
+    #pageNavBtn:hover,
     #pageNavBtn:focus {
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: rgba(255, 255, 255, 0.3);
+        outline: none;
     }
 
     /* Box Styles */
     #pageNavBox {
         display: none;
         position: absolute;
-        top: 120px; /* Adjusted top positioning */
-        right: 0;
-        background-color: #f1f1f1;
+        top: 65px;
+        right: 25px;
+        background-color: #ffffff;
         min-width: 200px;
         box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        z-index: 1;
-        border-radius: 5px;
-        margin-top: 0px; /* Removed top margin */
-        padding: 10px;
+        z-index: 10;
+        border-radius: 8px;
+        margin-top: 5px;
+        padding: 10px 0;
         text-align: left;
     }
 
     #pageNavBox a {
-        color: black;
-        padding: 8px 12px;
+        color: #343a40;
+        padding: 12px 20px;
         text-decoration: none;
         display: block;
-        border-radius: 5px;
+        border-radius: 0;
         transition: background-color 0.3s ease;
         white-space: nowrap;
     }
 
     #pageNavBox a:hover {
-        background-color: #ddd;
+        background-color: #f8f9fa;
     }
 
     #pageNavBox.show {
@@ -151,6 +164,91 @@ menu: nav/home.html
         font-size: 20px;
     }
 
+    /* Main content sections - Ensuring dark text on light backgrounds */
+    section {
+        background-color: #ffffff; /* Solid white background for better contrast */
+        color: #343a40; /* Dark gray text for main content */
+        padding: 30px;
+        margin-bottom: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        max-width: 1200px;
+        box-sizing: border-box;
+    }
+
+    .palomar-intro {
+        background-color: #f8f9fa; /* Light gray background */
+        color: #343a40; /* Dark gray text */
+    }
+
+    .palomar-features {
+        background-color: #e9ecef; /* Slightly darker gray background */
+        color: #343a40; /* Dark gray text */
+    }
+
+    .palomar-mission {
+        background-color: #f8f9fa; /* Light gray background */
+        color: #343a40; /* Dark gray text */
+    }
+
+    .palomar-impact {
+        background-color: #e9ecef; /* Slightly darker gray background */
+        color: #343a40; /* Dark gray text */
+    }
+
+    .feature-card {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        text-align: left;
+    }
+
+    .feature-card h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #007bff; /* Accent color for headings within cards */
+        margin-bottom: 8px;
+    }
+
+    .feature-card p {
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #495057; /* Darker text for paragraphs within cards */
+    }
+
+    .palomar-intro img,
+    .palomar-mission img,
+    .palomar-impact img {
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 15px;
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Specific text colors within sections to ensure visibility */
+    .px-6.py-12 h1,
+    .px-6.py-12 p,
+    .palomar-intro h1,
+    .palomar-intro p,
+    .palomar-features h2,
+    .palomar-features p,
+    .palomar-mission h2,
+    .palomar-mission p,
+    .palomar-impact h2,
+    .palomar-impact p {
+        color: #343a40; /* Ensure dark text on the light backgrounds */
+    }
+
+    .px-6.py-12 h1 span {
+        color: #000000; /* Keep specific spans black if intended */
+    }
+
+    .palomar-intro strong {
+        color: #212529; /* Darker color for emphasis */
+    }
 </style>
 
 <body>
@@ -228,7 +326,7 @@ menu: nav/home.html
   <div class="max-w-6xl mx-auto text-center">
     <h2 class="text-4xl font-bold text-blue-900 mb-6">Why It Matters</h2>
     <p class="text-lg text-gray-700 max-w-3xl mx-auto">
-      In an age where patients turn to Instagram for inspiration, Twitter for news, and TikTok for health tips, how a hospital shows up online truly matters. Through this initiative, Palomar Health San Diego is setting a new national benchmark for healthcare communication in the digital era.
+    In an age where patients turn to Instagram for inspiration, Twitter for news, and TikTok for health tips, how a hospital shows up online truly matters. Through this initiative, Palomar Health San Diego is setting a new national benchmark for healthcare communication in the digital era.
     </p>
     <img src="images/impact-visual.jpg" alt="Digital impact visualization" class="rounded-2xl shadow-2xl my-8 w-full max-w-4xl mx-auto">
   </div>
@@ -266,7 +364,7 @@ menu: nav/home.html
   border-radius: 16px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
   line-height: 1.6;
-  color: #000000;
+  color: #343a40; /* Darker text for better contrast */
   transition: transform 0.2s ease;
 }
 
@@ -277,10 +375,11 @@ menu: nav/home.html
 .team-card h3 {
   font-size: 1.8rem;
   margin-bottom: 1rem;
-  color: #2c3e50;
+  color: #007bff; /* Accent color for headings */
 }
 
 .team-card p {
   font-size: 1.1rem;
+  color: #495057; /* Slightly darker text for paragraphs */
 }
 </style>
