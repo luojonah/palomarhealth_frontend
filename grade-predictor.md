@@ -7,16 +7,14 @@ hide: true
 permalink: /grade-predictor
 ---
 
-
-
 <div class="container mt-5 mb-5">
   <h2 class="text-center mb-5">Grade in Class Predictor</h2>
 
   <div class="card shadow-sm mb-5">
     <div class="card-body">
       <h5 class="card-title mb-4">Self-Assessment Quiz</h5>
-      <p class="card-text">Rate yourself in each of the following categories on a scale of 1-4:</p>
-      <p class="text-muted small">1 = Needs Improvement, 2 = Developing, 3 = Proficient, 4 = Exemplary</p>
+      <p class="card-text">Rate yourself in each of the following categories on a scale of 1-5:</p>
+      <p class="text-muted small">1 = Needs Improvement, 2 = Developing, 3 = Satisfactory, 4 = Proficient, 5 = Exemplary</p>
       
       <form id="grade-predictor-form">
         <div class="table-responsive">
@@ -25,7 +23,7 @@ permalink: /grade-predictor
               <tr>
                 <th>Skill</th>
                 <th>Mastered?</th>
-                <th>Rating (1-4)</th>
+                <th>Rating (1-5)</th>
                 <th>Description</th>
               </tr>
             </thead>
@@ -37,8 +35,9 @@ permalink: /grade-predictor
                   <select class="form-select skill-rating" data-skill="attendance">
                     <option value="1">1 - Needs Improvement</option>
                     <option value="2">2 - Developing</option>
-                    <option value="3">3 - Proficient</option>
-                    <option value="4">4 - Exemplary</option>
+                    <option value="3">3 - Satisfactory</option>
+                    <option value="4">4 - Proficient</option>
+                    <option value="5">5 - Exemplary</option>
                   </select>
                 </td>
                 <td class="text-muted small">Regular attendance and punctuality to class</td>
@@ -50,8 +49,9 @@ permalink: /grade-predictor
                   <select class="form-select skill-rating" data-skill="workHabits">
                     <option value="1">1 - Needs Improvement</option>
                     <option value="2">2 - Developing</option>
-                    <option value="3">3 - Proficient</option>
-                    <option value="4">4 - Exemplary</option>
+                    <option value="3">3 - Satisfactory</option>
+                    <option value="4">4 - Proficient</option>
+                    <option value="5">5 - Exemplary</option>
                   </select>
                 </td>
                 <td class="text-muted small">Consistency in completing assignments and staying focused</td>
@@ -63,8 +63,9 @@ permalink: /grade-predictor
                   <select class="form-select skill-rating" data-skill="behavior">
                     <option value="1">1 - Needs Improvement</option>
                     <option value="2">2 - Developing</option>
-                    <option value="3">3 - Proficient</option>
-                    <option value="4">4 - Exemplary</option>
+                    <option value="3">3 - Satisfactory</option>
+                    <option value="4">4 - Proficient</option>
+                    <option value="5">5 - Exemplary</option>
                   </select>
                 </td>
                 <td class="text-muted small">Appropriate conduct and participation in class</td>
@@ -76,8 +77,9 @@ permalink: /grade-predictor
                   <select class="form-select skill-rating" data-skill="timeliness">
                     <option value="1">1 - Needs Improvement</option>
                     <option value="2">2 - Developing</option>
-                    <option value="3">3 - Proficient</option>
-                    <option value="4">4 - Exemplary</option>
+                    <option value="3">3 - Satisfactory</option>
+                    <option value="4">4 - Proficient</option>
+                    <option value="5">5 - Exemplary</option>
                   </select>
                 </td>
                 <td class="text-muted small">Submitting work by deadlines</td>
@@ -89,8 +91,9 @@ permalink: /grade-predictor
                   <select class="form-select skill-rating" data-skill="techSense">
                     <option value="1">1 - Needs Improvement</option>
                     <option value="2">2 - Developing</option>
-                    <option value="3">3 - Proficient</option>
-                    <option value="4">4 - Exemplary</option>
+                    <option value="3">3 - Satisfactory</option>
+                    <option value="4">4 - Proficient</option>
+                    <option value="5">5 - Exemplary</option>
                   </select>
                 </td>
                 <td class="text-muted small">Understanding and applying technical concepts</td>
@@ -102,8 +105,9 @@ permalink: /grade-predictor
                   <select class="form-select skill-rating" data-skill="techTalk">
                     <option value="1">1 - Needs Improvement</option>
                     <option value="2">2 - Developing</option>
-                    <option value="3">3 - Proficient</option>
-                    <option value="4">4 - Exemplary</option>
+                    <option value="3">3 - Satisfactory</option>
+                    <option value="4">4 - Proficient</option>
+                    <option value="5">5 - Exemplary</option>
                   </select>
                 </td>
                 <td class="text-muted small">Using appropriate technical vocabulary</td>
@@ -115,8 +119,9 @@ permalink: /grade-predictor
                   <select class="form-select skill-rating" data-skill="techGrowth">
                     <option value="1">1 - Needs Improvement</option>
                     <option value="2">2 - Developing</option>
-                    <option value="3">3 - Proficient</option>
-                    <option value="4">4 - Exemplary</option>
+                    <option value="3">3 - Satisfactory</option>
+                    <option value="4">4 - Proficient</option>
+                    <option value="5">5 - Exemplary</option>
                   </select>
                 </td>
                 <td class="text-muted small">Improvement in technical skills over time</td>
@@ -128,8 +133,9 @@ permalink: /grade-predictor
                   <select class="form-select skill-rating" data-skill="advocacy">
                     <option value="1">1 - Needs Improvement</option>
                     <option value="2">2 - Developing</option>
-                    <option value="3">3 - Proficient</option>
-                    <option value="4">4 - Exemplary</option>
+                    <option value="3">3 - Satisfactory</option>
+                    <option value="4">4 - Proficient</option>
+                    <option value="5">5 - Exemplary</option>
                   </select>
                 </td>
                 <td class="text-muted small">Self-advocacy and seeking help when needed</td>
@@ -141,8 +147,9 @@ permalink: /grade-predictor
                   <select class="form-select skill-rating" data-skill="commCollab">
                     <option value="1">1 - Needs Improvement</option>
                     <option value="2">2 - Developing</option>
-                    <option value="3">3 - Proficient</option>
-                    <option value="4">4 - Exemplary</option>
+                    <option value="3">3 - Satisfactory</option>
+                    <option value="4">4 - Proficient</option>
+                    <option value="5">5 - Exemplary</option>
                   </select>
                 </td>
                 <td class="text-muted small">Working effectively with others and communicating ideas</td>
@@ -154,8 +161,9 @@ permalink: /grade-predictor
                   <select class="form-select skill-rating" data-skill="integrity">
                     <option value="1">1 - Needs Improvement</option>
                     <option value="2">2 - Developing</option>
-                    <option value="3">3 - Proficient</option>
-                    <option value="4">4 - Exemplary</option>
+                    <option value="3">3 - Satisfactory</option>
+                    <option value="4">4 - Proficient</option>
+                    <option value="5">5 - Exemplary</option>
                   </select>
                 </td>
                 <td class="text-muted small">Academic honesty and ethical behavior</td>
@@ -167,8 +175,9 @@ permalink: /grade-predictor
                   <select class="form-select skill-rating" data-skill="organization">
                     <option value="1">1 - Needs Improvement</option>
                     <option value="2">2 - Developing</option>
-                    <option value="3">3 - Proficient</option>
-                    <option value="4">4 - Exemplary</option>
+                    <option value="3">3 - Satisfactory</option>
+                    <option value="4">4 - Proficient</option>
+                    <option value="5">5 - Exemplary</option>
                   </select>
                 </td>
                 <td class="text-muted small">Keeping track of assignments and managing time</td>
@@ -195,7 +204,7 @@ permalink: /grade-predictor
             <div class="card-body text-center">
               <h3 class="card-title">Overall Rating</h3>
               <div class="display-1 fw-bold my-3" id="average-score">0.0</div>
-              <p class="card-text">out of 4.0</p>
+              <p class="card-text">out of 5.0</p>
             </div>
           </div>
         </div>
@@ -260,7 +269,7 @@ permalink: /grade-predictor
         const selectElement = document.querySelector(`.skill-rating[data-skill="${skill}"]`);
         
         if (this.checked) {
-          selectElement.value = "4"; // Set to exemplary if marked as mastered
+          selectElement.value = "5"; // Set to exemplary if marked as mastered
           selectElement.disabled = true;
         } else {
           selectElement.disabled = false;
@@ -284,49 +293,52 @@ permalink: /grade-predictor
           name: skill,
           rating: rating,
           mastered: mastered,
-          ratio: rating / 4  // Calculate ratio (rating / max possible)
+          ratio: rating / 5  // Calculate ratio (rating / max possible)
         };
       });
       
       // Calculate averages and totals
       const totalRatings = Object.values(skills).reduce((sum, skill) => sum + skill.rating, 0);
-      const totalPossible = Object.keys(skills).length * 4; // 4 is max rating
+      const totalPossible = Object.keys(skills).length * 5; // 5 is max rating
       const averageRating = totalRatings / Object.keys(skills).length;
       const masteredCount = Object.values(skills).filter(skill => skill.mastered).length;
       const totalRatio = totalRatings / totalPossible;
       
       // Determine letter grade based on average rating
       let letterGrade, feedback;
-      if (averageRating >= 3.7) {
+      if (averageRating >= 4.8) {
         letterGrade = 'A+';
         feedback = 'Outstanding! You\'re excelling in all areas of the course.';
-      } else if (averageRating >= 3.3) {
+      } else if (averageRating >= 4.4) {
         letterGrade = 'A';
         feedback = 'Excellent work! You\'re showing mastery in most areas.';
-      } else if (averageRating >= 3.0) {
+      } else if (averageRating >= 4.0) {
         letterGrade = 'A-';
         feedback = 'Very good work! You\'re on the right track for success.';
-      } else if (averageRating >= 2.7) {
+      } else if (averageRating >= 3.7) {
         letterGrade = 'B+';
         feedback = 'Good job! You\'re showing strength in many areas.';
-      } else if (averageRating >= 2.3) {
+      } else if (averageRating >= 3.4) {
         letterGrade = 'B';
         feedback = 'Solid performance. Continue to develop your skills.';
-      } else if (averageRating >= 2.0) {
+      } else if (averageRating >= 3.0) {
         letterGrade = 'B-';
         feedback = 'You\'re doing fairly well. Focus on improving your weaker areas.';
-      } else if (averageRating >= 1.7) {
+      } else if (averageRating >= 2.7) {
         letterGrade = 'C+';
         feedback = 'You\'re meeting basic expectations. Work on consistency.';
-      } else if (averageRating >= 1.3) {
+      } else if (averageRating >= 2.4) {
         letterGrade = 'C';
         feedback = 'You\'re meeting minimum requirements. More effort is needed.';
-      } else if (averageRating >= 1.0) {
+      } else if (averageRating >= 2.0) {
         letterGrade = 'C-';
         feedback = 'You\'re at risk. Significant improvement is necessary.';
-      } else {
-        letterGrade = 'D/F';
+      } else if (averageRating >= 1.4) {
+        letterGrade = 'D';
         feedback = 'You need to address multiple areas to pass this course.';
+      } else {
+        letterGrade = 'F';
+        feedback = 'Immediate intervention is required to pass this course.';
       }
       
       // Update the results display
