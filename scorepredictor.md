@@ -1,8 +1,8 @@
 ---
 layout: bootstrap
-title: Viralyze
+title: Score Predictor
 search_exclude: true
-description: Viralyze social media content generator
+description: Score predictor home page
 hide: true
 permalink: /scorepredictor
 ---
@@ -151,7 +151,7 @@ permalink: /scorepredictor
                                     Communication & Collaboration • Integrity • Organization
                                 </small>
                             </div>
-                            <a href="/grade-predictor.html" class="btn btn-primary btn-lg">
+                            <a href="/palomarhealth_frontend/grade-predictor" class="btn btn-primary btn-lg">
                                 Start Grade Predictor <i class="fas fa-arrow-right ms-2"></i>
                             </a>
                         </div>
@@ -177,7 +177,7 @@ permalink: /scorepredictor
                                     Time Management • Test Preparation
                                 </small>
                             </div>
-                            <a href="/exam-predictor.html" class="btn btn-primary btn-lg">
+                            <a href="/palomarhealth_frontend/exam-predictor" class="btn btn-primary btn-lg">
                                 Start Exam Predictor <i class="fas fa-arrow-right ms-2"></i>
                             </a>
                         </div>

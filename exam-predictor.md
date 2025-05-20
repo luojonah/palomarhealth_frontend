@@ -1,8 +1,8 @@
 ---
 layout: bootstrap
-title: Viralyze
+title: Exam Predictor
 search_exclude: true
-description: Viralyze social media content generator
+description: Exam predictor for the AP Test
 hide: true
-permalink: /exam-predictor.html
+permalink: /exam-predictor
 ---
