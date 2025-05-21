@@ -577,7 +577,7 @@ permalink: /grade-predictor
       
       // Data from the image
       const attributesData = {
-        labels: ['Academic Attributes', 'Help Seeking', 'Persistence', 'Procrastination', 'Time Management', 'Locus Of Control'],
+        labels: ['Academic Attributes', 'Help Seeking', 'Persistence', 'Procrastination', 'Time Management', 'Focus Of Control'],
         datasets: [{
           data: [70, 40, 70, 50, 85, 65],
           backgroundColor: function(context) {
