@@ -1,0 +1,111 @@
+---
+layout: bootstrap
+title: Exam Predictor
+search_exclude: true
+description: Exam predictor for the AP Test
+hide: true
+permalink: /exam-predictor
+---
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AP CSP Score Calculator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .score-box {
+      background-color: #f8f9fa;
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .score-value {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: white;
+      background-color: #0d6efd;
+      border-radius: 10px;
+      padding: 0.5rem 1rem;
+      display: inline-block;
+    }
+    .predicted-score {
+      font-size: 2rem;
+      font-weight: bold;
+      color: white;
+      background-color: #6f42c1;
+      border-radius: 10px;
+      padding: 0.5rem 1rem;
+    }
+    .form-label {
+      color: white;
+    }
+  </style>
+</head>
+<body class="container py-5">
+  <h1 class="mb-4">AP&reg; Computer Science Principles</h1>
+
+  <div class="mb-4">
+    <label for="mcqScore" class="form-label"><strong>Section I: Multiple-Choice</strong></label>
+    <input type="range" class="form-range" id="mcqScore" min="0" max="70" value="60" oninput="updateScores()">
+    <input type="number" id="mcqInput" min="0" max="70" value="60" class="form-control w-25" oninput="syncSlider('mcq')">
+  </div>
+
+  <div class="mb-4">
+    <label for="frqScore" class="form-label"><strong>Create Performance Task</strong></label>
+    <input type="range" class="form-range" id="frqScore" min="0" max="6" value="6" oninput="updateScores()">
+    <input type="number" id="frqInput" min="0" max="6" value="6" class="form-control w-25" oninput="syncSlider('frq')">
+  </div>
+
+  <div class="score-box">
+    <p>MCQ Score</p>
+    <div class="score-value" id="mcqDisplay">60</div>
+    <p>FRQ Score</p>
+    <div class="score-value" id="frqDisplay">30</div>
+    <p>Total Composite Score</p>
+    <div class="score-value" id="compositeDisplay">90/100</div>
+    <p>Predicted AP&reg; Score</p>
+    <div class="predicted-score" id="predictedScore">5</div>
+  </div>
+
+  <script>
+    function updateScores() {
+      const mcqRaw = parseInt(document.getElementById("mcqScore").value);
+      const frqRaw = parseInt(document.getElementById("frqScore").value);
+
+      document.getElementById("mcqInput").value = mcqRaw;
+      document.getElementById("frqInput").value = frqRaw;
+
+      const mcqScore = mcqRaw; // /70
+      const frqScore = frqRaw * 5; // /30
+      const total = mcqScore + frqScore; // /100
+
+      document.getElementById("mcqDisplay").textContent = mcqScore;
+      document.getElementById("frqDisplay").textContent = frqScore;
+      document.getElementById("compositeDisplay").textContent = `${total}/100`;
+
+      let apScore = 1;
+      if (total >= 90) apScore = 5;
+      else if (total >= 81) apScore = 4;
+      else if (total >= 42) apScore = 3;
+      else if (total >= 30) apScore = 2;
+
+      document.getElementById("predictedScore").textContent = apScore;
+    }
+
+    function syncSlider(type) {
+      if (type === 'mcq') {
+        const val = parseInt(document.getElementById("mcqInput").value);
+        document.getElementById("mcqScore").value = val;
+      } else {
+        const val = parseInt(document.getElementById("frqInput").value);
+        document.getElementById("frqScore").value = val;
+      }
+      updateScores();
+    }
+
+    updateScores();
+  </script>
+</body>
+</html>
+
