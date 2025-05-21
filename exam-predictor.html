@@ -15,58 +15,78 @@ permalink: /exam-predictor
   <style>
     .score-box {
       background-color: #f8f9fa;
-      color: black;
       border-radius: 10px;
       padding: 1rem;
       text-align: center;
       margin-top: 1rem;
     }
+    .score-box p {
+      color: black;
+    }
     .score-value {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       font-weight: bold;
-      color: white;
-      background-color: #0d6efd;
+      color: black;
+      background-color: #71a5f3;
       border-radius: 10px;
       padding: 0.5rem 1rem;
       display: inline-block;
     }
     .predicted-score {
-      font-size: 2rem;
+      font-size: 1.75rem;
       font-weight: bold;
-      color: white;
-      background-color: #6f42c1;
+      color: black;
       border-radius: 10px;
       padding: 0.5rem 1rem;
     }
-    .form-label {
-      color: white;
+    .score-1 { background-color: rgb(167, 6, 6); color: white; }
+    .score-2 { background-color: rgb(112, 58, 58); color: white; }
+    .score-3 { background-color: rgb(15, 123, 107); color: white; }
+    .score-4 { background-color: rgb(60, 107, 234); color: white; }
+    .score-5 { background-color: purple; color: white; }
+    .input-section {
+      flex: 1;
+      padding-right: 1rem;
+    }
+    .slider-label {
+      font-size: 0.95rem;
+    }
+    .layout-row {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 1rem;
     }
   </style>
 </head>
 <body class="container py-5">
   <h1 class="mb-4">AP&reg; Computer Science Principles</h1>
 
-  <div class="mb-4">
-    <label for="mcqScore" class="form-label"><strong>Section I: Multiple-Choice</strong></label>
-    <input type="range" class="form-range" id="mcqScore" min="0" max="70" value="60" oninput="updateScores()">
-    <input type="number" id="mcqInput" min="0" max="70" value="60" class="form-control w-25" oninput="syncSlider('mcq')">
-  </div>
+  <div class="layout-row">
+    <div class="input-section">
+      <div class="mb-4">
+        <label for="mcqScore" class="form-label slider-label"><strong>Section I: Multiple-Choice</strong></label>
+        <input type="range" class="form-range" id="mcqScore" min="0" max="70" value="60" oninput="updateScores()">
+        <input type="number" id="mcqInput" min="0" max="70" value="60" class="form-control" oninput="syncSlider('mcq')">
+      </div>
 
-  <div class="mb-4">
-    <label for="frqScore" class="form-label"><strong>Create Performance Task</strong></label>
-    <input type="range" class="form-range" id="frqScore" min="0" max="6" value="6" oninput="updateScores()">
-    <input type="number" id="frqInput" min="0" max="6" value="6" class="form-control w-25" oninput="syncSlider('frq')">
-  </div>
+      <div class="mb-4">
+        <label for="frqScore" class="form-label slider-label"><strong>Create Performance Task</strong></label>
+        <input type="range" class="form-range" id="frqScore" min="0" max="6" value="6" oninput="updateScores()">
+        <input type="number" id="frqInput" min="0" max="6" value="6" class="form-control" oninput="syncSlider('frq')">
+      </div>
+    </div>
 
-  <div class="score-box">
-    <p>MCQ Score</p>
-    <div class="score-value" id="mcqDisplay">60</div>
-    <p>FRQ Score</p>
-    <div class="score-value" id="frqDisplay">30</div>
-    <p>Total Composite Score</p>
-    <div class="score-value" id="compositeDisplay">90/100</div>
-    <p>Predicted AP&reg; Score</p>
-    <div class="predicted-score" id="predictedScore">5</div>
+    <div class="score-box">
+      <p>MCQ Score</p>
+      <div class="score-value" id="mcqDisplay">60</div>
+      <p>FRQ Score</p>
+      <div class="score-value" id="frqDisplay">30</div>
+      <p>Total Composite Score</p>
+      <div class="score-value" id="compositeDisplay">90/100</div>
+      <p>Predicted AP&reg; Score</p>
+      <div class="predicted-score score-5" id="predictedScore">5</div>
+    </div>
   </div>
 
   <script>
@@ -91,7 +111,9 @@ permalink: /exam-predictor
       else if (total >= 42) apScore = 3;
       else if (total >= 30) apScore = 2;
 
-      document.getElementById("predictedScore").textContent = apScore;
+      const predictedEl = document.getElementById("predictedScore");
+      predictedEl.textContent = apScore;
+      predictedEl.className = `predicted-score score-${apScore}`;
     }
 
     function syncSlider(type) {
