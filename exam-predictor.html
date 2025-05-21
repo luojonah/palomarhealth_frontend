@@ -7,57 +7,6 @@ hide: true
 permalink: /exam-predictor
 ---
 
-<<<<<<< Updated upstream
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AP CSP Score Calculator</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    .score-box {
-      background-color: #f8f9fa;
-      border-radius: 10px;
-      padding: 1rem;
-      text-align: center;
-      margin-top: 1rem;
-    }
-    .score-box p {
-      color: black;
-    }
-    .score-value {
-      font-size: 1.25rem;
-      font-weight: bold;
-      color: black;
-      background-color: #71a5f3;
-      border-radius: 10px;
-      padding: 0.5rem 1rem;
-      display: inline-block;
-    }
-    .predicted-score {
-      font-size: 1.75rem;
-      font-weight: bold;
-      color: black;
-      border-radius: 10px;
-      padding: 0.5rem 1rem;
-    }
-    .score-1 { background-color: rgb(167, 6, 6); color: white; }
-    .score-2 { background-color: rgb(112, 58, 58); color: white; }
-    .score-3 { background-color: rgb(15, 123, 107); color: white; }
-    .score-4 { background-color: rgb(60, 107, 234); color: white; }
-    .score-5 { background-color: purple; color: white; }
-    .input-section {
-      flex: 1;
-      padding-right: 1rem;
-    }
-    .slider-label {
-      font-size: 0.95rem;
-    }
-    .layout-row {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      gap: 1rem;
-=======
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AP CSP Score Calculator</title>
@@ -280,40 +229,9 @@ permalink: /exam-predictor
       .number-input {
         width: 100%;
       }
->>>>>>> Stashed changes
     }
   </style>
 
-<<<<<<< Updated upstream
-  <div class="layout-row">
-    <div class="input-section">
-      <div class="mb-4">
-        <label for="mcqScore" class="form-label slider-label"><strong>Section I: Multiple-Choice</strong></label>
-        <input type="range" class="form-range" id="mcqScore" min="0" max="70" value="60" oninput="updateScores()">
-        <input type="number" id="mcqInput" min="0" max="70" value="60" class="form-control" oninput="syncSlider('mcq')">
-      </div>
-
-      <div class="mb-4">
-        <label for="frqScore" class="form-label slider-label"><strong>Create Performance Task</strong></label>
-        <input type="range" class="form-range" id="frqScore" min="0" max="6" value="6" oninput="updateScores()">
-        <input type="number" id="frqInput" min="0" max="6" value="6" class="form-control" oninput="syncSlider('frq')">
-      </div>
-    </div>
-
-    <div class="score-box">
-      <p>MCQ Score</p>
-      <div class="score-value" id="mcqDisplay">60</div>
-      <p>FRQ Score</p>
-      <div class="score-value" id="frqDisplay">30</div>
-      <p>Total Composite Score</p>
-      <div class="score-value" id="compositeDisplay">90/100</div>
-      <p>Predicted AP&reg; Score</p>
-      <div class="predicted-score score-5" id="predictedScore">5</div>
-    </div>
-  </div>
-
-  <script>
-=======
 <div class="container">
     <h1>AP® Computer Science Principles</h1>
     
@@ -377,7 +295,6 @@ permalink: /exam-predictor
       1: "No recommendation"
     };
 
->>>>>>> Stashed changes
     function updateScores() {
       const mcqRaw = parseInt(document.getElementById("mcqScore").value);
       const frqRaw = parseInt(document.getElementById("frqScore").value);
@@ -398,16 +315,9 @@ permalink: /exam-predictor
       else if (total >= 81) apScore = 4;
       else if (total >= 42) apScore = 3;
       else if (total >= 30) apScore = 2;
-<<<<<<< Updated upstream
-
-      const predictedEl = document.getElementById("predictedScore");
-      predictedEl.textContent = apScore;
-      predictedEl.className = `predicted-score score-${apScore}`;
-=======
       
       document.getElementById("predictedScore").textContent = apScore;
       document.getElementById("scoreInterpretation").textContent = interpretations[apScore];
->>>>>>> Stashed changes
     }
 
     function syncSlider(type) {
