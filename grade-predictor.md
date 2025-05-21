@@ -572,288 +572,295 @@ permalink: /grade-predictor
     </div>
   </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const calculateBtn = document.getElementById('calculate-btn');
-      const resetBtn = document.getElementById('reset-btn');
-      const resultsCard = document.getElementById('results-card');
-      const progressRing = document.getElementById('progress-ring');
-      const percentLabel = document.getElementById('percentage-label');
-      const gradeFeedback = document.getElementById('grade-feedback');
-      const avgRating = document.getElementById('avg-rating');
-      const letterGrade = document.getElementById('letter-grade');
-      const skillsBreakdown = document.getElementById('skills-breakdown');
-      const chartYLabels = document.querySelector('.chart-y-labels');
+<script type="module">
+    import { pythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    const API_URL = 'http://127.0.0.1:8101/api/user';
+    const UID = 'janedoe123'; // TODO: Replace this dynamically based on logged-in user context
 
-      const circumference = 2 * Math.PI * 65;
-      progressRing.style.strokeDasharray = circumference;
+    const calculateBtn = document.getElementById('calculate-btn');
+    const resetBtn = document.getElementById('reset-btn');
+    const resultsCard = document.getElementById('results-card');
+    const progressRing = document.getElementById('progress-ring');
+    const percentLabel = document.getElementById('percentage-label');
+    const gradeFeedback = document.getElementById('grade-feedback');
+    const avgRating = document.getElementById('avg-rating');
+    const letterGrade = document.getElementById('letter-grade');
+    const skillsBreakdown = document.getElementById('skills-breakdown');
+    const chartYLabels = document.querySelector('.chart-y-labels');
 
-      // Add Y-axis labels for the chart
-      const addYAxisLabels = () => {
-        // Clear existing labels
-        chartYLabels.innerHTML = '';
-        
-        // Add labels for Sustain, Grow, Nurture
-        const levels = [
-          { name: 'Sustain', position: 25, color: '#238636' },
-          { name: 'Grow', position: 50, color: '#bf8700' },
-          { name: 'Nurture', position: 75, color: '#da3633' }
-        ];
-        
-        levels.forEach(level => {
-          // Create level marker line
-          const marker = document.createElement('div');
-          marker.className = 'level-marker';
-          marker.style.top = `${level.position}%`;
-          
-          // Create level label
-          const label = document.createElement('div');
-          label.className = 'level-label';
-          label.textContent = level.name;
-          label.style.top = `${level.position}%`;
-          label.style.color = level.color;
-          
-          chartYLabels.appendChild(marker);
-          chartYLabels.appendChild(label);
-        });
-      };
-      
-      addYAxisLabels();
+    const circumference = 2 * Math.PI * 65;
+    progressRing.style.strokeDasharray = circumference;
 
-      const masteryCheckboxes = document.querySelectorAll('.mastery-checkbox');
-      masteryCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', function () {
-          const skill = this.dataset.skill;
-          const ratingSelect = document.querySelector(`.skill-rating[data-skill="${skill}"]`);
-          if (this.checked) {
-            ratingSelect.value = "5";
-            ratingSelect.disabled = true;
-          } else {
-            ratingSelect.disabled = false;
-          }
-        });
+    const addYAxisLabels = () => {
+      chartYLabels.innerHTML = '';
+      const levels = [
+        { name: 'Sustain', position: 25, color: '#28a745' },
+        { name: 'Grow', position: 50, color: '#ffc107' },
+        { name: 'Nurture', position: 75, color: '#dc3545' }
+      ];
+      levels.forEach(level => {
+        const marker = document.createElement('div');
+        marker.className = 'level-marker';
+        marker.style.top = `${level.position}%`;
+        const label = document.createElement('div');
+        label.className = 'level-label';
+        label.textContent = level.name;
+        label.style.top = `${level.position}%`;
+        label.style.color = level.color;
+        chartYLabels.appendChild(marker);
+        chartYLabels.appendChild(label);
       });
+    };
 
-      calculateBtn.addEventListener('click', () => {
-        const ratings = document.querySelectorAll('.skill-rating');
-        const checkboxes = document.querySelectorAll('.mastery-checkbox');
-        let totalScore = 0;
-        let maxScore = ratings.length * 5;
-        let skillsData = [];
+    addYAxisLabels();
 
-        ratings.forEach((r, index) => {
-          const skillName = r.dataset.skill;
-          const rating = parseInt(r.value);
-          const isMastered = checkboxes[index].checked;
-          const ratio = (rating / 5).toFixed(1);
-          
-          totalScore += rating;
-          
-          skillsData.push({
-            skill: skillName,
-            mastered: isMastered,
-            rating: rating,
-            ratio: ratio
-          });
-        });
-
-        const avgRatingValue = (totalScore / ratings.length).toFixed(1);
-        const percentage = Math.round((totalScore / maxScore) * 100);
-        const offset = circumference * (1 - percentage / 100);
-        
-        // Update the ring and percentage
-        progressRing.style.strokeDashoffset = offset;
-        percentLabel.textContent = `${percentage}%`;
-        
-        // Update average rating
-        avgRating.textContent = avgRatingValue;
-        
-        // Determine letter grade
-        let grade = 'F';
-        let feedback = 'Immediate intervention is required to pass this course.';
-        let badgeColor = 'bg-danger';
-        
-        if (percentage >= 90) {
-          grade = 'A';
-          feedback = 'Excellent work! Keep up the great performance.';
-          badgeColor = 'bg-success';
-        } else if (percentage >= 80) {
-          grade = 'B';
-          feedback = 'Good work! Continue focusing on improvement.';
-          badgeColor = 'bg-info';
-        } else if (percentage >= 70) {
-          grade = 'C';
-          feedback = 'Satisfactory work. Consider seeking additional support.';
-          badgeColor = 'bg-warning text-dark';
-        } else if (percentage >= 60) {
-          grade = 'D';
-          feedback = 'You need to significantly improve to pass this course.';
-          badgeColor = 'bg-danger';
-        }
-        
-        letterGrade.textContent = grade;
-        letterGrade.className = `badge ${badgeColor}`;
-        gradeFeedback.textContent = feedback;
-        
-        // Dynamic ring color - updated for dark mode
-        let color = '#da3633'; // red for F
-        if (percentage >= 90) color = '#238636'; // green for A
-        else if (percentage >= 80) color = '#1f6feb'; // blue for B
-        else if (percentage >= 70) color = '#bf8700'; // yellow for C
-        else if (percentage >= 60) color = '#fb8500'; // orange for D
-        progressRing.style.stroke = color;
-        
-        // Populate skills breakdown table
-        skillsBreakdown.innerHTML = '';
-        skillsData.forEach(skill => {
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td>${skill.skill}</td>
-            <td>${skill.mastered ? '✓' : '—'}</td>
-            <td>${skill.rating}</td>
-            <td>${skill.ratio}</td>
-          `;
-          skillsBreakdown.appendChild(row);
-        });
-        
-        // Add average row
-        const avgRow = document.createElement('tr');
-        avgRow.classList.add('fw-bold', 'table-active');
-        avgRow.innerHTML = `
-          <td>Average</td>
-          <td>${skillsData.filter(s => s.mastered).length}/${skillsData.length}</td>
-          <td>${avgRatingValue}</td>
-          <td>${(avgRatingValue/5).toFixed(1)}</td>
-        `;
-        skillsBreakdown.appendChild(avgRow);
-
-        resultsCard.style.display = 'block';
-        
-        // Scroll to results
-        resultsCard.scrollIntoView({behavior: 'smooth'});
-      });
-
-      resetBtn.addEventListener('click', () => {
-        document.getElementById('grade-predictor-form').reset();
-        document.querySelectorAll('.skill-rating').forEach(r => r.disabled = false);
-        resultsCard.style.display = 'none';
-      });
-      
-      // Function to get bar color based on value - updated for dark mode
-      const getBarColor = (value) => {
-        if (value >= 70) return '#238636'; // green - Sustain
-        if (value >= 40) return '#bf8700'; // yellow - Grow
-        return '#da3633'; // red - Nurture
-      };
-      
-      // Individual Attributes Chart
-      const ctx = document.getElementById('attributesChart').getContext('2d');
-      
-      // Data from the image
-      const attributesData = {
-        labels: ['Academic Attributes', 'Help Seeking', 'Persistence', 'Procrastination', 'Time Management', 'Focus Of Control'],
-        datasets: [{
-          data: [70, 40, 70, 50, 85, 65],
-          backgroundColor: function(context) {
-            const value = context.dataset.data[context.dataIndex];
-            return getBarColor(value);
-          },
-          borderWidth: 0,
-          borderRadius: 4,
-          barPercentage: 0.6,
-          categoryPercentage: 0.8
-        }]
-      };
-      
-      const chart = new Chart(ctx, {
-        type: 'bar',
-        data: attributesData,
-        options: {
-          indexAxis: 'y',
-          plugins: {
-            legend: {
-              display: false
-            },
-            tooltip: {
-              backgroundColor: 'rgba(22, 27, 34, 0.95)',
-              titleColor: '#f0f6fc',
-              bodyColor: '#e6edf3',
-              borderColor: '#30363d',
-              borderWidth: 1,
-              titleFont: {
-                size: 14,
-                weight: 'bold'
-              },
-              bodyFont: {
-                size: 13
-              },
-              padding: 12,
-              callbacks: {
-                label: function(context) {
-                  const value = context.raw;
-                  let status = 'Nurture';
-                  if (value >= 70) status = 'Sustain';
-                  else if (value >= 40) status = 'Grow';
-                  return `${value}% (${status})`;
-                }
-              }
-            }
-          },
-          scales: {
-            x: {
-              beginAtZero: true,
-              max: 100,
-              grid: {
-                color: function(context) {
-                  if (context.tick.value === 40 || context.tick.value === 70) {
-                    return 'rgba(139, 148, 158, 0.3)';
-                  }
-                  return 'rgba(48, 54, 61, 0.5)';
-                },
-                lineWidth: function(context) {
-                  if (context.tick.value === 40 || context.tick.value === 70) {
-                    return 1;
-                  }
-                  return 0.5;
-                }
-              },
-              ticks: {
-                callback: function(value) {
-                  return value + '%';
-                },
-                font: {
-                  size: 11
-                },
-                color: '#8b949e',
-                padding: 10
-              }
-            },
-            y: {
-              grid: {
-                display: false
-              },
-              ticks: {
-                font: {
-                  size: 12,
-                  weight: 'bold'
-                },
-                color: '#e6edf3',
-                padding: 12
-              }
-            }
-          },
-          responsive: true,
-          maintainAspectRatio: false,
-          layout: {
-            padding: {
-              top: 20,
-              right: 25,
-              bottom: 10,
-              left: 10
-            }
-          }
+    const masteryCheckboxes = document.querySelectorAll('.mastery-checkbox');
+    masteryCheckboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', function () {
+        const skill = this.dataset.skill;
+        const ratingSelect = document.querySelector(`.skill-rating[data-skill="${skill}"]`);
+        if (this.checked) {
+          ratingSelect.value = "5";
+          ratingSelect.disabled = true;
+        } else {
+          ratingSelect.disabled = false;
         }
       });
     });
-  </script>
+
+    // Fetch user data (GET request)
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch(`${API_URL}?uid=${UID}`);
+        const data = await response.json();
+        console.log('Fetched user data:', data);
+        // You can use `data.grade_data` to prefill fields if needed
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUserData(); // Call on page load
+
+    calculateBtn.addEventListener('click', async () => {
+      const ratings = document.querySelectorAll('.skill-rating');
+      const checkboxes = document.querySelectorAll('.mastery-checkbox');
+      let totalScore = 0;
+      let maxScore = ratings.length * 5;
+      let skillsData = [];
+
+      let gradeData = {};
+      ratings.forEach((r, index) => {
+        const skillName = r.dataset.skill;
+        const rating = parseInt(r.value);
+        const isMastered = checkboxes[index].checked;
+        const ratio = (rating / 5).toFixed(1);
+        totalScore += rating;
+        skillsData.push({
+          skill: skillName,
+          mastered: isMastered,
+          rating: rating,
+          ratio: ratio
+        });
+        gradeData[skillName] = rating;
+      });
+
+      const avgRatingValue = (totalScore / ratings.length).toFixed(1);
+      const percentage = Math.round((totalScore / maxScore) * 100);
+      const offset = circumference * (1 - percentage / 100);
+      progressRing.style.strokeDashoffset = offset;
+      percentLabel.textContent = `${percentage}%`;
+      avgRating.textContent = avgRatingValue;
+
+      let grade = 'F';
+      let feedback = 'Immediate intervention is required to pass this course.';
+      let badgeColor = 'bg-danger';
+
+      if (percentage >= 90) {
+        grade = 'A';
+        feedback = 'Excellent work! Keep up the great performance.';
+        badgeColor = 'bg-success';
+      } else if (percentage >= 80) {
+        grade = 'B';
+        feedback = 'Good work! Continue focusing on improvement.';
+        badgeColor = 'bg-info';
+      } else if (percentage >= 70) {
+        grade = 'C';
+        feedback = 'Satisfactory work. Consider seeking additional support.';
+        badgeColor = 'bg-warning text-dark';
+      } else if (percentage >= 60) {
+        grade = 'D';
+        feedback = 'You need to significantly improve to pass this course.';
+        badgeColor = 'bg-danger';
+      }
+
+      letterGrade.textContent = grade;
+      letterGrade.className = `badge ${badgeColor}`;
+      gradeFeedback.textContent = feedback;
+
+      let color = '#dc3545';
+      if (percentage >= 90) color = '#28a745';
+      else if (percentage >= 80) color = '#198754';
+      else if (percentage >= 70) color = '#ffc107';
+      else if (percentage >= 60) color = '#fd7e14';
+      progressRing.style.stroke = color;
+
+      skillsBreakdown.innerHTML = '';
+      skillsData.forEach(skill => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${skill.skill}</td>
+          <td>${skill.mastered ? '✓' : '—'}</td>
+          <td>${skill.rating}</td>
+          <td>${skill.ratio}</td>
+        `;
+        skillsBreakdown.appendChild(row);
+      });
+
+      const avgRow = document.createElement('tr');
+      avgRow.classList.add('fw-bold', 'table-active');
+      avgRow.innerHTML = `
+        <td>Average</td>
+        <td>${skillsData.filter(s => s.mastered).length}/${skillsData.length}</td>
+        <td>${avgRatingValue}</td>
+        <td>${(avgRatingValue / 5).toFixed(1)}</td>
+      `;
+      skillsBreakdown.appendChild(avgRow);
+
+      resultsCard.style.display = 'block';
+      resultsCard.scrollIntoView({ behavior: 'smooth' });
+
+      // Prepare full user update payload
+      const updatedUser = {
+        uid: UID,
+        name: "Jane Doe", // Optional: update dynamically if needed
+        password: "SecurePass123!", // Required by backend, ensure available
+        pfp: "janedoe.png",
+        car: "janecar.png",
+        role: "Student",
+        grade_data: {
+          grade: grade,
+          ...gradeData
+        }
+      };
+
+      // PUT request to update user
+      try {
+        const response = await fetch(`${pythonURI}/api/user`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(updatedUser)
+        });
+        const result = await response.json();
+        console.log('Update successful:', result);
+      } catch (error) {
+        console.error('Error updating user:', error);
+      }
+    });
+
+    resetBtn.addEventListener('click', () => {
+      document.getElementById('grade-predictor-form').reset();
+      document.querySelectorAll('.skill-rating').forEach(r => r.disabled = false);
+      resultsCard.style.display = 'none';
+    });
+
+    const getBarColor = (value) => {
+      if (value >= 70) return '#28a745';
+      if (value >= 40) return '#ffc107';
+      return '#dc3545';
+    };
+
+    const ctx = document.getElementById('attributesChart').getContext('2d');
+    const attributesData = {
+      labels: ['Academic Attributes', 'Help Seeking', 'Persistence', 'Procrastination', 'Time Management', 'Locus Of Control'],
+      datasets: [{
+        data: [70, 40, 70, 50, 85, 65],
+        backgroundColor: function (context) {
+          const value = context.dataset.data[context.dataIndex];
+          return getBarColor(value);
+        },
+        borderWidth: 0,
+        borderRadius: 4,
+        barPercentage: 0.6,
+        categoryPercentage: 0.8
+      }]
+    };
+
+    const chart = new Chart(ctx, {
+      type: 'bar',
+      data: attributesData,
+      options: {
+        indexAxis: 'y',
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: 'rgba(0,0,0,0.8)',
+            titleFont: { size: 14, weight: 'bold' },
+            bodyFont: { size: 13 },
+            padding: 12,
+            callbacks: {
+              label: function (context) {
+                const value = context.raw;
+                let status = 'Nurture';
+                if (value >= 70) status = 'Sustain';
+                else if (value >= 40) status = 'Grow';
+                return `${value}% (${status})`;
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            beginAtZero: true,
+            max: 100,
+            grid: {
+              color: function (context) {
+                if (context.tick.value === 40 || context.tick.value === 70) {
+                  return 'rgba(0,0,0,0.15)';
+                }
+                return 'rgba(0,0,0,0.05)';
+              },
+              lineWidth: function (context) {
+                if (context.tick.value === 40 || context.tick.value === 70) {
+                  return 1;
+                }
+                return 0.5;
+              }
+            },
+            ticks: {
+              callback: function (value) {
+                return value + '%';
+              },
+              font: { size: 11 },
+              color: '#666',
+              padding: 10
+            }
+          },
+          y: {
+            grid: { display: false },
+            ticks: {
+              font: { size: 12, weight: 'bold' },
+              color: '#333',
+              padding: 12
+            }
+          }
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        layout: {
+          padding: {
+            top: 20,
+            right: 25,
+            bottom: 10,
+            left: 10
+          }
+        }
+      }
+    });
+  });
+</script>
 </body>
