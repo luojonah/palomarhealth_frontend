@@ -10,10 +10,28 @@ permalink: /grade-predictor
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Grade Predictor</title>
+  <title>Grade Predictor - Dark Mode</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
   <style>
+    /* Dark mode theme */
+    body {
+      background-color: #0d1117;
+      color: #e6edf3;
+    }
+
+    .container {
+      background-color: #0d1117;
+    }
+
+    h2, h5, h6 {
+      color: #f0f6fc;
+    }
+
+    p {
+      color: #8b949e;
+    }
+
     #grade-ring-container {
       position: relative;
       width: 150px;
@@ -28,10 +46,11 @@ permalink: /grade-predictor
       transform: translate(-50%, -50%);
       font-size: 1.5rem;
       font-weight: bold;
+      color: #f0f6fc;
     }
 
     svg circle.bg {
-      stroke: #e6e6e6;
+      stroke: #30363d;
     }
     
     .chart-container {
@@ -42,21 +61,30 @@ permalink: /grade-predictor
     
     .card {
       margin-bottom: 2rem;
-      box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+      box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.3);
       border-radius: 0.5rem;
-      border: none;
+      border: 1px solid #30363d;
+      background-color: #161b22;
     }
     
     .card-header {
       border-top-left-radius: 0.5rem !important;
       border-top-right-radius: 0.5rem !important;
+      background-color: #21262d !important;
+      border-bottom: 1px solid #30363d;
+      color: #f0f6fc;
+    }
+
+    .card-body {
+      background-color: #161b22;
+      color: #e6edf3;
     }
     
     .level-marker {
       position: absolute;
       left: 0;
       width: 100%;
-      border-bottom: 1px dashed rgba(0,0,0,0.2);
+      border-bottom: 1px dashed rgba(255,255,255,0.2);
       z-index: 0;
     }
     
@@ -66,7 +94,7 @@ permalink: /grade-predictor
       transform: translateY(-50%);
       font-weight: bold;
       font-size: 0.85rem;
-      color: #555;
+      color: #8b949e;
     }
     
     .chart-y-labels {
@@ -84,14 +112,128 @@ permalink: /grade-predictor
       padding-right: 15px;
     }
     
-    table.table th, table.table td {
+    /* Dark mode table styles */
+    .table {
+      color: #e6edf3;
+      background-color: #161b22;
+    }
+
+    .table th {
+      background-color: #21262d;
+      color: #f0f6fc;
+      border-color: #30363d;
+    }
+
+    .table td {
+      border-color: #30363d;
+      background-color: #161b22;
+    }
+
+    .table-light {
+      background-color: #21262d !important;
+      color: #f0f6fc !important;
+    }
+
+    .table-active {
+      background-color: #21262d !important;
+      color: #f0f6fc !important;
+    }
+
+    .table-bordered {
+      border-color: #30363d;
+    }
+
+    .table th, .table td {
       vertical-align: middle;
+    }
+    
+    /* Form controls dark mode */
+    .form-select {
+      background-color: #21262d;
+      color: #e6edf3;
+      border-color: #30363d;
+    }
+
+    .form-select:focus {
+      background-color: #21262d;
+      color: #e6edf3;
+      border-color: #58a6ff;
+      box-shadow: 0 0 0 0.25rem rgba(88, 166, 255, 0.25);
+    }
+
+    .form-select option {
+      background-color: #21262d;
+      color: #e6edf3;
+    }
+
+    .form-check-input {
+      background-color: #21262d;
+      border-color: #30363d;
+    }
+
+    .form-check-input:checked {
+      background-color: #238636;
+      border-color: #238636;
+    }
+
+    .form-check-input:focus {
+      border-color: #58a6ff;
+      box-shadow: 0 0 0 0.25rem rgba(88, 166, 255, 0.25);
+    }
+
+    /* Button styles */
+    .btn-primary {
+      background-color: #238636;
+      border-color: #238636;
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background-color: #2ea043;
+      border-color: #2ea043;
+    }
+
+    .btn-primary:focus {
+      box-shadow: 0 0 0 0.25rem rgba(35, 134, 54, 0.5);
+    }
+
+    .btn-outline-secondary {
+      color: #8b949e;
+      border-color: #30363d;
+    }
+
+    .btn-outline-secondary:hover {
+      background-color: #30363d;
+      border-color: #30363d;
+      color: #f0f6fc;
+    }
+
+    /* Badge styles */
+    .badge.bg-primary {
+      background-color: #238636 !important;
+    }
+
+    .badge.bg-success {
+      background-color: #238636 !important;
+    }
+
+    .badge.bg-info {
+      background-color: #1f6feb !important;
+    }
+
+    .badge.bg-warning {
+      background-color: #bf8700 !important;
+      color: #ffffff !important;
+    }
+
+    .badge.bg-danger {
+      background-color: #da3633 !important;
     }
     
     .progress-ring-title {
       margin-bottom: 1rem;
       font-weight: 600;
-      color: #495057;
+      color: #f0f6fc;
     }
     
     .chart-area {
@@ -110,6 +252,7 @@ permalink: /grade-predictor
       display: flex;
       align-items: center;
       margin-right: 15px;
+      color: #e6edf3;
     }
     
     .legend-color {
@@ -117,6 +260,37 @@ permalink: /grade-predictor
       height: 12px;
       margin-right: 5px;
       border-radius: 50%;
+    }
+
+    /* Text colors */
+    .text-muted {
+      color: #8b949e !important;
+    }
+
+    .fw-bold {
+      color: #f0f6fc;
+    }
+
+    .small {
+      color: #8b949e;
+    }
+
+    /* Scrollbar styling for dark mode */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #161b22;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #30363d;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #484f58;
     }
   </style>
 </head>
@@ -317,7 +491,7 @@ permalink: /grade-predictor
             <div id="grade-ring-container">
               <svg width="150" height="150">
                 <circle class="bg" cx="75" cy="75" r="65" stroke-width="15" fill="none" />
-                <circle id="progress-ring" cx="75" cy="75" r="65" stroke="#007bff" stroke-width="15" fill="none"
+                <circle id="progress-ring" cx="75" cy="75" r="65" stroke="#238636" stroke-width="15" fill="none"
                         stroke-linecap="round" stroke-dasharray="408" stroke-dashoffset="408"
                         transform="rotate(-90 75 75)" />
               </svg>
@@ -421,9 +595,9 @@ permalink: /grade-predictor
         
         // Add labels for Sustain, Grow, Nurture
         const levels = [
-          { name: 'Sustain', position: 25, color: '#28a745' },
-          { name: 'Grow', position: 50, color: '#ffc107' },
-          { name: 'Nurture', position: 75, color: '#dc3545' }
+          { name: 'Sustain', position: 25, color: '#238636' },
+          { name: 'Grow', position: 50, color: '#bf8700' },
+          { name: 'Nurture', position: 75, color: '#da3633' }
         ];
         
         levels.forEach(level => {
@@ -521,12 +695,12 @@ permalink: /grade-predictor
         letterGrade.className = `badge ${badgeColor}`;
         gradeFeedback.textContent = feedback;
         
-        // Dynamic ring color
-        let color = '#dc3545'; // red for F
-        if (percentage >= 90) color = '#28a745'; // green for A
-        else if (percentage >= 80) color = '#198754'; // green for B
-        else if (percentage >= 70) color = '#ffc107'; // yellow for C
-        else if (percentage >= 60) color = '#fd7e14'; // orange for D
+        // Dynamic ring color - updated for dark mode
+        let color = '#da3633'; // red for F
+        if (percentage >= 90) color = '#238636'; // green for A
+        else if (percentage >= 80) color = '#1f6feb'; // blue for B
+        else if (percentage >= 70) color = '#bf8700'; // yellow for C
+        else if (percentage >= 60) color = '#fb8500'; // orange for D
         progressRing.style.stroke = color;
         
         // Populate skills breakdown table
@@ -565,11 +739,11 @@ permalink: /grade-predictor
         resultsCard.style.display = 'none';
       });
       
-      // Function to get bar color based on value
+      // Function to get bar color based on value - updated for dark mode
       const getBarColor = (value) => {
-        if (value >= 70) return '#28a745'; // green - Sustain
-        if (value >= 40) return '#ffc107'; // yellow - Grow
-        return '#dc3545'; // red - Nurture
+        if (value >= 70) return '#238636'; // green - Sustain
+        if (value >= 40) return '#bf8700'; // yellow - Grow
+        return '#da3633'; // red - Nurture
       };
       
       // Individual Attributes Chart
@@ -601,7 +775,11 @@ permalink: /grade-predictor
               display: false
             },
             tooltip: {
-              backgroundColor: 'rgba(0,0,0,0.8)',
+              backgroundColor: 'rgba(22, 27, 34, 0.95)',
+              titleColor: '#f0f6fc',
+              bodyColor: '#e6edf3',
+              borderColor: '#30363d',
+              borderWidth: 1,
               titleFont: {
                 size: 14,
                 weight: 'bold'
@@ -628,9 +806,9 @@ permalink: /grade-predictor
               grid: {
                 color: function(context) {
                   if (context.tick.value === 40 || context.tick.value === 70) {
-                    return 'rgba(0,0,0,0.15)';
+                    return 'rgba(139, 148, 158, 0.3)';
                   }
-                  return 'rgba(0,0,0,0.05)';
+                  return 'rgba(48, 54, 61, 0.5)';
                 },
                 lineWidth: function(context) {
                   if (context.tick.value === 40 || context.tick.value === 70) {
@@ -646,7 +824,7 @@ permalink: /grade-predictor
                 font: {
                   size: 11
                 },
-                color: '#666',
+                color: '#8b949e',
                 padding: 10
               }
             },
@@ -659,7 +837,7 @@ permalink: /grade-predictor
                   size: 12,
                   weight: 'bold'
                 },
-                color: '#333',
+                color: '#e6edf3',
                 padding: 12
               }
             }
