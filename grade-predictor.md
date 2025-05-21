@@ -35,8 +35,9 @@ permalink: /grade-predictor
     }
     
     .chart-container {
-      height: 300px;
+      height: 400px;
       margin-top: 2rem;
+      width: 100%;
     }
     
     .card {
@@ -71,13 +72,16 @@ permalink: /grade-predictor
     .chart-y-labels {
       position: relative;
       height: 100%;
-      margin-right: 10px;
+      margin-right: 20px;
+      width: 70px;
     }
     
     .chart-with-labels {
       display: flex;
-      height: 300px;
+      height: 400px;
       position: relative;
+      margin-top: 20px;
+      padding-right: 15px;
     }
     
     table.table th, table.table td {
@@ -88,6 +92,31 @@ permalink: /grade-predictor
       margin-bottom: 1rem;
       font-weight: 600;
       color: #495057;
+    }
+    
+    .chart-area {
+      flex-grow: 1;
+      position: relative;
+    }
+    
+    .chart-legend {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      padding: 0 15px;
+    }
+    
+    .legend-item {
+      display: flex;
+      align-items: center;
+      margin-right: 15px;
+    }
+    
+    .legend-color {
+      width: 12px;
+      height: 12px;
+      margin-right: 5px;
+      border-radius: 50%;
     }
   </style>
 </head>
@@ -336,12 +365,33 @@ permalink: /grade-predictor
         <small class="text-muted">Completed 1 time | Last completed 5/20/25 9:51 PM</small>
       </div>
       <div class="card-body">
-        <div class="chart-with-labels">
-          <div class="chart-y-labels">
-            <!-- Y-axis labels will be added by JavaScript -->
-          </div>
-          <div class="chart-container">
-            <canvas id="attributesChart"></canvas>
+        <div class="row">
+          <div class="col-12">
+            <div class="chart-with-labels">
+              <div class="chart-y-labels">
+                <!-- Y-axis labels will be added by JavaScript -->
+              </div>
+              <div class="chart-area">
+                <div class="chart-container">
+                  <canvas id="attributesChart"></canvas>
+                </div>
+              </div>
+            </div>
+            
+            <div class="chart-legend mt-4">
+              <div class="legend-item">
+                <div class="legend-color bg-danger"></div>
+                <span>Nurture (0-39%)</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-color bg-warning"></div>
+                <span>Grow (40-69%)</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-color bg-success"></div>
+                <span>Sustain (70-100%)</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -371,9 +421,9 @@ permalink: /grade-predictor
         
         // Add labels for Sustain, Grow, Nurture
         const levels = [
-          { name: 'Sustain', position: 25 },
-          { name: 'Grow', position: 50 },
-          { name: 'Nurture', position: 75 }
+          { name: 'Sustain', position: 25, color: '#28a745' },
+          { name: 'Grow', position: 50, color: '#ffc107' },
+          { name: 'Nurture', position: 75, color: '#dc3545' }
         ];
         
         levels.forEach(level => {
@@ -387,6 +437,7 @@ permalink: /grade-predictor
           label.className = 'level-label';
           label.textContent = level.name;
           label.style.top = `${level.position}%`;
+          label.style.color = level.color;
           
           chartYLabels.appendChild(marker);
           chartYLabels.appendChild(label);
@@ -514,6 +565,13 @@ permalink: /grade-predictor
         resultsCard.style.display = 'none';
       });
       
+      // Function to get bar color based on value
+      const getBarColor = (value) => {
+        if (value >= 70) return '#28a745'; // green - Sustain
+        if (value >= 40) return '#ffc107'; // yellow - Grow
+        return '#dc3545'; // red - Nurture
+      };
+      
       // Individual Attributes Chart
       const ctx = document.getElementById('attributesChart').getContext('2d');
       
@@ -522,9 +580,14 @@ permalink: /grade-predictor
         labels: ['Academic Attributes', 'Help Seeking', 'Persistence', 'Procrastination', 'Time Management', 'Locus Of Control'],
         datasets: [{
           data: [70, 40, 70, 50, 85, 65],
-          backgroundColor: '#5a8ca8',
+          backgroundColor: function(context) {
+            const value = context.dataset.data[context.dataIndex];
+            return getBarColor(value);
+          },
           borderWidth: 0,
-          barThickness: 40,
+          borderRadius: 4,
+          barPercentage: 0.6,
+          categoryPercentage: 0.8
         }]
       };
       
@@ -532,61 +595,85 @@ permalink: /grade-predictor
         type: 'bar',
         data: attributesData,
         options: {
-          indexAxis: 'x',
+          indexAxis: 'y',
           plugins: {
             legend: {
               display: false
             },
             tooltip: {
+              backgroundColor: 'rgba(0,0,0,0.8)',
+              titleFont: {
+                size: 14,
+                weight: 'bold'
+              },
+              bodyFont: {
+                size: 13
+              },
+              padding: 12,
               callbacks: {
                 label: function(context) {
                   const value = context.raw;
                   let status = 'Nurture';
                   if (value >= 70) status = 'Sustain';
                   else if (value >= 40) status = 'Grow';
-                  return `${value}/100 (${status})`;
+                  return `${value}% (${status})`;
                 }
               }
             }
           },
           scales: {
-            y: {
+            x: {
               beginAtZero: true,
               max: 100,
               grid: {
                 color: function(context) {
-                  if (context.tick.value === 33 || context.tick.value === 66) {
-                    return 'rgba(0,0,0,0.2)';
+                  if (context.tick.value === 40 || context.tick.value === 70) {
+                    return 'rgba(0,0,0,0.15)';
                   }
-                  return 'rgba(0,0,0,0.1)';
+                  return 'rgba(0,0,0,0.05)';
                 },
                 lineWidth: function(context) {
-                  if (context.tick.value === 33 || context.tick.value === 66) {
-                    return 2;
+                  if (context.tick.value === 40 || context.tick.value === 70) {
+                    return 1;
                   }
-                  return 1;
-                },
-                borderDash: function(context) {
-                  if (context.tick.value === 33 || context.tick.value === 66) {
-                    return [5, 5];
-                  }
-                  return undefined;
+                  return 0.5;
                 }
               },
               ticks: {
                 callback: function(value) {
                   return value + '%';
-                }
+                },
+                font: {
+                  size: 11
+                },
+                color: '#666',
+                padding: 10
               }
             },
-            x: {
+            y: {
               grid: {
                 display: false
+              },
+              ticks: {
+                font: {
+                  size: 12,
+                  weight: 'bold'
+                },
+                color: '#333',
+                padding: 12
               }
             }
           },
           responsive: true,
           maintainAspectRatio: false,
+          layout: {
+            padding: {
+              top: 20,
+              right: 25,
+              bottom: 10,
+              left: 10
+            }
+          }
         }
       });
     });
