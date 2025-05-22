@@ -531,45 +531,6 @@ permalink: /grade-predictor
         </div>
       </div>
     </div>
-    
-    <!-- Individual Attributes Section -->
-    <div class="card shadow mt-5">
-      <div class="card-header bg-light">
-        <h5 class="mb-0">Individual Attributes</h5>
-        <small class="text-muted">Completed 1 time | Last completed 5/20/25 9:51 PM</small>
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-12">
-            <div class="chart-with-labels">
-              <div class="chart-y-labels">
-                <!-- Y-axis labels will be added by JavaScript -->
-              </div>
-              <div class="chart-area">
-                <div class="chart-container">
-                  <canvas id="attributesChart"></canvas>
-                </div>
-              </div>
-            </div>
-            
-            <div class="chart-legend mt-4">
-              <div class="legend-item">
-                <div class="legend-color bg-danger"></div>
-                <span>Nurture (0-39%)</span>
-              </div>
-              <div class="legend-item">
-                <div class="legend-color bg-warning"></div>
-                <span>Grow (40-69%)</span>
-              </div>
-              <div class="legend-item">
-                <div class="legend-color bg-success"></div>
-                <span>Sustain (70-100%)</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 
 <script type="module">
@@ -591,29 +552,6 @@ permalink: /grade-predictor
 
     const circumference = 2 * Math.PI * 65;
     progressRing.style.strokeDasharray = circumference;
-
-    const addYAxisLabels = () => {
-      chartYLabels.innerHTML = '';
-      const levels = [
-        { name: 'Sustain', position: 25, color: '#28a745' },
-        { name: 'Grow', position: 50, color: '#ffc107' },
-        { name: 'Nurture', position: 75, color: '#dc3545' }
-      ];
-      levels.forEach(level => {
-        const marker = document.createElement('div');
-        marker.className = 'level-marker';
-        marker.style.top = `${level.position}%`;
-        const label = document.createElement('div');
-        label.className = 'level-label';
-        label.textContent = level.name;
-        label.style.top = `${level.position}%`;
-        label.style.color = level.color;
-        chartYLabels.appendChild(marker);
-        chartYLabels.appendChild(label);
-      });
-    };
-
-    addYAxisLabels();
 
     const masteryCheckboxes = document.querySelectorAll('.mastery-checkbox');
     masteryCheckboxes.forEach(checkbox => {
@@ -782,94 +720,6 @@ permalink: /grade-predictor
       if (value >= 40) return '#ffc107';
       return '#dc3545';
     };
-
-    const ctx = document.getElementById('attributesChart').getContext('2d');
-    const attributesData = {
-      labels: ['Academic Attributes', 'Help Seeking', 'Persistence', 'Procrastination', 'Time Management', 'Locus Of Control'],
-      datasets: [{
-        data: [70, 40, 70, 50, 85, 65],
-        backgroundColor: function (context) {
-          const value = context.dataset.data[context.dataIndex];
-          return getBarColor(value);
-        },
-        borderWidth: 0,
-        borderRadius: 4,
-        barPercentage: 0.6,
-        categoryPercentage: 0.8
-      }]
-    };
-
-    const chart = new Chart(ctx, {
-      type: 'bar',
-      data: attributesData,
-      options: {
-        indexAxis: 'y',
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            backgroundColor: 'rgba(0,0,0,0.8)',
-            titleFont: { size: 14, weight: 'bold' },
-            bodyFont: { size: 13 },
-            padding: 12,
-            callbacks: {
-              label: function (context) {
-                const value = context.raw;
-                let status = 'Nurture';
-                if (value >= 70) status = 'Sustain';
-                else if (value >= 40) status = 'Grow';
-                return `${value}% (${status})`;
-              }
-            }
-          }
-        },
-        scales: {
-          x: {
-            beginAtZero: true,
-            max: 100,
-            grid: {
-              color: function (context) {
-                if (context.tick.value === 40 || context.tick.value === 70) {
-                  return 'rgba(0,0,0,0.15)';
-                }
-                return 'rgba(0,0,0,0.05)';
-              },
-              lineWidth: function (context) {
-                if (context.tick.value === 40 || context.tick.value === 70) {
-                  return 1;
-                }
-                return 0.5;
-              }
-            },
-            ticks: {
-              callback: function (value) {
-                return value + '%';
-              },
-              font: { size: 11 },
-              color: '#666',
-              padding: 10
-            }
-          },
-          y: {
-            grid: { display: false },
-            ticks: {
-              font: { size: 12, weight: 'bold' },
-              color: '#333',
-              padding: 12
-            }
-          }
-        },
-        responsive: true,
-        maintainAspectRatio: false,
-        layout: {
-          padding: {
-            top: 20,
-            right: 25,
-            bottom: 10,
-            left: 10
-          }
-        }
-      }
-    });
   });
 </script>
 </body>
