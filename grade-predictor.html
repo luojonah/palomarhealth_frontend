@@ -577,7 +577,6 @@ permalink: /grade-predictor
   
   document.addEventListener('DOMContentLoaded', () => {
     const API_URL = 'http://127.0.0.1:8101/api/user';
-    const UID = 'janedoe123'; // TODO: Replace this dynamically based on logged-in user context
 
     const calculateBtn = document.getElementById('calculate-btn');
     const resetBtn = document.getElementById('reset-btn');
@@ -630,26 +629,13 @@ permalink: /grade-predictor
       });
     });
 
-    // Fetch user data (GET request)
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch(`${API_URL}?uid=${UID}`);
-        const data = await response.json();
-        console.log('Fetched user data:', data);
-        // You can use `data.grade_data` to prefill fields if needed
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
-
-    fetchUserData(); // Call on page load
-
     calculateBtn.addEventListener('click', async () => {
       const ratings = document.querySelectorAll('.skill-rating');
       const checkboxes = document.querySelectorAll('.mastery-checkbox');
       let totalScore = 0;
       let maxScore = ratings.length * 5;
       let skillsData = [];
+      let currentUser = null;
 
       let gradeData = {};
       ratings.forEach((r, index) => {
@@ -732,27 +718,50 @@ permalink: /grade-predictor
       resultsCard.style.display = 'block';
       resultsCard.scrollIntoView({ behavior: 'smooth' });
 
+      await fetchCurrentUser();
+      if (!currentUser) return; // Exit if not logged in
+
       // Prepare full user update payload
       const updatedUser = {
-        uid: UID,
-        name: "Jane Doe", // Optional: update dynamically if needed
-        password: "SecurePass123!", // Required by backend, ensure available
-        pfp: "janedoe.png",
-        car: "janecar.png",
-        role: "Student",
+        uid: currentUser.uid,
+        name: currentUser.name,
+        pfp: currentUser.pfp || "default.png",
+        car: currentUser.car || "defaultcar.png",
+        role: currentUser.role || "Student",
         grade_data: {
           grade: grade,
           ...gradeData
         }
       };
 
+
+      async function fetchCurrentUser() {
+          try {
+              const response = await fetch(`${pythonURI}/api/user`, {
+                  method: 'GET',
+                  credentials: 'include',
+              });
+              if (response.ok) {
+                  currentUser = await response.json();
+                  console.log("Fetched current user:", currentUser);
+              } else {
+                  console.warn('Could not fetch current user. Status:', response.status);
+                  alert("You must be logged in to use this feature.");
+              }
+          } catch (error) {
+              console.error('Error fetching current user:', error);
+              alert("An error occurred while fetching user info.");
+          }
+      }
+
       // PUT request to update user
       try {
         const response = await fetch(`${pythonURI}/api/user`, {
           method: 'PUT',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           },
+          credentials: "include",
           body: JSON.stringify(updatedUser)
         });
         const result = await response.json();
