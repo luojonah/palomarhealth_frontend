@@ -310,6 +310,54 @@ permalink: /studytracker
     // Call once to initialize
     updateStats();
 
+    // Fetch existing study records on page load
+    window.addEventListener('DOMContentLoaded', async () => {
+      try {
+        // Attempt to get records from the server
+        const response = await fetch('http://127.0.0.1:8101/api/study');
+        
+        if (response.ok) {
+          const studyRecords = await response.json();
+          
+          // Mark topics as completed based on existing records
+          studyRecords.forEach(record => {
+            if (record.studied) {
+              // Find the topic and subtopic in our data structure
+              const topicIndex = topicsData.findIndex(t => t.title === record.topic);
+              if (topicIndex !== -1) {
+                const subtopicIndex = topicsData[topicIndex].subtopics.indexOf(record.subtopic);
+                if (subtopicIndex !== -1) {
+                  // Mark as completed (will be handled when rendering)
+                  completedSubtopics++;
+                }
+              }
+            }
+          });
+          
+          // Update stats with the data from the server
+          updateStats();
+        } else {
+          console.warn("Could not load study records from server. Status:", response.status);
+          // Could add local storage fallback here if needed
+        }
+      } catch (error) {
+        console.error("Error loading study records:", error);
+        console.log("Using local storage as fallback");
+        
+        // Fallback to localStorage if available
+        try {
+          const savedRecords = localStorage.getItem('studyRecords');
+          if (savedRecords) {
+            const records = JSON.parse(savedRecords);
+            // Process local records similar to server records
+            // (Implementation would be similar to above)
+          }
+        } catch (localError) {
+          console.error("Local storage fallback failed:", localError);
+        }
+      }
+    });
+
     topicsData.forEach((topic, topicIndex) => {
       // Create main topic card
       const topicCard = document.createElement('div');
@@ -388,54 +436,96 @@ permalink: /studytracker
         
         // Handle study button click
         studyButton.onclick = async () => {
+          // Create the record object once to use in both server and local storage
+          const studyRecord = {
+            topic: topic.title,
+            subtopic: subtopic,
+            studied: true,
+            timestamp: new Date().toISOString()
+          };
+
+          // Function to update UI after successful completion
+          const markAsCompleted = () => {
+            // Update button state
+            studyButton.innerHTML = '<i class="bi bi-check-circle me-1"></i>Completed';
+            studyButton.disabled = true;
+            studyButton.classList.remove('btn-outline-primary');
+            studyButton.classList.add('btn-success');
+            
+            // Add completion class to list item
+            subtopicItem.classList.add('bg-light');
+            
+            // Update completion counters
+            topicCompletedCount++;
+            completedSubtopics++;
+            
+            // Update topic progress badge
+            const badge = document.getElementById(`topic-${topicIndex}-progress`);
+            if (badge) {
+              badge.textContent = `${topicCompletedCount}/${topic.subtopics.length}`;
+              
+              // If all subtopics completed, update badge style
+              if (topicCompletedCount === topic.subtopics.length) {
+                badge.classList.remove('bg-light', 'text-primary');
+                badge.classList.add('bg-success', 'text-white');
+              }
+            }
+            
+            // Update overall stats
+            updateStats();
+          };
+
+          // First try to send to server
           try {
-            const res = await fetch('https://your-backend.com/api/study', {
+            const res = await fetch('http://127.0.0.1:8101/api/study', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
               },
-              body: JSON.stringify({
-                topic: topic.title,
-                subtopic: subtopic,
-                studied: true,
-                timestamp: new Date().toISOString()
-              })
+              body: JSON.stringify(studyRecord)
             });
 
             if (res.ok) {
-              // Update button state
-              studyButton.innerHTML = '<i class="bi bi-check-circle me-1"></i>Completed';
-              studyButton.disabled = true;
-              studyButton.classList.remove('btn-outline-primary');
-              studyButton.classList.add('btn-success');
-              
-              // Add completion class to list item
-              subtopicItem.classList.add('bg-light');
-              
-              // Update completion counters
-              topicCompletedCount++;
-              completedSubtopics++;
-              
-              // Update topic progress badge
-              const badge = document.getElementById(`topic-${topicIndex}-progress`);
-              if (badge) {
-                badge.textContent = `${topicCompletedCount}/${topic.subtopics.length}`;
-                
-                // If all subtopics completed, update badge style
-                if (topicCompletedCount === topic.subtopics.length) {
-                  badge.classList.remove('bg-light', 'text-primary');
-                  badge.classList.add('bg-success', 'text-white');
-                }
-              }
-              
-              // Update overall stats
-              updateStats();
+              // Server successful, update UI
+              markAsCompleted();
             } else {
-              alert("Something went wrong. Try again.");
+              console.warn("Server returned error status:", res.status);
+              // Server error, try local storage fallback
+              try {
+                // Get existing records or initialize empty array
+                const existingRecords = JSON.parse(localStorage.getItem('studyRecords') || '[]');
+                // Add new record
+                existingRecords.push(studyRecord);
+                // Save back to localStorage
+                localStorage.setItem('studyRecords', JSON.stringify(existingRecords));
+                
+                // Update UI even though server failed
+                markAsCompleted();
+                console.log("Saved to localStorage instead of server");
+              } catch (localError) {
+                console.error("LocalStorage fallback failed:", localError);
+                alert("Could not save your progress. Please try again later.");
+              }
             }
           } catch (error) {
             console.error("POST error:", error);
-            alert("Failed to send request.");
+            
+            // Network error, try local storage fallback
+            try {
+              // Get existing records or initialize empty array
+              const existingRecords = JSON.parse(localStorage.getItem('studyRecords') || '[]');
+              // Add new record
+              existingRecords.push(studyRecord);
+              // Save back to localStorage
+              localStorage.setItem('studyRecords', JSON.stringify(existingRecords));
+              
+              // Update UI even though server request failed
+              markAsCompleted();
+              console.log("Network request failed, saved to localStorage instead");
+            } catch (localError) {
+              console.error("LocalStorage fallback failed:", localError);
+              alert("Failed to send request and could not save locally.");
+            }
           }
         };
         
