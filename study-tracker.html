@@ -1,70 +1,282 @@
 ---
-layout: bootstrap
-title: Study Trcaker
+layout: default
+title: Study Tracker
 search_exclude: true
 description: Exam predictor for the AP Test
 hide: true
 permalink: /studytracker
 ---
 
-<link href="https://cdn.tailwindcss.com" rel="stylesheet">
-<div class="max-w-2xl mx-auto bg-white mt-8 p-6 rounded-xl shadow-md">
-  <h1 class="text-2xl font-bold mb-4">AP CSP Study Tracker</h1>
-  <ul id="topics" class="space-y-4"></ul>
-</div>
-
-<script>
-  const topics = [
-    "Big Idea 1: Creative Development",
-    "Big Idea 2: Data",
-    "Big Idea 3: Algorithms and Programming",
-    "Big Idea 4: Computer Systems and Networks",
-    "Big Idea 5: Impact of Computing"
-  ];
-
-  const topicsContainer = document.getElementById('topics');
-
-  topics.forEach(topic => {
-    const li = document.createElement('li');
-    li.className = "flex justify-between items-center p-4 border rounded";
-
-    const span = document.createElement('span');
-    span.textContent = topic;
-
-    const button = document.createElement('button');
-    button.textContent = "Mark as Studied";
-    button.className = "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study Tracker</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+  
+  <style>
+    :root {
+      --primary-color: #4361ee;
+      --secondary-color: #3a0ca3;
+      --success-color: #4cc9f0;
+      --light-color: #f8f9fa;
+      --dark-color: #212529;
+    }
     
-    button.onclick = async () => {
-      try {
-        const res = await fetch('https://your-backend.com/api/study', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            topic: topic,
-            studied: true,
-            timestamp: new Date().toISOString()
-          })
-        });
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f7fb;
+      color: #333;
+    }
+    
+    .navbar-brand {
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    
+    .card {
+      border-radius: 12px;
+      overflow: hidden;
+      border: none;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+    }
+    
+    .progress {
+      height: 8px;
+      border-radius: 4px;
+    }
+    
+    .btn-primary {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--secondary-color);
+      border-color: var(--secondary-color);
+    }
+    
+    .bg-gradient-primary {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    }
+    
+    .topic-header {
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .badge-custom {
+      font-weight: 500;
+      padding: 0.5em 0.75em;
+      border-radius: 6px;
+    }
+    
+    .icon-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 1rem;
+      background-color: rgba(67, 97, 238, 0.1);
+      color: var(--primary-color);
+    }
+    
+    .sidebar {
+      background-color: white;
+      border-right: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .btn-outline-primary {
+      color: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+    
+    .btn-outline-primary:hover {
+      background-color: var(--primary-color);
+      color: white;
+    }
+    
+    .stat-card {
+      background-color: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+    }
+    
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+    
+    .stat-label {
+      color: #6c757d;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <i class="bi bi-journal-check text-primary me-2"></i>Study Tracker
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Topics</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Analytics</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Settings</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-        if (res.ok) {
-          button.textContent = "✓ Studied";
-          button.disabled = true;
-          button.classList.remove("bg-blue-600", "hover:bg-blue-700");
-          button.classList.add("bg-green-500", "cursor-not-allowed");
-        } else {
-          alert("Something went wrong. Try again.");
+  <!-- Main Content -->
+  <div class="container py-5">
+    <!-- Stats Row -->
+    <div class="row mb-4 g-3">
+      <div class="col-md-3">
+        <div class="stat-card h-100">
+          <div class="d-flex align-items-center mb-2">
+            <i class="bi bi-lightning-charge fs-4 text-primary"></i>
+            <span class="ms-2 text-muted">Current Streak</span>
+          </div>
+          <div class="stat-number">7</div>
+          <div class="stat-label">days</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="stat-card h-100">
+          <div class="d-flex align-items-center mb-2">
+            <i class="bi bi-clock-history fs-4 text-primary"></i>
+            <span class="ms-2 text-muted">Total Time</span>
+          </div>
+          <div class="stat-number">24</div>
+          <div class="stat-label">hours</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="stat-card h-100">
+          <div class="d-flex align-items-center mb-2">
+            <i class="bi bi-check2-square fs-4 text-primary"></i>
+            <span class="ms-2 text-muted">Topics Completed</span>
+          </div>
+          <div class="stat-number">8</div>
+          <div class="stat-label">of 16</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="stat-card h-100">
+          <div class="d-flex align-items-center mb-2">
+            <i class="bi bi-calendar-check fs-4 text-primary"></i>
+            <span class="ms-2 text-muted">Exam Countdown</span>
+          </div>
+          <div class="stat-number">21</div>
+          <div class="stat-label">days left</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Topics List -->
+    <div class="row mt-5">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="topic-header">AP CSP Topics</h2>
+            <ul id="topics" class="list-group list-group-flush">
+              <!-- Topics will be generated dynamically -->
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const topics = [
+      "Big Idea 1: Creative Development",
+      "Big Idea 2: Data",
+      "Big Idea 3: Algorithms and Programming",
+      "Big Idea 4: Computer Systems and Networks",
+      "Big Idea 5: Impact of Computing"
+    ];
+
+    const topicsContainer = document.getElementById('topics');
+
+    topics.forEach(topic => {
+      const li = document.createElement('li');
+      li.className = "list-group-item d-flex justify-content-between align-items-center";
+
+      const span = document.createElement('span');
+      span.textContent = topic;
+
+      const button = document.createElement('button');
+      button.textContent = "Mark as Studied";
+      button.className = "btn btn-primary";
+
+      button.onclick = async () => {
+        try {
+          const res = await fetch('https://your-backend.com/api/study', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              topic: topic,
+              studied: true,
+              timestamp: new Date().toISOString()
+            })
+          });
+
+          if (res.ok) {
+            button.textContent = "✓ Studied";
+            button.disabled = true;
+            button.classList.remove("btn-primary");
+            button.classList.add("btn-success");
+          } else {
+            alert("Something went wrong. Try again.");
+          }
+        } catch (error) {
+          console.error("POST error:", error);
+          alert("Failed to send request.");
         }
-      } catch (error) {
-        console.error("POST error:", error);
-        alert("Failed to send request.");
-      }
-    };
+      };
 
-    li.appendChild(span);
-    li.appendChild(button);
-    topicsContainer.appendChild(li);
-  });
-</script>
+      li.appendChild(span);
+      li.appendChild(button);
+      topicsContainer.appendChild(li);
+    });
+  </script>
+
+  <!-- Bootstrap JS Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
