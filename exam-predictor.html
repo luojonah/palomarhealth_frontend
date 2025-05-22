@@ -461,31 +461,34 @@ permalink: /exam-predictor
         </div>
         
         <div class="prediction-section">
-            <div class="prediction-title">Predicted AP® Score</div>
-            <div class="predicted-score" id="practiceBasedScore">-</div>
-            <div class="score-interpretation" id="practiceInterpretation">Enter your practice scores above</div>
-            <div class="confidence-indicator" id="confidenceLevel">Confidence: Low</div>
-            
-            <div class="breakdown-grid">
-                <div class="breakdown-card">
-                    <h4>Average MCQ</h4>
-                    <div class="breakdown-value" id="avgMCQ">-</div>
-                </div>
-                <div class="breakdown-card">
-                    <h4>MCQ Percentage</h4>
-                    <div class="breakdown-value" id="mcqPercent">-</div>
-                </div>
-                <div class="breakdown-card">
-                    <h4>FRQ Score</h4>
-                    <div class="breakdown-value" id="frqScore">-</div>
-                </div>
-                <div class="breakdown-card">
-                    <h4>Overall Strength</h4>
-                    <div class="breakdown-value" id="overallStrength">-</div>
-                </div>
-            </div>
-        </div>
-    </div>
+          <div class="prediction-title">Predicted AP® Score</div>
+          <div class="predicted-score" id="practiceBasedScore">-</div>
+          <div class="score-interpretation" id="practiceInterpretation">Enter your practice scores above</div>
+          <div class="confidence-indicator" id="confidenceLevel">Confidence: Low</div>
+      
+          <div class="breakdown-grid">
+              <div class="breakdown-card">
+                  <h4>Average MCQ</h4>
+                  <div class="breakdown-value" id="avgMCQ">-</div>
+              </div>
+              <div class="breakdown-card">
+                  <h4>MCQ Percentage</h4>
+                  <div class="breakdown-value" id="mcqPercent">-</div>
+              </div>
+              <div class="breakdown-card">
+                  <h4>FRQ Score</h4>
+                  <div class="breakdown-value" id="frqScore">-</div>
+              </div>
+              <div class="breakdown-card">
+                  <h4>Overall Strength</h4>
+                  <div class="breakdown-value" id="overallStrength">-</div>
+              </div>
+          </div>
+      
+          <!-- 🔥 Add your button right here -->
+          <button id="savePredictionBtn" class="btn btn-primary" style="margin-top: 20px;">Save Prediction</button>
+      </div>
+      
 
     <!-- Original Manual Score Predictor -->
     <div class="section">
@@ -544,138 +547,136 @@ permalink: /exam-predictor
 </div>
 
 <script>
-    const interpretations = {
-      5: "Extremely well qualified",
-      4: "Well qualified", 
-      3: "Qualified",
-      2: "Possibly qualified",
-      1: "No recommendation"
-    };
+  const interpretations = {
+    5: "Extremely well qualified",
+    4: "Well qualified", 
+    3: "Qualified",
+    2: "Possibly qualified",
+    1: "No recommendation"
+  };
 
-    // Practice-based prediction function
-    function calculatePrediction() {
-        const mcq2018 = parseInt(document.getElementById("mcq2018").value) || 0;
-        const mcq2020 = parseInt(document.getElementById("mcq2020").value) || 0;
-        const mcq2021 = parseInt(document.getElementById("mcq2021").value) || 0;
-        const practiceFRQ = parseInt(document.getElementById("practicefrq").value) || 0;
-        
-        // Count how many scores have been entered
-        const mcqCount = (mcq2018 > 0 ? 1 : 0) + (mcq2020 > 0 ? 1 : 0) + (mcq2021 > 0 ? 1 : 0);
-        const frqCount = practiceFRQ > 0 ? 1 : 0;
-        const totalInputs = mcqCount + frqCount;
-        
-        if (totalInputs === 0) {
-            document.getElementById("practiceBasedScore").textContent = "-";
-            document.getElementById("practiceInterpretation").textContent = "Enter your practice scores above";
-            document.getElementById("confidenceLevel").textContent = "Confidence: Low";
-            document.getElementById("avgMCQ").textContent = "-";
-            document.getElementById("mcqPercent").textContent = "-";
-            document.getElementById("frqScore").textContent = "-";
-            document.getElementById("overallStrength").textContent = "-";
-            return;
-        }
-        
-        // Calculate average MCQ score
-        let avgMCQ = 0;
-        if (mcqCount > 0) {
-            avgMCQ = (mcq2018 + mcq2020 + mcq2021) / mcqCount;
-        }
-        
-        // Convert to percentage
-        const mcqPercentage = (avgMCQ / 70) * 100;
-        
-        // Weight the prediction: MCQ (70%) + FRQ (30%)
-        let compositeScore = 0;
-        if (mcqCount > 0 && frqCount > 0) {
-            // Both available - full prediction
-            compositeScore = (avgMCQ * 0.7) + (practiceFRQ * 5 * 0.3);
-        } else if (mcqCount > 0) {
-            // Only MCQ available - estimate FRQ performance based on MCQ
-            const estimatedFRQ = Math.max(0, Math.min(6, (avgMCQ / 70) * 6));
-            compositeScore = (avgMCQ * 0.7) + (estimatedFRQ * 5 * 0.3);
-        } else {
-            // Only FRQ available - estimate MCQ performance
-            const estimatedMCQ = (practiceFRQ / 6) * 70;
-            compositeScore = (estimatedMCQ * 0.7) + (practiceFRQ * 5 * 0.3);
-        }
-        
-        // Convert composite to 100-point scale for AP score calculation
-        const scaledScore = (compositeScore / 65) * 100; // Scale to match original calculator
-        
-        // Determine AP Score (matching original thresholds)
-        let apScore = 1;
-        if (scaledScore >= 90) apScore = 5;
-        else if (scaledScore >= 81) apScore = 4;
-        else if (scaledScore >= 42) apScore = 3;
-        else if (scaledScore >= 30) apScore = 2;
-        
-        // Determine confidence level
-        let confidence = "Low";
-        let strengthAssessment = "Developing";
-        
-        if (totalInputs >= 3) {
-            confidence = "High";
-            if (mcqPercentage >= 85) strengthAssessment = "Excellent";
-            else if (mcqPercentage >= 75) strengthAssessment = "Strong";
-            else if (mcqPercentage >= 60) strengthAssessment = "Good";
-        } else if (totalInputs === 2) {
-            confidence = "Medium";
-            if (mcqPercentage >= 80) strengthAssessment = "Strong";
-            else if (mcqPercentage >= 65) strengthAssessment = "Good";
-        }
-        
-        // Update display
-        document.getElementById("practiceBasedScore").textContent = apScore;
-        document.getElementById("practiceInterpretation").textContent = interpretations[apScore];
-        document.getElementById("confidenceLevel").textContent = `Confidence: ${confidence}`;
-        document.getElementById("avgMCQ").textContent = mcqCount > 0 ? Math.round(avgMCQ) : "-";
-        document.getElementById("mcqPercent").textContent = mcqCount > 0 ? Math.round(mcqPercentage) + "%" : "-";
-        document.getElementById("frqScore").textContent = frqCount > 0 ? practiceFRQ + "/6" : "-";
-        document.getElementById("overallStrength").textContent = strengthAssessment;
-    }
-
-    // Original manual calculator functions
-    function updateScores() {
-      const mcqRaw = parseInt(document.getElementById("mcqScore").value);
-      const frqRaw = parseInt(document.getElementById("frqScore").value);
+  // Practice-based prediction function
+  function calculatePrediction() {
+      const mcq2018 = parseInt(document.getElementById("mcq2018").value) || 0;
+      const mcq2020 = parseInt(document.getElementById("mcq2020").value) || 0;
+      const mcq2021 = parseInt(document.getElementById("mcq2021").value) || 0;
+      const practiceFRQ = parseInt(document.getElementById("practicefrq").value) || 0;
       
-      document.getElementById("mcqInput").value = mcqRaw;
-      document.getElementById("frqInput").value = frqRaw;
+      // Count how many scores have been entered
+      const mcqCount = (mcq2018 > 0 ? 1 : 0) + (mcq2020 > 0 ? 1 : 0) + (mcq2021 > 0 ? 1 : 0);
+      const frqCount = practiceFRQ > 0 ? 1 : 0;
+      const totalInputs = mcqCount + frqCount;
       
-      const mcqScore = mcqRaw;
-      const frqScore = frqRaw * 5;
-      const total = mcqScore + frqScore;
+      if (totalInputs === 0) {
+          document.getElementById("practiceBasedScore").textContent = "-";
+          document.getElementById("practiceInterpretation").textContent = "Enter your practice scores above";
+          document.getElementById("confidenceLevel").textContent = "Confidence: Low";
+          document.getElementById("avgMCQ").textContent = "-";
+          document.getElementById("mcqPercent").textContent = "-";
+          document.getElementById("frqScore").textContent = "-";
+          document.getElementById("overallStrength").textContent = "-";
+          return;
+      }
       
-      document.getElementById("mcqDisplay").textContent = mcqScore;
-      document.getElementById("frqDisplay").textContent = frqScore;
-      document.getElementById("compositeDisplay").textContent = total;
+      // Calculate average MCQ score
+      let avgMCQ = 0;
+      if (mcqCount > 0) {
+          avgMCQ = (mcq2018 + mcq2020 + mcq2021) / mcqCount;
+      }
+      
+      // Convert to percentage
+      const mcqPercentage = (avgMCQ / 70) * 100;
+      
+      // Weight the prediction: MCQ (70%) + FRQ (30%)
+      let compositeScore = 0;
+      if (mcqCount > 0 && frqCount > 0) {
+          compositeScore = (avgMCQ * 0.7) + (practiceFRQ * 5 * 0.3);
+      } else if (mcqCount > 0) {
+          const estimatedFRQ = Math.max(0, Math.min(6, (avgMCQ / 70) * 6));
+          compositeScore = (avgMCQ * 0.7) + (estimatedFRQ * 5 * 0.3);
+      } else {
+          const estimatedMCQ = (practiceFRQ / 6) * 70;
+          compositeScore = (estimatedMCQ * 0.7) + (practiceFRQ * 5 * 0.3);
+      }
+      
+      const scaledScore = (compositeScore / 65) * 100;
       
       let apScore = 1;
-      if (total >= 90) apScore = 5;
-      else if (total >= 81) apScore = 4;
-      else if (total >= 42) apScore = 3;
-      else if (total >= 30) apScore = 2;
+      if (scaledScore >= 90) apScore = 5;
+      else if (scaledScore >= 81) apScore = 4;
+      else if (scaledScore >= 42) apScore = 3;
+      else if (scaledScore >= 30) apScore = 2;
       
-      document.getElementById("predictedScore").textContent = apScore;
-      document.getElementById("scoreInterpretation").textContent = interpretations[apScore];
-    }
-
-    function syncSlider(type) {
-      if (type === 'mcq') {
-        const val = parseInt(document.getElementById("mcqInput").value);
-        if (val >= 0 && val <= 70) {
-          document.getElementById("mcqScore").value = val;
-        }
-      } else {
-        const val = parseInt(document.getElementById("frqInput").value);
-        if (val >= 0 && val <= 6) {
-          document.getElementById("frqScore").value = val;
-        }
+      let confidence = "Low";
+      let strengthAssessment = "Developing";
+      
+      if (totalInputs >= 3) {
+          confidence = "High";
+          if (mcqPercentage >= 85) strengthAssessment = "Excellent";
+          else if (mcqPercentage >= 75) strengthAssessment = "Strong";
+          else if (mcqPercentage >= 60) strengthAssessment = "Good";
+      } else if (totalInputs === 2) {
+          confidence = "Medium";
+          if (mcqPercentage >= 80) strengthAssessment = "Strong";
+          else if (mcqPercentage >= 65) strengthAssessment = "Good";
       }
-      updateScores();
-    }
+      
+      document.getElementById("practiceBasedScore").textContent = apScore;
+      document.getElementById("practiceInterpretation").textContent = interpretations[apScore];
+      document.getElementById("confidenceLevel").textContent = `Confidence: ${confidence}`;
+      document.getElementById("avgMCQ").textContent = mcqCount > 0 ? Math.round(avgMCQ) : "-";
+      document.getElementById("mcqPercent").textContent = mcqCount > 0 ? Math.round(mcqPercentage) + "%" : "-";
+      document.getElementById("frqScore").textContent = frqCount > 0 ? practiceFRQ + "/6" : "-";
+      document.getElementById("overallStrength").textContent = strengthAssessment;
+  }
 
-    // Initialize both calculators
+  // Original manual calculator functions
+  function updateScores() {
+    const mcqRaw = parseInt(document.getElementById("mcqScore").value);
+    const frqRaw = parseInt(document.getElementById("frqScore").value);
+    
+    document.getElementById("mcqInput").value = mcqRaw;
+    document.getElementById("frqInput").value = frqRaw;
+    
+    const mcqScore = mcqRaw;
+    const frqScore = frqRaw * 5;
+    const total = mcqScore + frqScore;
+    
+    document.getElementById("mcqDisplay").textContent = mcqScore;
+    document.getElementById("frqDisplay").textContent = frqScore;
+    document.getElementById("compositeDisplay").textContent = total;
+    
+    let apScore = 1;
+    if (total >= 90) apScore = 5;
+    else if (total >= 81) apScore = 4;
+    else if (total >= 42) apScore = 3;
+    else if (total >= 30) apScore = 2;
+    
+    document.getElementById("predictedScore").textContent = apScore;
+    document.getElementById("scoreInterpretation").textContent = interpretations[apScore];
+  }
+
+  function syncSlider(type) {
+    if (type === 'mcq') {
+      const val = parseInt(document.getElementById("mcqInput").value);
+      if (val >= 0 && val <= 70) {
+        document.getElementById("mcqScore").value = val;
+      }
+    } else {
+      const val = parseInt(document.getElementById("frqInput").value);
+      if (val >= 0 && val <= 6) {
+        document.getElementById("frqScore").value = val;
+      }
+    }
     updateScores();
-    calculatePrediction();
+  }
+
+  // Make functions available globally for inline HTML event handlers
+  window.calculatePrediction = calculatePrediction;
+  window.updateScores = updateScores;
+  window.syncSlider = syncSlider;
+
+  // Initialize both calculators
+  updateScores();
+  calculatePrediction();
 </script>
