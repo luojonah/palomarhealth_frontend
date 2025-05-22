@@ -221,58 +221,254 @@ permalink: /studytracker
   </div>
 
   <script>
-    const topics = [
-      "Big Idea 1: Creative Development",
-      "Big Idea 2: Data",
-      "Big Idea 3: Algorithms and Programming",
-      "Big Idea 4: Computer Systems and Networks",
-      "Big Idea 5: Impact of Computing"
+    // Topic data structure with subtopics
+    const topicsData = [
+      {
+        title: "Big Idea 1: Creative Development",
+        subtopics: [
+          "1.1 Collaboration",
+          "1.2 Program Function and Purpose",
+          "1.3 Program Design and Development",
+          "1.4 Identifying and Correcting Errors"
+        ]
+      },
+      {
+        title: "Big Idea 2: Data",
+        subtopics: [
+          "2.1 Binary Numbers",
+          "2.2 Data Compression",
+          "2.3 Extracting Information from Data",
+          "2.4 Using Programs with Data"
+        ]
+      },
+      {
+        title: "Big Idea 3: Algorithms and Programming",
+        subtopics: [
+          "3.1 Variables and Assignments",
+          "3.2 Data Abstraction",
+          "3.3 Mathematical Expressions",
+          "3.4 Strings",
+          "3.5 Boolean Expressions",
+          "3.6 Conditionals",
+          "3.7 Nested Conditionals",
+          "3.8 Iteration",
+          "3.9 Developing Algorithms",
+          "3.10 Lists",
+          "3.11 Binary Search",
+          "3.12 Calling Procedures",
+          "3.13 Developing Procedures",
+          "3.14 Libraries",
+          "3.15 Random Values",
+          "3.16 Simulations",
+          "3.17 Algorithm Efficiency",
+          "3.18 Undecidable Problems"
+        ]
+      },
+      {
+        title: "Big Idea 4: Computer Systems and Networks",
+        subtopics: [
+          "4.1 The Internet",
+          "4.2 Fault Tolerance",
+          "4.3 Parallel and Distributed Computing"
+        ]
+      },
+      {
+        title: "Big Idea 5: Impact of Computing",
+        subtopics: [
+          "5.1 Beneficial and Harmful Effects",
+          "5.2 Digital Divide",
+          "5.3 Computing Bias",
+          "5.4 Crowdsourcing",
+          "5.5 Legal and Ethical Concerns",
+          "5.6 Safe Computing"
+        ]
+      }
     ];
 
     const topicsContainer = document.getElementById('topics');
+    
+    // Track progress across all subtopics
+    let totalSubtopics = 0;
+    topicsData.forEach(topic => totalSubtopics += topic.subtopics.length);
+    let completedSubtopics = 0;
 
-    topics.forEach(topic => {
-      const li = document.createElement('li');
-      li.className = "list-group-item d-flex justify-content-between align-items-center";
+    // Update the stats based on completed subtopics
+    const updateStats = () => {
+      // Update the topics completed stat
+      const topicsCompletedElement = document.querySelector('.col-md-3:nth-child(3) .stat-number');
+      if (topicsCompletedElement) {
+        topicsCompletedElement.textContent = completedSubtopics;
+      }
+      
+      // Update the "of X" label
+      const topicsCompletedLabelElement = document.querySelector('.col-md-3:nth-child(3) .stat-label');
+      if (topicsCompletedLabelElement) {
+        topicsCompletedLabelElement.textContent = `of ${totalSubtopics}`;
+      }
+    };
 
-      const span = document.createElement('span');
-      span.textContent = topic;
+    // Call once to initialize
+    updateStats();
 
-      const button = document.createElement('button');
-      button.textContent = "Mark as Studied";
-      button.className = "btn btn-primary";
+    topicsData.forEach((topic, topicIndex) => {
+      // Create main topic card
+      const topicCard = document.createElement('div');
+      topicCard.className = 'card mb-4';
+      
+      // Create card header
+      const cardHeader = document.createElement('div');
+      cardHeader.className = 'card-header bg-white py-3 d-flex justify-content-between align-items-center';
+      
+      // Create topic title with collapsible control
+      const titleContainer = document.createElement('div');
+      titleContainer.className = 'd-flex align-items-center';
+      
+      const collapseButton = document.createElement('button');
+      collapseButton.className = 'btn btn-link text-decoration-none p-0 me-2';
+      collapseButton.innerHTML = '<i class="bi bi-chevron-down"></i>';
+      collapseButton.setAttribute('data-bs-toggle', 'collapse');
+      collapseButton.setAttribute('data-bs-target', `#topic-${topicIndex}-content`);
+      collapseButton.setAttribute('aria-expanded', 'true');
+      
+      const topicTitle = document.createElement('h5');
+      topicTitle.className = 'mb-0 fw-bold';
+      topicTitle.textContent = topic.title;
+      
+      titleContainer.appendChild(collapseButton);
+      titleContainer.appendChild(topicTitle);
+      
+      // Create progress badge for this topic
+      const progressBadge = document.createElement('span');
+      progressBadge.className = 'badge bg-light text-primary';
+      progressBadge.id = `topic-${topicIndex}-progress`;
+      progressBadge.textContent = `0/${topic.subtopics.length}`;
+      
+      cardHeader.appendChild(titleContainer);
+      cardHeader.appendChild(progressBadge);
+      
+      // Create collapsible content area
+      const collapseArea = document.createElement('div');
+      collapseArea.className = 'collapse show';
+      collapseArea.id = `topic-${topicIndex}-content`;
+      
+      // Create card body for subtopics
+      const cardBody = document.createElement('div');
+      cardBody.className = 'card-body';
+      
+      // Create subtopics list
+      const subtopicsList = document.createElement('ul');
+      subtopicsList.className = 'list-group list-group-flush';
+      
+      // Track completed subtopics for this main topic
+      let topicCompletedCount = 0;
+      
+      // Add each subtopic
+      topic.subtopics.forEach((subtopic, subtopicIndex) => {
+        const subtopicItem = document.createElement('li');
+        subtopicItem.className = 'list-group-item d-flex justify-content-between align-items-center py-3 border-0';
+        
+        // Create left side with subtopic icon and text
+        const subtopicContent = document.createElement('div');
+        subtopicContent.className = 'd-flex align-items-center';
+        
+        const subtopicIcon = document.createElement('div');
+        subtopicIcon.className = 'me-3 text-muted';
+        subtopicIcon.innerHTML = '<i class="bi bi-file-text"></i>';
+        
+        const subtopicText = document.createElement('span');
+        subtopicText.textContent = subtopic;
+        
+        subtopicContent.appendChild(subtopicIcon);
+        subtopicContent.appendChild(subtopicText);
+        
+        // Create study button
+        const studyButton = document.createElement('button');
+        studyButton.textContent = 'Mark as Studied';
+        studyButton.className = 'btn btn-outline-primary btn-sm';
+        
+        // Handle study button click
+        studyButton.onclick = async () => {
+          try {
+            const res = await fetch('https://your-backend.com/api/study', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                topic: topic.title,
+                subtopic: subtopic,
+                studied: true,
+                timestamp: new Date().toISOString()
+              })
+            });
 
-      button.onclick = async () => {
-        try {
-          const res = await fetch('https://your-backend.com/api/study', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              topic: topic,
-              studied: true,
-              timestamp: new Date().toISOString()
-            })
-          });
-
-          if (res.ok) {
-            button.textContent = "✓ Studied";
-            button.disabled = true;
-            button.classList.remove("btn-primary");
-            button.classList.add("btn-success");
-          } else {
-            alert("Something went wrong. Try again.");
+            if (res.ok) {
+              // Update button state
+              studyButton.innerHTML = '<i class="bi bi-check-circle me-1"></i>Completed';
+              studyButton.disabled = true;
+              studyButton.classList.remove('btn-outline-primary');
+              studyButton.classList.add('btn-success');
+              
+              // Add completion class to list item
+              subtopicItem.classList.add('bg-light');
+              
+              // Update completion counters
+              topicCompletedCount++;
+              completedSubtopics++;
+              
+              // Update topic progress badge
+              const badge = document.getElementById(`topic-${topicIndex}-progress`);
+              if (badge) {
+                badge.textContent = `${topicCompletedCount}/${topic.subtopics.length}`;
+                
+                // If all subtopics completed, update badge style
+                if (topicCompletedCount === topic.subtopics.length) {
+                  badge.classList.remove('bg-light', 'text-primary');
+                  badge.classList.add('bg-success', 'text-white');
+                }
+              }
+              
+              // Update overall stats
+              updateStats();
+            } else {
+              alert("Something went wrong. Try again.");
+            }
+          } catch (error) {
+            console.error("POST error:", error);
+            alert("Failed to send request.");
           }
-        } catch (error) {
-          console.error("POST error:", error);
-          alert("Failed to send request.");
-        }
-      };
+        };
+        
+        // Assemble subtopic item
+        subtopicItem.appendChild(subtopicContent);
+        subtopicItem.appendChild(studyButton);
+        subtopicsList.appendChild(subtopicItem);
+      });
+      
+      // Assemble the card
+      cardBody.appendChild(subtopicsList);
+      collapseArea.appendChild(cardBody);
+      topicCard.appendChild(cardHeader);
+      topicCard.appendChild(collapseArea);
+      
+      // Add to container
+      topicsContainer.appendChild(topicCard);
+    });
 
-      li.appendChild(span);
-      li.appendChild(button);
-      topicsContainer.appendChild(li);
+    // Initialize collapse functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add click event for the collapse icons to toggle between up/down
+      const collapseButtons = document.querySelectorAll('[data-bs-toggle="collapse"]');
+      collapseButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const icon = this.querySelector('i');
+          if (icon.classList.contains('bi-chevron-down')) {
+            icon.classList.replace('bi-chevron-down', 'bi-chevron-right');
+          } else {
+            icon.classList.replace('bi-chevron-right', 'bi-chevron-down');
+          }
+        });
+      });
     });
   </script>
 
