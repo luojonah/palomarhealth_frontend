@@ -1,0 +1,70 @@
+---
+layout: tailwind
+title: Study Trcaker
+search_exclude: true
+description: Exam predictor for the AP Test
+hide: true
+permalink: /studytracker
+---
+
+<link href="https://cdn.tailwindcss.com" rel="stylesheet">
+<div class="max-w-2xl mx-auto bg-white mt-8 p-6 rounded-xl shadow-md">
+  <h1 class="text-2xl font-bold mb-4">AP CSP Study Tracker</h1>
+  <ul id="topics" class="space-y-4"></ul>
+</div>
+
+<script>
+  const topics = [
+    "Big Idea 1: Creative Development",
+    "Big Idea 2: Data",
+    "Big Idea 3: Algorithms and Programming",
+    "Big Idea 4: Computer Systems and Networks",
+    "Big Idea 5: Impact of Computing"
+  ];
+
+  const topicsContainer = document.getElementById('topics');
+
+  topics.forEach(topic => {
+    const li = document.createElement('li');
+    li.className = "flex justify-between items-center p-4 border rounded";
+
+    const span = document.createElement('span');
+    span.textContent = topic;
+
+    const button = document.createElement('button');
+    button.textContent = "Mark as Studied";
+    button.className = "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition";
+    
+    button.onclick = async () => {
+      try {
+        const res = await fetch('https://your-backend.com/api/study', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            topic: topic,
+            studied: true,
+            timestamp: new Date().toISOString()
+          })
+        });
+
+        if (res.ok) {
+          button.textContent = "✓ Studied";
+          button.disabled = true;
+          button.classList.remove("bg-blue-600", "hover:bg-blue-700");
+          button.classList.add("bg-green-500", "cursor-not-allowed");
+        } else {
+          alert("Something went wrong. Try again.");
+        }
+      } catch (error) {
+        console.error("POST error:", error);
+        alert("Failed to send request.");
+      }
+    };
+
+    li.appendChild(span);
+    li.appendChild(button);
+    topicsContainer.appendChild(li);
+  });
+</script>
