@@ -6,6 +6,145 @@ menu: nav/home.html
 search_exclude: true
 show_reading_time: false
 ---
+<style>
+/* Grade Predictor Results Card Styling */
+#profile-results-card.card {
+  background: #23272f;
+  color: #fff;
+  border-radius: 1rem;
+  border: 1px solid #222;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+  margin-bottom: 2rem;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#profile-results-card .card-header {
+  background: #181b20;
+  border-bottom: 1px solid #333;
+  border-radius: 1rem 1rem 0 0;
+  color: #fff;
+}
+
+#profile-results-card .progress-ring-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+#profile-results-card #profile-grade-ring-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+
+#profile-results-card svg {
+  display: block;
+  margin: 0 auto;
+}
+
+#profile-results-card #profile-percentage-label {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffc107;
+  letter-spacing: 1px;
+}
+
+#profile-results-card .badge {
+  font-size: 1.2rem;
+  padding: 0.5em 1em;
+  border-radius: 0.5em;
+}
+
+#profile-results-card .table {
+  background: #23272f;
+  color: #fff;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+#profile-results-card .table thead {
+  background: #181b20;
+  color: #ffc107;
+  font-weight: 600;
+}
+
+#profile-results-card .table-bordered th,
+#profile-results-card .table-bordered td {
+  border: 1px solid #333;
+}
+
+#profile-results-card .fw-bold {
+  color: #ffc107;
+}
+
+#profile-results-card .table-active {
+  background: #232323;
+}
+
+#profile-results-card .mb-3,
+#profile-results-card .mb-0 {
+  margin-bottom: 1rem !important;
+}
+
+#profile-results-card .col-md-4,
+#profile-results-card .col-md-5,
+#profile-results-card .col-md-7,
+#profile-results-card .col-md-8 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#profile-results-card .card-body {
+  padding: 2rem 2rem 2rem 2rem;
+}
+
+#profile-results-card .table th, 
+#profile-results-card .table td {
+  vertical-align: middle;
+  text-align: center;
+}
+
+#profile-results-card .col-md-5, 
+#profile-results-card .col-md-7 {
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  #profile-results-card .row {
+    flex-direction: column;
+  }
+  #profile-results-card .col-md-4,
+  #profile-results-card .col-md-5,
+  #profile-results-card .col-md-7,
+  #profile-results-card .col-md-8 {
+    width: 100%;
+    margin-bottom: 1.5rem;
+    border-right: none !important;
+  }
+}
+
+@media (max-width: 900px) {
+  #profile-results-card .row {
+    flex-direction: column;
+  }
+  #profile-results-card .col-md-5,
+  #profile-results-card .col-md-7 {
+    border-right: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+</style>
 <div class="profile-container">
  <div class="card">
    <form>
@@ -32,6 +171,59 @@ show_reading_time: false
      <p id="profile-message" style="color: red;"></p>
    </form>
  </div>
+ 
+</div>
+
+<!-- Grade Predictor Results Card for Profile -->
+<div id="profile-results-card" class="card shadow mt-5" style="display: none; max-width: 900px;">
+  <div class="card-header bg-dark text-white" style="border-radius: 1rem 1rem 0 0;">
+    <h5 class="mb-0">Your Class Grade Prediction</h5>
+  </div>
+  <div class="card-body" style="background: #23272f; border-radius: 0 0 1rem 1rem;">
+    <div class="row" style="display: flex; flex-wrap: wrap;">
+      <!-- Left: Progress Ring and Grade -->
+      <div class="col-md-5 d-flex flex-column align-items-center justify-content-center" style="border-right: 1px solid #333; min-height: 350px;">
+        <h5 class="progress-ring-title mb-3 mt-2" style="font-size: 1.25rem;">Predicted Grade</h5>
+        <div id="profile-grade-ring-container" style="position: relative; width: 180px; margin: 0 auto;">
+          <svg width="180" height="180">
+            <circle class="bg" cx="90" cy="90" r="75" stroke="#343a40" stroke-width="18" fill="none" />
+            <circle id="profile-progress-ring" cx="90" cy="90" r="75" stroke="#ffc107" stroke-width="18" fill="none"
+                    stroke-linecap="round" stroke-dasharray="471" stroke-dashoffset="471"
+                    transform="rotate(-90 90 90)" />
+          </svg>
+          <div id="profile-percentage-label" style="position: absolute; top: 50%; left: 0; width: 100%; transform: translateY(-50%); font-size: 2.2rem; font-weight: 700; color: #ffc107; text-align: center;">0%</div>
+        </div>
+        <div class="mt-4 mb-2">
+          <h6 class="mb-2" style="font-size: 1.1rem;">Letter Grade:
+            <span id="profile-letter-grade" class="badge bg-primary" style="font-size: 1.2rem; vertical-align: middle;">-</span>
+          </h6>
+        </div>
+        <div id="profile-grade-feedback" class="text-muted" style="font-size: 1rem; margin-top: 0.5rem; text-align: center; max-width: 220px;"></div>
+      </div>
+      <!-- Right: Skills Table -->
+      <div class="col-md-7" style="padding-left: 2rem; padding-right: 1rem;">
+        <h5 class="mb-3 mt-2">Skills Summary</h5>
+        <div class="mb-3" style="font-size: 1.08rem;">
+          <span class="fw-bold" style="color: #ffc107;">Overall Rating:</span>
+          <span id="profile-avg-rating" style="color: #fff;">0.0</span> out of 5.0
+        </div>
+        <div class="table-responsive">
+          <table class="table table-sm table-dark table-bordered mb-0" style="border-radius: 0.5rem; overflow: hidden;">
+            <thead class="table-dark">
+              <tr>
+                <th>Skill</th>
+                <th>Rating</th>
+                <th>Ratio</th>
+              </tr>
+            </thead>
+            <tbody id="profile-skills-breakdown">
+              <!-- Will be populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script type="module">
@@ -40,90 +232,6 @@ import {pythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js
 // Import functions from config.js
 import { putUpdate, postUpdate, deleteData, logoutUser } from "{{site.baseurl}}/assets/js/api/profile.js";
 
-// Function to update table with fetched data
-function updateTableWithData(data) {
-   const tableBody = document.getElementById('profileResult');
-   tableBody.innerHTML = '';
-
-   data.sections.forEach((section, index) => {
-       const tr = document.createElement('tr');
-       const themeCell = document.createElement('td');
-       const nameCell = document.createElement('td');
-
-       themeCell.textContent = section.theme;
-       nameCell.textContent = section.name;
-
-       const trashIcon = document.createElement('i');
-       trashIcon.className = 'fas fa-trash-alt trash-icon';
-       trashIcon.style.marginLeft = '10px';
-       themeCell.appendChild(trashIcon);
-
-       trashIcon.addEventListener('click', async function (event) {
-           event.preventDefault();
-           const URL = pythonURI + "/api/user/section";
-           // Remove the row from the table
-           tr.remove();
-
-           const options = {
-               URL,
-               body: { sections: [section.theme] },
-               message: 'profile-message',
-           };
-
-           try {
-               await deleteData(options);
-           } catch (error) {
-               console.error('Error deleting section:', error.message);
-               document.getElementById('profile-message').textContent = 'Error deleting section: ' + error.message;
-           }
-       });
-
-      yearCell.classList.add('editable'); // Make year cell editable
-      yearCell.innerHTML = `${section.year} <i class="fas fa-pencil-alt edit-icon" style="margin-left: 10px;"></i>`;
-
-       // Make the year cell editable
-       yearCell.addEventListener('click', function () {
-           const input = document.createElement('input');
-           input.type = 'text';
-           input.value = section.year;
-           input.className = 'edit-input';
-           yearCell.innerHTML = '';
-           yearCell.appendChild(input);
-
-           input.focus();
-
-           input.addEventListener('blur', async function () {
-               const newYear = input.value;
-               const URL = pythonURI + "/api/user/section";
-               const options = {
-                   URL,
-                   body: { section: { theme: section.theme, year: newYear } },
-                   message: 'profile-message',
-               };
-
-               try {
-                   await putUpdate(options);
-               } catch (error) {
-                   console.error('Error updating year:', error.message);
-                   document.getElementById('profile-message').textContent = 'Error updating year: ' + error.message;
-               }
-
-               yearCell.textContent = newYear;
-           });
-
-           input.addEventListener('keydown', function (event) {
-               if (event.key === 'Enter') {
-                   input.blur();
-               }
-           });
-       });
-       tr.appendChild(themeCell);
-       tr.appendChild(nameCell);
-
-       tableBody.appendChild(tr);
-   });
-
-}
 
 // Function to fetch user profile data
 async function fetchUserProfile() {
@@ -376,4 +484,98 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 });
 
+// Grade Predictor Results Card Logic for Profile
+document.addEventListener('DOMContentLoaded', async () => {
+  const card = document.getElementById('profile-results-card');
+  const ring = document.getElementById('profile-progress-ring');
+  const percentLabel = document.getElementById('profile-percentage-label');
+  const avgRating = document.getElementById('profile-avg-rating');
+  const letterGrade = document.getElementById('profile-letter-grade');
+  const skillsBreakdown = document.getElementById('profile-skills-breakdown');
+  const gradeFeedback = document.getElementById('profile-grade-feedback');
+  const circumference = 2 * Math.PI * 75;
+  ring.style.strokeDasharray = circumference;
+
+  try {
+    const response = await fetch(`${pythonURI}/api/grade_data`, {
+      method: 'GET',
+      credentials: 'include'
+    });
+    if (!response.ok) return;
+    const data = await response.json();
+    if (!data.grade_data) return;
+
+    const gradeData = data.grade_data;
+    const skillNames = [
+      "Attendance", "Work Habits", "Behavior", "Timeliness", "Tech Sense",
+      "Tech Talk", "Tech Growth", "Advocacy", "Communication & Collaboration",
+      "Integrity", "Organization"
+    ];
+
+    let totalScore = 0;
+    let maxScore = skillNames.length * 5;
+    skillsBreakdown.innerHTML = '';
+    skillNames.forEach(skill => {
+      const rating = gradeData[skill] || 0;
+      totalScore += rating;
+      const ratio = (rating / 5).toFixed(1);
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${skill}</td>
+        <td>${rating}</td>
+        <td>${ratio}</td>
+      `;
+      skillsBreakdown.appendChild(row);
+    });
+
+    const avgRatingValue = (totalScore / skillNames.length).toFixed(1);
+    const percentage = Math.round((totalScore / maxScore) * 100);
+    const offset = circumference * (1 - percentage / 100);
+    ring.style.strokeDashoffset = offset;
+    percentLabel.textContent = `${percentage}%`;
+    avgRating.textContent = avgRatingValue;
+
+    let grade = gradeData.grade || '-';
+    let badgeColor = 'bg-danger';
+    let feedback = 'Immediate intervention is required to pass this course.';
+    if (percentage >= 90) {
+      badgeColor = 'bg-success';
+      feedback = 'Excellent work! Keep up the great performance.';
+    } else if (percentage >= 80) {
+      badgeColor = 'bg-info';
+      feedback = 'Good work! Continue focusing on improvement.';
+    } else if (percentage >= 70) {
+      badgeColor = 'bg-warning text-dark';
+      feedback = 'Satisfactory work. Consider seeking additional support.';
+    } else if (percentage >= 60) {
+      badgeColor = 'bg-danger';
+      feedback = 'You need to significantly improve to pass this course.';
+    }
+
+    letterGrade.textContent = grade;
+    letterGrade.className = `badge ${badgeColor}`;
+    gradeFeedback.textContent = feedback;
+
+    let color = '#dc3545';
+    if (percentage >= 90) color = '#28a745';
+    else if (percentage >= 80) color = '#198754';
+    else if (percentage >= 70) color = '#ffc107';
+    else if (percentage >= 60) color = '#fd7e14';
+    ring.style.stroke = color;
+
+    // Add average row
+    const avgRow = document.createElement('tr');
+    avgRow.classList.add('fw-bold', 'table-active');
+    avgRow.innerHTML = `
+      <td>Average</td>
+      <td>${avgRatingValue}</td>
+      <td>${(avgRatingValue / 5).toFixed(1)}</td>
+    `;
+    skillsBreakdown.appendChild(avgRow);
+
+    card.style.display = 'block';
+  } catch (err) {
+    // Not logged in or error, do nothing
+  }
+});
 </script>
