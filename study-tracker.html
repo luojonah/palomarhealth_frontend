@@ -22,40 +22,47 @@ permalink: /studytracker
   
   <style>
     :root {
-      --primary-color: #4361ee;
-      --secondary-color: #3a0ca3;
-      --success-color: #4cc9f0;
-      --light-color: #f8f9fa;
-      --dark-color: #212529;
+      --primary-color: #6c63ff;
+      --secondary-color: #5046e4;
+      --success-color: #4ecca3;
+      --dark-bg: #121212;
+      --card-bg: #1e1e1e;
+      --text-primary: #ffffff;
+      --text-secondary: #b3b3b3;
+      --border-color: #2d2d2d;
+      --hover-color: #333333;
     }
     
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: #f5f7fb;
-      color: #333;
+      background-color: var(--dark-bg);
+      color: var(--text-primary);
     }
     
     .navbar-brand {
       font-weight: 700;
       letter-spacing: 0.5px;
+      color: var(--text-primary) !important;
     }
     
     .card {
       border-radius: 12px;
       overflow: hidden;
-      border: none;
-      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border-color);
+      background-color: var(--card-bg);
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     
     .card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+      box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
     }
     
     .progress {
       height: 8px;
       border-radius: 4px;
+      background-color: var(--border-color);
     }
     
     .btn-primary {
@@ -73,9 +80,11 @@ permalink: /studytracker
     }
     
     .topic-header {
-      font-weight: 600;
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+      letter-spacing: 0.5px;
     }
     
     .badge-custom {
@@ -92,47 +101,65 @@ permalink: /studytracker
       align-items: center;
       justify-content: center;
       margin-right: 1rem;
-      background-color: rgba(67, 97, 238, 0.1);
+      background-color: rgba(108, 99, 255, 0.15);
       color: var(--primary-color);
     }
     
     .sidebar {
-      background-color: white;
-      border-right: 1px solid rgba(0,0,0,0.05);
+      background-color: var(--card-bg);
+      border-right: 1px solid var(--border-color);
     }
     
     .btn-outline-primary {
       color: var(--primary-color);
       border-color: var(--primary-color);
+      border-width: 2px;
+      font-weight: 500;
     }
     
     .btn-outline-primary:hover {
       background-color: var(--primary-color);
-      color: white;
+      color: var(--text-primary);
     }
     
     .stat-card {
-      background-color: white;
+      background-color: var(--card-bg);
       border-radius: 12px;
       padding: 1.5rem;
-      box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+      box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.15);
+      border: 1px solid var(--border-color);
     }
     
     .stat-number {
-      font-size: 2rem;
+      font-size: 2.2rem;
       font-weight: 700;
       color: var(--primary-color);
+      text-shadow: 0 0 15px rgba(108, 99, 255, 0.3);
     }
     
     .stat-label {
-      color: #6c757d;
+      color: var(--text-secondary);
       font-weight: 500;
+    }
+    
+    .btn-link {
+      color: var(--primary-color);
+    }
+    
+    .list-group-item {
+      background-color: var(--card-bg);
+      border-color: var(--border-color);
+      color: var(--text-primary);
+    }
+    
+    .text-muted {
+      color: var(--text-secondary) !important;
     }
   </style>
 </head>
 <body>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+  <nav class="navbar navbar-expand-lg navbar-dark shadow-sm sticky-top" style="background-color: var(--card-bg);">
     <div class="container">
       <a class="navbar-brand" href="#">
         <i class="bi bi-journal-check text-primary me-2"></i>Study Tracker
@@ -166,8 +193,8 @@ permalink: /studytracker
       <div class="col-md-3">
         <div class="stat-card h-100">
           <div class="d-flex align-items-center mb-2">
-            <i class="bi bi-lightning-charge fs-4 text-primary"></i>
-            <span class="ms-2 text-muted">Current Streak</span>
+            <i class="bi bi-lightning-charge fs-4" style="color: var(--primary-color)"></i>
+            <span class="ms-2" style="color: var(--text-primary); font-weight: 500;">Current Streak</span>
           </div>
           <div class="stat-number">7</div>
           <div class="stat-label">days</div>
@@ -176,8 +203,8 @@ permalink: /studytracker
       <div class="col-md-3">
         <div class="stat-card h-100">
           <div class="d-flex align-items-center mb-2">
-            <i class="bi bi-clock-history fs-4 text-primary"></i>
-            <span class="ms-2 text-muted">Total Time</span>
+            <i class="bi bi-clock-history fs-4" style="color: var(--primary-color)"></i>
+            <span class="ms-2" style="color: var(--text-primary); font-weight: 500;">Total Time</span>
           </div>
           <div class="stat-number">24</div>
           <div class="stat-label">hours</div>
@@ -186,8 +213,8 @@ permalink: /studytracker
       <div class="col-md-3">
         <div class="stat-card h-100">
           <div class="d-flex align-items-center mb-2">
-            <i class="bi bi-check2-square fs-4 text-primary"></i>
-            <span class="ms-2 text-muted">Topics Completed</span>
+            <i class="bi bi-check2-square fs-4" style="color: var(--primary-color)"></i>
+            <span class="ms-2" style="color: var(--text-primary); font-weight: 500;">Topics Completed</span>
           </div>
           <div class="stat-number">8</div>
           <div class="stat-label">of 16</div>
@@ -196,8 +223,8 @@ permalink: /studytracker
       <div class="col-md-3">
         <div class="stat-card h-100">
           <div class="d-flex align-items-center mb-2">
-            <i class="bi bi-calendar-check fs-4 text-primary"></i>
-            <span class="ms-2 text-muted">Exam Countdown</span>
+            <i class="bi bi-calendar-check fs-4" style="color: var(--primary-color)"></i>
+            <span class="ms-2" style="color: var(--text-primary); font-weight: 500;">Exam Countdown</span>
           </div>
           <div class="stat-number">21</div>
           <div class="stat-label">days left</div>
@@ -365,7 +392,7 @@ permalink: /studytracker
       
       // Create card header
       const cardHeader = document.createElement('div');
-      cardHeader.className = 'card-header bg-white py-3 d-flex justify-content-between align-items-center';
+      cardHeader.className = 'card-header py-3 d-flex justify-content-between align-items-center';
       
       // Create topic title with collapsible control
       const titleContainer = document.createElement('div');
@@ -373,6 +400,7 @@ permalink: /studytracker
       
       const collapseButton = document.createElement('button');
       collapseButton.className = 'btn btn-link text-decoration-none p-0 me-2';
+      collapseButton.style.color = 'var(--primary-color)';
       collapseButton.innerHTML = '<i class="bi bi-chevron-down"></i>';
       collapseButton.setAttribute('data-bs-toggle', 'collapse');
       collapseButton.setAttribute('data-bs-target', `#topic-${topicIndex}-content`);
@@ -380,6 +408,9 @@ permalink: /studytracker
       
       const topicTitle = document.createElement('h5');
       topicTitle.className = 'mb-0 fw-bold';
+      topicTitle.style.color = '#ffffff';
+      topicTitle.style.textShadow = '0 0 10px rgba(108, 99, 255, 0.3)';
+      topicTitle.style.letterSpacing = '0.5px';
       topicTitle.textContent = topic.title;
       
       titleContainer.appendChild(collapseButton);
@@ -387,8 +418,12 @@ permalink: /studytracker
       
       // Create progress badge for this topic
       const progressBadge = document.createElement('span');
-      progressBadge.className = 'badge bg-light text-primary';
+      progressBadge.className = 'badge';
       progressBadge.id = `topic-${topicIndex}-progress`;
+      progressBadge.style.backgroundColor = 'var(--border-color)';
+      progressBadge.style.color = 'var(--primary-color)';
+      progressBadge.style.fontWeight = '600';
+      progressBadge.style.padding = '6px 10px';
       progressBadge.textContent = `0/${topic.subtopics.length}`;
       
       cardHeader.appendChild(titleContainer);
@@ -414,17 +449,22 @@ permalink: /studytracker
       topic.subtopics.forEach((subtopic, subtopicIndex) => {
         const subtopicItem = document.createElement('li');
         subtopicItem.className = 'list-group-item d-flex justify-content-between align-items-center py-3 border-0';
+        subtopicItem.style.backgroundColor = 'var(--card-bg)';
+        subtopicItem.style.color = 'var(--text-primary)';
+        subtopicItem.style.borderBottom = '1px solid var(--border-color)';
         
         // Create left side with subtopic icon and text
         const subtopicContent = document.createElement('div');
         subtopicContent.className = 'd-flex align-items-center';
         
         const subtopicIcon = document.createElement('div');
-        subtopicIcon.className = 'me-3 text-muted';
+        subtopicIcon.className = 'me-3';
+        subtopicIcon.style.color = 'var(--primary-color)';
         subtopicIcon.innerHTML = '<i class="bi bi-file-text"></i>';
         
         const subtopicText = document.createElement('span');
         subtopicText.textContent = subtopic;
+        subtopicText.style.fontWeight = '500';
         
         subtopicContent.appendChild(subtopicIcon);
         subtopicContent.appendChild(subtopicText);
@@ -453,7 +493,7 @@ permalink: /studytracker
             studyButton.classList.add('btn-success');
             
             // Add completion class to list item
-            subtopicItem.classList.add('bg-light');
+            subtopicItem.classList.add('bg-dark');
             
             // Update completion counters
             topicCompletedCount++;
@@ -467,7 +507,9 @@ permalink: /studytracker
               // If all subtopics completed, update badge style
               if (topicCompletedCount === topic.subtopics.length) {
                 badge.classList.remove('bg-light', 'text-primary');
-                badge.classList.add('bg-success', 'text-white');
+                badge.style.backgroundColor = 'var(--success-color)';
+                badge.style.color = '#121212';
+                badge.style.fontWeight = '600';
               }
             }
             
