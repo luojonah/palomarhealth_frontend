@@ -144,6 +144,309 @@ show_reading_time: false
     padding-right: 0 !important;
   }
 }
+
+/* Enhanced Exam Predictor Results Styling */
+#examResultsContainer {
+  background: linear-gradient(135deg, #1a1d23 0%, #23272f 100%);
+  border-radius: 24px;
+  padding: 3rem 2.5rem;
+  margin: 3rem auto;
+  max-width: 1000px;
+  border: 1px solid #333;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+#examResultsContainer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    #3b82f6 20%, 
+    #8b5cf6 50%, 
+    #06b6d4 80%, 
+    transparent
+  );
+  border-radius: 24px 24px 0 0;
+}
+
+#examResultsContainer h2 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  letter-spacing: -0.5px;
+}
+
+#examResultsContainer h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
+  border-radius: 2px;
+}
+
+#examResultsContent {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 16px;
+  padding: 2.5rem;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.8;
+  font-size: 1.1rem;
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  position: relative;
+}
+
+#examResultsContent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  border-radius: 16px 16px 0 0;
+}
+
+.exam-section {
+  margin-bottom: 2.5rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.exam-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.exam-section-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #fbbf24;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.exam-section-title::before {
+  content: '📊';
+  font-size: 1.2rem;
+}
+
+.exam-data-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.exam-data-item {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.exam-data-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.exam-data-item:hover {
+  transform: translateY(-2px);
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.exam-data-item:hover::before {
+  opacity: 1;
+}
+
+.exam-data-label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #94a3b8;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.exam-data-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.exam-data-max {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #64748b;
+}
+
+.predicted-score-highlight {
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+  border: 2px solid #4338ca;
+  position: relative;
+  grid-column: 1 / -1;
+}
+
+.predicted-score-highlight::before {
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
+  opacity: 1;
+}
+
+.predicted-score-highlight .exam-data-value {
+  font-size: 2.5rem;
+  background: linear-gradient(135deg, #ffffff 0%, #c4b5fd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.predicted-score-highlight .exam-data-label {
+  color: #c4b5fd;
+  font-size: 1.1rem;
+}
+
+.last-updated {
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+  color: #67e8f9;
+  text-align: center;
+  font-weight: 500;
+}
+
+.no-data-message {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #94a3b8;
+  padding: 3rem 2rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 12px;
+  border: 2px dashed rgba(255, 255, 255, 0.1);
+}
+
+.loading-message {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #fbbf24;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(251, 191, 36, 0.3);
+  border-top: 2px solid #fbbf24;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.confidence-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-left: 0.5rem;
+}
+
+.confidence-high {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.confidence-medium {
+  background: rgba(251, 191, 36, 0.2);
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.confidence-low {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+@media (max-width: 768px) {
+  #examResultsContainer {
+    margin: 2rem 1rem;
+    padding: 2rem 1.5rem;
+  }
+  
+  #examResultsContainer h2 {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+  }
+  
+  #examResultsContent {
+    padding: 1.5rem;
+    font-size: 1rem;
+  }
+  
+  .exam-data-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .exam-data-item {
+    padding: 1.2rem;
+  }
+  
+  .exam-data-value {
+    font-size: 1.3rem;
+  }
+  
+  .predicted-score-highlight .exam-data-value {
+    font-size: 2rem;
+  }
+}
 </style>
 <div class="profile-container">
  <div class="card">
@@ -579,11 +882,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 });
 </script>
-<!-- Example: Add this to your profile.md or profile.html -->
+<!-- Enhanced AP Exam Predictor Results -->
 <div id="examResultsContainer" class="section">
   <h2>Your AP Exam Predictor Results</h2>
   <div id="examResultsContent">
-    Loading exam predictor data...
+    <div class="loading-message">
+      <div class="loading-spinner"></div>
+      Loading exam predictor data...
+    </div>
   </div>
 </div>
 
@@ -597,35 +903,117 @@ document.addEventListener('DOMContentLoaded', async () => {
         method: 'GET',
         credentials: 'include'
       });
+      
       if (!response.ok) {
-        container.textContent = 'Unable to load exam predictor data. Please log in.';
+        container.innerHTML = `
+          <div class="no-data-message">
+            <p>Unable to load exam predictor data. Please log in to view your results.</p>
+          </div>
+        `;
         return;
       }
+      
       const user = await response.json();
+      
       if (!user.ap_exam || !user.ap_exam.predicted_score) {
-        container.textContent = 'No exam predictor data found.';
+        container.innerHTML = `
+          <div class="no-data-message">
+            <p>No exam predictor data found. Take the AP Exam Predictor to see your results here!</p>
+          </div>
+        `;
         return;
       }
 
       const { practice_based, manual_calculator } = user.ap_exam.predicted_score;
+      const lastUpdated = user.ap_exam.last_updated || 'N/A';
 
       container.innerHTML = `
-        <strong>Last Updated:</strong> ${user.ap_exam.last_updated || 'N/A'}<br><br>
-        <strong>Practice-Based Prediction:</strong><br>
-        MCQ 2018: ${practice_based?.mcq_2018 ?? '-'} / 70<br>
-        MCQ 2020: ${practice_based?.mcq_2020 ?? '-'} / 70<br>
-        MCQ 2021: ${practice_based?.mcq_2021 ?? '-'} / 70<br>
-        Practice FRQ: ${practice_based?.practice_frq ?? '-'} / 6<br>
-        Predicted AP Score: <b>${practice_based?.predicted_ap_score ?? '-'}</b><br>
-        Confidence: ${practice_based?.confidence_level ?? '-'}<br><br>
-        <strong>Manual Calculator:</strong><br>
-        MCQ Score: ${manual_calculator?.mcq_score ?? '-'} / 70<br>
-        FRQ Score: ${manual_calculator?.frq_score ?? '-'} / 6<br>
-        Composite Score: ${manual_calculator?.composite_score ?? '-'} / 100<br>
-        Predicted AP Score: <b>${manual_calculator?.predicted_ap_score ?? '-'}</b>
+        <div class="last-updated">
+          <strong>📅 Last Updated:</strong> ${lastUpdated}
+        </div>
+        
+        <div class="exam-section">
+          <div class="exam-section-title">Practice-Based Prediction</div>
+          <div class="exam-data-grid">
+            <div class="exam-data-item">
+              <div class="exam-data-label">MCQ 2018</div>
+              <div class="exam-data-value">
+                ${practice_based?.mcq_2018 ?? '—'}
+                <span class="exam-data-max">/ 70</span>
+              </div>
+            </div>
+            <div class="exam-data-item">
+              <div class="exam-data-label">MCQ 2020</div>
+              <div class="exam-data-value">
+                ${practice_based?.mcq_2020 ?? '—'}
+                <span class="exam-data-max">/ 70</span>
+              </div>
+            </div>
+            <div class="exam-data-item">
+              <div class="exam-data-label">MCQ 2021</div>
+              <div class="exam-data-value">
+                ${practice_based?.mcq_2021 ?? '—'}
+                <span class="exam-data-max">/ 70</span>
+              </div>
+            </div>
+            <div class="exam-data-item">
+              <div class="exam-data-label">Practice FRQ</div>
+              <div class="exam-data-value">
+                ${practice_based?.practice_frq ?? '—'}
+                <span class="exam-data-max">/ 6</span>
+              </div>
+            </div>
+            <div class="exam-data-item predicted-score-highlight">
+              <div class="exam-data-label">Predicted AP Score</div>
+              <div class="exam-data-value">
+                ${practice_based?.predicted_ap_score ?? '—'}
+                <span class="confidence-badge confidence-${(practice_based?.confidence_level || 'low').toLowerCase()}">
+                  ${practice_based?.confidence_level || 'Low'} Confidence
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="exam-section">
+          <div class="exam-section-title">Manual Calculator Results</div>
+          <div class="exam-data-grid">
+            <div class="exam-data-item">
+              <div class="exam-data-label">MCQ Score</div>
+              <div class="exam-data-value">
+                ${manual_calculator?.mcq_score ?? '—'}
+                <span class="exam-data-max">/ 70</span>
+              </div>
+            </div>
+            <div class="exam-data-item">
+              <div class="exam-data-label">FRQ Score</div>
+              <div class="exam-data-value">
+                ${manual_calculator?.frq_score ?? '—'}
+                <span class="exam-data-max">/ 6</span>
+              </div>
+            </div>
+            <div class="exam-data-item">
+              <div class="exam-data-label">Composite Score</div>
+              <div class="exam-data-value">
+                ${manual_calculator?.composite_score ?? '—'}
+                <span class="exam-data-max">/ 100</span>
+              </div>
+            </div>
+            <div class="exam-data-item predicted-score-highlight">
+              <div class="exam-data-label">Predicted AP Score</div>
+              <div class="exam-data-value">
+                ${manual_calculator?.predicted_ap_score ?? '—'}
+              </div>
+            </div>
+          </div>
+        </div>
       `;
     } catch (err) {
-      container.textContent = 'Error loading exam predictor data.';
+      container.innerHTML = `
+        <div class="no-data-message">
+          <p>Error loading exam predictor data. Please try again later.</p>
+        </div>
+      `;
       console.error(err);
     }
   }
