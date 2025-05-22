@@ -181,6 +181,12 @@ permalink: /studytracker
           <li class="nav-item">
             <a class="nav-link" href="#">Settings</a>
           </li>
+          <li class="nav-item ms-3">
+            <span class="nav-link">
+              <i class="bi bi-person-circle me-1"></i>
+              <span id="user-display-name">Guest</span>
+            </span>
+          </li>
         </ul>
       </div>
     </div>
@@ -248,6 +254,12 @@ permalink: /studytracker
   </div>
 
   <script>
+    // Global variables for user information
+    let currentUser = {
+      id: null,
+      name: ""
+    };
+
     // Topic data structure with subtopics
     const topicsData = [
       {
@@ -336,6 +348,34 @@ permalink: /studytracker
 
     // Call once to initialize
     updateStats();
+
+    // Function to prompt for user name
+    const promptForUserName = () => {
+      // Check if we already have a name in localStorage
+      const savedName = localStorage.getItem('userName');
+      
+      if (savedName) {
+        currentUser.name = savedName;
+        document.getElementById('user-display-name').textContent = savedName;
+        return;
+      }
+      
+      // If no saved name, prompt the user
+      const userName = prompt('Please enter your name for the Study Tracker:', '');
+      
+      if (userName && userName.trim() !== '') {
+        currentUser.name = userName.trim();
+        localStorage.setItem('userName', userName.trim());
+        document.getElementById('user-display-name').textContent = userName.trim();
+      } else {
+        // If user cancels or enters empty name, use 'Guest'
+        currentUser.name = 'Guest';
+        document.getElementById('user-display-name').textContent = 'Guest';
+      }
+    };
+    
+    // Call when document is loaded
+    document.addEventListener('DOMContentLoaded', promptForUserName);
 
     // Fetch existing study records on page load
     window.addEventListener('DOMContentLoaded', async () => {
@@ -480,6 +520,7 @@ permalink: /studytracker
           const studyRecord = {
             topic: topic.title,
             subtopic: subtopic,
+            userName: currentUser.name,
             studied: true,
             timestamp: new Date().toISOString()
           };
