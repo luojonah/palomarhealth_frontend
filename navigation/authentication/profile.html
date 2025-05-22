@@ -579,3 +579,56 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 });
 </script>
+<!-- Example: Add this to your profile.md or profile.html -->
+<div id="examResultsContainer" class="section">
+  <h2>Your AP Exam Predictor Results</h2>
+  <div id="examResultsContent">
+    Loading exam predictor data...
+  </div>
+</div>
+
+<script type="module">
+  import { pythonURI } from '{{site.baseurl}}/assets/js/api/config.js';
+
+  async function loadExamPredictorResults() {
+    const container = document.getElementById('examResultsContent');
+    try {
+      const response = await fetch(`${pythonURI}/api/user`, {
+        method: 'GET',
+        credentials: 'include'
+      });
+      if (!response.ok) {
+        container.textContent = 'Unable to load exam predictor data. Please log in.';
+        return;
+      }
+      const user = await response.json();
+      if (!user.ap_exam || !user.ap_exam.predicted_score) {
+        container.textContent = 'No exam predictor data found.';
+        return;
+      }
+
+      const { practice_based, manual_calculator } = user.ap_exam.predicted_score;
+
+      container.innerHTML = `
+        <strong>Last Updated:</strong> ${user.ap_exam.last_updated || 'N/A'}<br><br>
+        <strong>Practice-Based Prediction:</strong><br>
+        MCQ 2018: ${practice_based?.mcq_2018 ?? '-'} / 70<br>
+        MCQ 2020: ${practice_based?.mcq_2020 ?? '-'} / 70<br>
+        MCQ 2021: ${practice_based?.mcq_2021 ?? '-'} / 70<br>
+        Practice FRQ: ${practice_based?.practice_frq ?? '-'} / 6<br>
+        Predicted AP Score: <b>${practice_based?.predicted_ap_score ?? '-'}</b><br>
+        Confidence: ${practice_based?.confidence_level ?? '-'}<br><br>
+        <strong>Manual Calculator:</strong><br>
+        MCQ Score: ${manual_calculator?.mcq_score ?? '-'} / 70<br>
+        FRQ Score: ${manual_calculator?.frq_score ?? '-'} / 6<br>
+        Composite Score: ${manual_calculator?.composite_score ?? '-'} / 100<br>
+        Predicted AP Score: <b>${manual_calculator?.predicted_ap_score ?? '-'}</b>
+      `;
+    } catch (err) {
+      container.textContent = 'Error loading exam predictor data.';
+      console.error(err);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', loadExamPredictorResults);
+</script>
