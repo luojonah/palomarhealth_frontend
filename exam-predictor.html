@@ -6,10 +6,6 @@ description: Exam predictor for the AP Test
 hide: true
 permalink: /exam-predictor
 ---
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AP CSP Score Calculator</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
     * {
@@ -48,6 +44,23 @@ permalink: /exam-predictor
       background-clip: text;
     }
 
+    .nav-links {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .nav-links a {
+      color: #3b82f6;
+      text-decoration: none;
+      margin: 0 1rem;
+      font-size: 0.9rem;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: #60a5fa;
+    }
+
     .input-group {
       margin-bottom: 2.5rem;
     }
@@ -58,6 +71,24 @@ permalink: /exam-predictor
       font-weight: 500;
       color: #d4d4d8;
       margin-bottom: 1rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 8px;
+      color: #e4e4e7;
+      font-size: 0.9rem;
+      outline: none;
+      transition: all 0.2s ease;
+      margin-bottom: 1rem;
+    }
+
+    .form-input:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
     }
 
     .slider-container {
@@ -125,6 +156,40 @@ permalink: /exam-predictor
       display: flex;
       align-items: center;
       gap: 1rem;
+    }
+
+    .button {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin: 0.5rem;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .button-secondary {
+      background: #27272a;
+      color: #e4e4e7;
+    }
+
+    .button-secondary:hover {
+      background: #3f3f46;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     }
 
     .results-grid {
@@ -206,6 +271,44 @@ permalink: /exam-predictor
       font-weight: 500;
     }
 
+    .save-section {
+      margin-top: 2rem;
+      padding: 2rem;
+      background: #0f172a;
+      border-radius: 16px;
+      border: 1px solid #1e293b;
+    }
+
+    .save-section h3 {
+      color: #e2e8f0;
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+
+    .alert {
+      padding: 1rem;
+      border-radius: 8px;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+    }
+
+    .alert-success {
+      background: #064e3b;
+      border: 1px solid #059669;
+      color: #6ee7b7;
+    }
+
+    .alert-error {
+      background: #7f1d1d;
+      border: 1px solid #dc2626;
+      color: #fca5a5;
+    }
+
+    .loading {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
     @media (max-width: 640px) {
       body {
         padding: 1rem 0.5rem;
@@ -230,111 +333,249 @@ permalink: /exam-predictor
         width: 100%;
       }
     }
-  </style>
+</style>
 
 <div class="container">
     <h1>AP® Computer Science Principles</h1>
     
-    <div class="input-group">
-      <label class="input-label">Section I: Multiple-Choice Questions</label>
-      <div class="slider-container">
-        <input type="range" class="form-range" id="mcqScore" min="0" max="70" value="60" oninput="updateScores()">
-      </div>
-      <div class="flex-row">
-        <span style="color: #71717a; font-size: 0.9rem;">Score:</span>
-        <input type="number" id="mcqInput" min="0" max="70" value="60" class="number-input" oninput="syncSlider('mcq')">
-        <span style="color: #71717a; font-size: 0.9rem;">/ 70</span>
-      </div>
+    <div class="nav-links">
+        <a href="/">Calculator</a>
+        <a href="/dashboard">Dashboard</a>
     </div>
     
     <div class="input-group">
-      <label class="input-label">Create Performance Task</label>
-      <div class="slider-container">
-        <input type="range" class="form-range" id="frqScore" min="0" max="6" value="6" oninput="updateScores()">
-      </div>
-      <div class="flex-row">
-        <span style="color: #71717a; font-size: 0.9rem;">Score:</span>
-        <input type="number" id="frqInput" min="0" max="6" value="6" class="number-input" oninput="syncSlider('frq')">
-        <span style="color: #71717a; font-size: 0.9rem;">/ 6</span>
-      </div>
+        <label class="input-label">Section I: Multiple-Choice Questions</label>
+        <div class="slider-container">
+            <input type="range" class="form-range" id="mcqScore" min="0" max="70" value="60" oninput="updateScores()">
+        </div>
+        <div class="flex-row">
+            <span style="color: #71717a; font-size: 0.9rem;">Score:</span>
+            <input type="number" id="mcqInput" min="0" max="70" value="60" class="number-input" oninput="syncSlider('mcq')">
+            <span style="color: #71717a; font-size: 0.9rem;">/ 70</span>
+        </div>
+    </div>
+    
+    <div class="input-group">
+        <label class="input-label">Create Performance Task</label>
+        <div class="slider-container">
+            <input type="range" class="form-range" id="frqScore" min="0" max="6" value="6" oninput="updateScores()">
+        </div>
+        <div class="flex-row">
+            <span style="color: #71717a; font-size: 0.9rem;">Score:</span>
+            <input type="number" id="frqInput" min="0" max="6" value="6" class="number-input" oninput="syncSlider('frq')">
+            <span style="color: #71717a; font-size: 0.9rem;">/ 6</span>
+        </div>
     </div>
     
     <div class="results-grid">
-      <div class="score-card">
-        <h3>Multiple Choice</h3>
-        <div class="score-value" id="mcqDisplay">60</div>
-        <div class="score-max">out of 70</div>
-      </div>
-      
-      <div class="score-card">
-        <h3>Performance Task</h3>
-        <div class="score-value" id="frqDisplay">30</div>
-        <div class="score-max">out of 30</div>
-      </div>
-      
-      <div class="score-card">
-        <h3>Composite Score</h3>
-        <div class="score-value" id="compositeDisplay">90</div>
-        <div class="score-max">out of 100</div>
-      </div>
-      
-      <div class="score-card final-score">
-        <h3>Predicted AP® Score</h3>
-        <div class="score-value" id="predictedScore">5</div>
-        <div class="score-interpretation" id="scoreInterpretation">Extremely well qualified</div>
-      </div>
+        <div class="score-card">
+            <h3>Multiple Choice</h3>
+            <div class="score-value" id="mcqDisplay">60</div>
+            <div class="score-max">out of 70</div>
+        </div>
+        
+        <div class="score-card">
+            <h3>Performance Task</h3>
+            <div class="score-value" id="frqDisplay">30</div>
+            <div class="score-max">out of 30</div>
+        </div>
+        
+        <div class="score-card">
+            <h3>Composite Score</h3>
+            <div class="score-value" id="compositeDisplay">90</div>
+            <div class="score-max">out of 100</div>
+        </div>
+        
+        <div class="score-card final-score">
+            <h3>Predicted AP® Score</h3>
+            <div class="score-value" id="predictedScore">5</div>
+            <div class="score-interpretation" id="scoreInterpretation">Extremely well qualified</div>
+        </div>
     </div>
-  </div>
+
+    <div class="save-section">
+        <h3>Save Your Results</h3>
+        <div class="input-group">
+            <label class="input-label">Student Name (Required)</label>
+            <input type="text" id="studentName" class="form-input" placeholder="Enter your name" required>
+        </div>
+        <div class="input-group">
+            <label class="input-label">Email (Optional)</label>
+            <input type="email" id="studentEmail" class="form-input" placeholder="Enter your email">
+        </div>
+        <button class="button" onclick="saveScore()" id="saveBtn">Save Score</button>
+        <button class="button button-secondary" onclick="calculateWithAPI()">Recalculate via API</button>
+        
+        <div id="alertContainer"></div>
+    </div>
+</div>
 
 <script>
     const interpretations = {
-      5: "Extremely well qualified",
-      4: "Well qualified", 
-      3: "Qualified",
-      2: "Possibly qualified",
-      1: "No recommendation"
+        5: "Extremely well qualified",
+        4: "Well qualified", 
+        3: "Qualified",
+        2: "Possibly qualified",
+        1: "No recommendation"
     };
 
+    function showAlert(message, type = 'success') {
+        const alertContainer = document.getElementById('alertContainer');
+        const alert = document.createElement('div');
+        alert.className = `alert alert-${type}`;
+        alert.textContent = message;
+        
+        alertContainer.innerHTML = '';
+        alertContainer.appendChild(alert);
+        
+        setTimeout(() => {
+            alert.remove();
+        }, 5000);
+    }
+
+    function setLoading(isLoading) {
+        const container = document.querySelector('.container');
+        if (isLoading) {
+            container.classList.add('loading');
+        } else {
+            container.classList.remove('loading');
+        }
+    }
+
     function updateScores() {
-      const mcqRaw = parseInt(document.getElementById("mcqScore").value);
-      const frqRaw = parseInt(document.getElementById("frqScore").value);
-      
-      document.getElementById("mcqInput").value = mcqRaw;
-      document.getElementById("frqInput").value = frqRaw;
-      
-      const mcqScore = mcqRaw;
-      const frqScore = frqRaw * 5;
-      const total = mcqScore + frqScore;
-      
-      document.getElementById("mcqDisplay").textContent = mcqScore;
-      document.getElementById("frqDisplay").textContent = frqScore;
-      document.getElementById("compositeDisplay").textContent = total;
-      
-      let apScore = 1;
-      if (total >= 90) apScore = 5;
-      else if (total >= 81) apScore = 4;
-      else if (total >= 42) apScore = 3;
-      else if (total >= 30) apScore = 2;
-      
-      document.getElementById("predictedScore").textContent = apScore;
-      document.getElementById("scoreInterpretation").textContent = interpretations[apScore];
+        const mcqRaw = parseInt(document.getElementById("mcqScore").value);
+        const frqRaw = parseInt(document.getElementById("frqScore").value);
+        
+        document.getElementById("mcqInput").value = mcqRaw;
+        document.getElementById("frqInput").value = frqRaw;
+        
+        const mcqScore = mcqRaw;
+        const frqScore = frqRaw * 5;
+        const total = mcqScore + frqScore;
+        
+        document.getElementById("mcqDisplay").textContent = mcqScore;
+        document.getElementById("frqDisplay").textContent = frqScore;
+        document.getElementById("compositeDisplay").textContent = total;
+        
+        let apScore = 1;
+        if (total >= 90) apScore = 5;
+        else if (total >= 81) apScore = 4;
+        else if (total >= 42) apScore = 3;
+        else if (total >= 30) apScore = 2;
+        
+        document.getElementById("predictedScore").textContent = apScore;
+        document.getElementById("scoreInterpretation").textContent = interpretations[apScore];
     }
 
     function syncSlider(type) {
-      if (type === 'mcq') {
-        const val = parseInt(document.getElementById("mcqInput").value);
-        if (val >= 0 && val <= 70) {
-          document.getElementById("mcqScore").value = val;
+        if (type === 'mcq') {
+            const val = parseInt(document.getElementById("mcqInput").value);
+            if (val >= 0 && val <= 70) {
+                document.getElementById("mcqScore").value = val;
+            }
+        } else {
+            const val = parseInt(document.getElementById("frqInput").value);
+            if (val >= 0 && val <= 6) {
+                document.getElementById("frqScore").value = val;
+            }
         }
-      } else {
-        const val = parseInt(document.getElementById("frqInput").value);
-        if (val >= 0 && val <= 6) {
-          document.getElementById("frqScore").value = val;
-        }
-      }
-      updateScores();
+        updateScores();
     }
 
-    // Initialize
+    async function calculateWithAPI() {
+        try {
+            setLoading(true);
+            
+            const mcqScore = parseInt(document.getElementById("mcqScore").value);
+            const frqScore = parseInt(document.getElementById("frqScore").value);
+            
+            const response = await fetch('/api/calculate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    mcq_score: mcqScore,
+                    frq_score: frqScore
+                })
+            });
+            
+            const data = await response.json();
+            
+            if (response.ok) {
+                document.getElementById("mcqDisplay").textContent = data.mcq_score;
+                document.getElementById("frqDisplay").textContent = data.frq_score;
+                document.getElementById("compositeDisplay").textContent = data.composite_score;
+                document.getElementById("predictedScore").textContent = data.predicted_ap_score;
+                document.getElementById("scoreInterpretation").textContent = data.interpretation;
+                
+                showAlert('Scores calculated successfully via API!');
+            } else {
+                showAlert(data.error || 'Error calculating scores', 'error');
+            }
+        } catch (error) {
+            showAlert('Network error occurred', 'error');
+            console.error('Error:', error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    async function saveScore() {
+        try {
+            const studentName = document.getElementById('studentName').value.trim();
+            const studentEmail = document.getElementById('studentEmail').value.trim();
+            
+            if (!studentName) {
+                showAlert('Please enter a student name', 'error');
+                return;
+            }
+            
+            setLoading(true);
+            
+            const mcqScore = parseInt(document.getElementById("mcqScore").value);
+            const frqScore = parseInt(document.getElementById("frqScore").value);
+            const compositeScore = mcqScore + (frqScore * 5);
+            
+            let apScore = 1;
+            if (compositeScore >= 90) apScore = 5;
+            else if (compositeScore >= 81) apScore = 4;
+            else if (compositeScore >= 42) apScore = 3;
+            else if (compositeScore >= 30) apScore = 2;
+            
+            const response = await fetch('/api/save-score', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    student_name: studentName,
+                    student_email: studentEmail,
+                    mcq_score: mcqScore,
+                    frq_score: frqScore,
+                    composite_score: compositeScore,
+                    predicted_ap_score: apScore,
+                    interpretation: interpretations[apScore]
+                })
+            });
+            
+            const data = await response.json();
+            
+            if (response.ok) {
+                showAlert('Score saved successfully!');
+                document.getElementById('studentName').value = '';
+                document.getElementById('studentEmail').value = '';
+            } else {
+                showAlert(data.error || 'Error saving score', 'error');
+            }
+        } catch (error) {
+            showAlert('Network error occurred', 'error');
+            console.error('Error:', error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    // Initialize scores on page load
     updateScores();
-  </script>
+</script>
