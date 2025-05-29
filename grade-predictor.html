@@ -456,10 +456,10 @@ permalink: /grade-predictor
                   <td>Academic honesty and ethical behavior</td>
                 </tr>
                 <tr>
-                  <td>Organization</td>
-                  <td><input type="checkbox" class="form-check-input mastery-checkbox" data-skill="Organization" /></td>
+                  <td>Leadership</td>
+                  <td><input type="checkbox" class="form-check-input mastery-checkbox" data-skill="Leadership" /></td>
                   <td>
-                    <select class="form-select skill-rating" data-skill="Organization">
+                    <select class="form-select skill-rating" data-skill="Leadership">
                       <option value="1">1 - Needs Improvement</option>
                       <option value="2">2 - Developing</option>
                       <option value="3" selected>3 - Satisfactory</option>
@@ -467,7 +467,7 @@ permalink: /grade-predictor
                       <option value="5">5 - Exemplary</option>
                     </select>
                   </td>
-                  <td>Keeping track of assignments and managing time</td>
+                  <td>Taking initiative and guiding others</td>
                 </tr>
               </tbody>
             </table>
@@ -537,8 +537,6 @@ permalink: /grade-predictor
     import { pythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
   
   document.addEventListener('DOMContentLoaded', () => {
-    const API_URL = 'http://127.0.0.1:8101/api/user';
-
     const calculateBtn = document.getElementById('calculate-btn');
     const resetBtn = document.getElementById('reset-btn');
     const resultsCard = document.getElementById('results-card');
@@ -570,108 +568,159 @@ permalink: /grade-predictor
     calculateBtn.addEventListener('click', async () => {
       const ratings = document.querySelectorAll('.skill-rating');
       const checkboxes = document.querySelectorAll('.mastery-checkbox');
-      let totalScore = 0;
-      let maxScore = ratings.length * 5;
-      let skillsData = [];
       let currentUser = null;
 
+      // Prepare inputs for ML model in the exact order expected by the model
+      const mlInputs = [];
+      const skillOrder = [
+        'Attendance', 'Work Habits', 'Behavior', 'Timeliness', 'Advocacy', 'Tech Growth',
+        'Tech Sense', 'Tech Talk', 'Communication & Collaboration', 'Leadership', 'Integrity'
+      ];
+
+      let skillsData = [];
       let gradeData = {};
-      ratings.forEach((r, index) => {
-        const skillName = r.dataset.skill;
-        const rating = parseInt(r.value);
-        const isMastered = checkboxes[index].checked;
-        const ratio = (rating / 5).toFixed(1);
-        totalScore += rating;
-        skillsData.push({
-          skill: skillName,
-          mastered: isMastered,
-          rating: rating,
-          ratio: ratio
-        });
-        gradeData[skillName] = rating;
-      });
+      let totalScore = 0;
 
-      const avgRatingValue = (totalScore / ratings.length).toFixed(1);
-      const percentage = Math.round((totalScore / maxScore) * 100);
-      const offset = circumference * (1 - percentage / 100);
-      progressRing.style.strokeDashoffset = offset;
-      percentLabel.textContent = `${percentage}%`;
-      avgRating.textContent = avgRatingValue;
-
-      let grade = 'F';
-      let feedback = 'Immediate intervention is required to pass this course.';
-      let badgeColor = 'bg-danger';
-
-      if (percentage >= 90) {
-        grade = 'A';
-        feedback = 'Excellent work! Keep up the great performance.';
-        badgeColor = 'bg-success';
-      } else if (percentage >= 80) {
-        grade = 'B';
-        feedback = 'Good work! Continue focusing on improvement.';
-        badgeColor = 'bg-info';
-      } else if (percentage >= 70) {
-        grade = 'C';
-        feedback = 'Satisfactory work. Consider seeking additional support.';
-        badgeColor = 'bg-warning text-dark';
-      } else if (percentage >= 60) {
-        grade = 'D';
-        feedback = 'You need to significantly improve to pass this course.';
-        badgeColor = 'bg-danger';
-      }
-
-      letterGrade.textContent = grade;
-      letterGrade.className = `badge ${badgeColor}`;
-      gradeFeedback.textContent = feedback;
-
-      let color = '#dc3545';
-      if (percentage >= 90) color = '#28a745';
-      else if (percentage >= 80) color = '#198754';
-      else if (percentage >= 70) color = '#ffc107';
-      else if (percentage >= 60) color = '#fd7e14';
-      progressRing.style.stroke = color;
-
-      skillsBreakdown.innerHTML = '';
-      skillsData.forEach(skill => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${skill.skill}</td>
-          <td>${skill.mastered ? '✓' : '—'}</td>
-          <td>${skill.rating}</td>
-          <td>${skill.ratio}</td>
-        `;
-        skillsBreakdown.appendChild(row);
-      });
-
-      const avgRow = document.createElement('tr');
-      avgRow.classList.add('fw-bold', 'table-active');
-      avgRow.innerHTML = `
-        <td>Average</td>
-        <td>${skillsData.filter(s => s.mastered).length}/${skillsData.length}</td>
-        <td>${avgRatingValue}</td>
-        <td>${(avgRatingValue / 5).toFixed(1)}</td>
-      `;
-      skillsBreakdown.appendChild(avgRow);
-
-      resultsCard.style.display = 'block';
-      resultsCard.scrollIntoView({ behavior: 'smooth' });
-
-      await fetchCurrentUser();
-      if (!currentUser) return; // Exit if not logged in
-
-      // Prepare full user update payload
-      const updatedUser = {
-        uid: currentUser.uid,
-        name: currentUser.name,
-        pfp: currentUser.pfp || "default.png",
-        car: currentUser.car || "defaultcar.png",
-        role: currentUser.role || "Student",
-        grade_data: {
-          grade: grade,
-          ...gradeData
+      // Collect ratings in the correct order for ML model
+      skillOrder.forEach(skillName => {
+        const ratingSelect = document.querySelector(`.skill-rating[data-skill="${skillName}"]`);
+        const checkbox = document.querySelector(`.mastery-checkbox[data-skill="${skillName}"]`);
+        
+        if (ratingSelect) {
+          const rating = parseInt(ratingSelect.value);
+          mlInputs.push(rating);
+          totalScore += rating;
+          
+          const isMastered = checkbox ? checkbox.checked : false;
+          const ratio = (rating / 5).toFixed(1);
+          
+          skillsData.push({
+            skill: skillName,
+            mastered: isMastered,
+            rating: rating,
+            ratio: ratio
+          });
+          
+          gradeData[skillName] = rating;
         }
-      };
+      });
 
+      try {
+        // Call ML API for grade prediction
+        const mlResponse = await fetch(`${pythonURI}/api/grade/predict`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            inputs: mlInputs
+          })
+        });
+
+        if (!mlResponse.ok) {
+          throw new Error(`ML API error: ${mlResponse.status}`);
+        }
+
+        const mlResult = await mlResponse.json();
+        const percentage = Math.round(mlResult.predicted_percent);
+        const grade = mlResult.predicted_grade;
+
+        // Update UI with ML prediction results
+        const avgRatingValue = (totalScore / ratings.length).toFixed(1);
+        const offset = circumference * (1 - percentage / 100);
+        progressRing.style.strokeDashoffset = offset;
+        percentLabel.textContent = `${percentage}%`;
+        avgRating.textContent = avgRatingValue;
+
+        let feedback = 'Immediate intervention is required to pass this course.';
+        let badgeColor = 'bg-danger';
+
+        if (percentage >= 90) {
+          feedback = 'Excellent work! Keep up the great performance.';
+          badgeColor = 'bg-success';
+        } else if (percentage >= 80) {
+          feedback = 'Good work! Continue focusing on improvement.';
+          badgeColor = 'bg-info';
+        } else if (percentage >= 70) {
+          feedback = 'Satisfactory work. Consider seeking additional support.';
+          badgeColor = 'bg-warning text-dark';
+        } else if (percentage >= 60) {
+          feedback = 'You need to significantly improve to pass this course.';
+          badgeColor = 'bg-danger';
+        }
+
+        letterGrade.textContent = grade;
+        letterGrade.className = `badge ${badgeColor}`;
+        gradeFeedback.textContent = feedback;
+
+        let color = '#dc3545';
+        if (percentage >= 90) color = '#28a745';
+        else if (percentage >= 80) color = '#198754';
+        else if (percentage >= 70) color = '#ffc107';
+        else if (percentage >= 60) color = '#fd7e14';
+        progressRing.style.stroke = color;
+
+        skillsBreakdown.innerHTML = '';
+        skillsData.forEach(skill => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${skill.skill}</td>
+            <td>${skill.mastered ? '✓' : '—'}</td>
+            <td>${skill.rating}</td>
+            <td>${skill.ratio}</td>
+          `;
+          skillsBreakdown.appendChild(row);
+        });
+
+        const avgRow = document.createElement('tr');
+        avgRow.classList.add('fw-bold', 'table-active');
+        avgRow.innerHTML = `
+          <td>Average</td>
+          <td>${skillsData.filter(s => s.mastered).length}/${skillsData.length}</td>
+          <td>${avgRatingValue}</td>
+          <td>${(avgRatingValue / 5).toFixed(1)}</td>
+        `;
+        skillsBreakdown.appendChild(avgRow);
+
+        resultsCard.style.display = 'block';
+        resultsCard.scrollIntoView({ behavior: 'smooth' });
+
+        await fetchCurrentUser();
+        if (!currentUser) return; // Exit if not logged in
+
+        // Prepare full user update payload
+        const updatedUser = {
+          uid: currentUser.uid,
+          name: currentUser.name,
+          pfp: currentUser.pfp || "default.png",
+          car: currentUser.car || "defaultcar.png",
+          role: currentUser.role || "Student",
+          grade_data: {
+            grade: grade,
+            ...gradeData
+          }
+        };
+
+        // PUT request to update user
+        try {
+          const response = await fetch(`${pythonURI}/api/user`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            credentials: "include",
+            body: JSON.stringify(updatedUser)
+          });
+          const result = await response.json();
+          console.log('Update successful:', result);
+        } catch (error) {
+          console.error('Error updating user:', error);
+        }
+
+      } catch (error) {
+        console.error('Error calling ML API:', error);
+        alert('Error calculating grade prediction. Please try again.');
+      }
 
       async function fetchCurrentUser() {
           try {
@@ -690,22 +739,6 @@ permalink: /grade-predictor
               console.error('Error fetching current user:', error);
               alert("An error occurred while fetching user info.");
           }
-      }
-
-      // PUT request to update user
-      try {
-        const response = await fetch(`${pythonURI}/api/user`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: "include",
-          body: JSON.stringify(updatedUser)
-        });
-        const result = await response.json();
-        console.log('Update successful:', result);
-      } catch (error) {
-        console.error('Error updating user:', error);
       }
     });
 
