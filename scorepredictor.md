@@ -266,5 +266,15 @@ permalink: /scorepredictor
             setTheme(newTheme);
         });
     </script>
+    
+    <!-- Track Progress Button -->
+    <div class="container text-center mb-5">
+        <a href="/studytracker" class="btn btn-primary btn-lg">
+            <i class="bi bi-graph-up"></i> Track Progress
+        </a>
+    </div>
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 </body>
 </html>

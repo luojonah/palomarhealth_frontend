@@ -169,18 +169,6 @@ permalink: /studytracker
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link active" href="#">Dashboard</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Topics</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Analytics</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Settings</a>
-          </li>
           <li class="nav-item ms-3">
             <span class="nav-link">
               <i class="bi bi-person-circle me-1"></i>
@@ -396,6 +384,14 @@ permalink: /studytracker
                 if (subtopicIndex !== -1) {
                   // Mark as completed (will be handled when rendering)
                   completedSubtopics++;
+                  // Store the completion info to apply to UI elements later
+                  if (!window.completedItems) window.completedItems = [];
+                  window.completedItems.push({
+                    topicIndex,
+                    subtopicIndex,
+                    topic: record.topic,
+                    subtopic: record.subtopic
+                  });
                 }
               }
             }
@@ -417,7 +413,29 @@ permalink: /studytracker
           if (savedRecords) {
             const records = JSON.parse(savedRecords);
             // Process local records similar to server records
-            // (Implementation would be similar to above)
+            records.forEach(record => {
+              if (record.studied) {
+                // Find the topic and subtopic in our data structure
+                const topicIndex = topicsData.findIndex(t => t.title === record.topic);
+                if (topicIndex !== -1) {
+                  const subtopicIndex = topicsData[topicIndex].subtopics.indexOf(record.subtopic);
+                  if (subtopicIndex !== -1) {
+                    // Mark as completed
+                    completedSubtopics++;
+                    // Store the completion info to apply to UI elements later
+                    if (!window.completedItems) window.completedItems = [];
+                    window.completedItems.push({
+                      topicIndex,
+                      subtopicIndex,
+                      topic: record.topic,
+                      subtopic: record.subtopic
+                    });
+                  }
+                }
+              }
+            });
+            // Update stats with the data from localStorage
+            updateStats();
           }
         } catch (localError) {
           console.error("Local storage fallback failed:", localError);
@@ -513,6 +531,20 @@ permalink: /studytracker
         const studyButton = document.createElement('button');
         studyButton.textContent = 'Mark as Studied';
         studyButton.className = 'btn btn-outline-primary btn-sm';
+        
+        // Check if this subtopic is already completed
+        const isCompleted = window.completedItems && window.completedItems.some(item => 
+          item.topicIndex === topicIndex && item.subtopicIndex === subtopicIndex);
+        
+        // If completed, update the button and item appearance
+        if (isCompleted) {
+          studyButton.innerHTML = '<i class="bi bi-check-circle me-1"></i>Completed';
+          studyButton.disabled = true;
+          studyButton.classList.remove('btn-outline-primary');
+          studyButton.classList.add('btn-success');
+          subtopicItem.classList.add('bg-dark');
+          topicCompletedCount++;
+        }
         
         // Handle study button click
         studyButton.onclick = async () => {
