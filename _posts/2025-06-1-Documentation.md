@@ -8,186 +8,204 @@ toc: True
 comments: True
 ---
 
-#  AP Grade Predictor: Using Machine Learning to Forecast Student Performance
+# AP Grade Predictor Documentation
 
-**Project by**: [luojonah/palomarhealth_frontend](https://github.com/luojonah/palomarhealth_frontend)  
-**Related Issues**: [#32 - Show Saved Grade After Login](https://github.com/luojonah/palomarhealth_frontend/issues/32), [#28 - Grade Saves to Profile](https://github.com/luojonah/palomarhealth_frontend/issues/28)
+## Overview
+Machine learning-powered web feature that estimates student grades based on self-assessment data. Integrated into Palomar Health Frontend with profile persistence.
 
----
-
-##  Overview
-
-Our **AP Grade Predictor** is a machine learning-powered web feature designed to give students an estimate of their grade based on their self-assessment. This project is integrated into the Palomar Health Frontend and leverages a trained regression model to generate both a percentage score and a letter grade. The results are saved to the user’s profile for easy retrieval.
-
----
-
-##  The Machine Learning Model
-
-We trained a **Linear Regression model** using a dataset of student characteristics and their actual grades. The dataset includes 11 input features, all scored from 1–5:
-
-- Attendance  
-- Work Habits  
-- Behavior  
-- Timeliness  
-- Advocacy  
-- Tech Growth  
-- Tech Sense  
-- Tech Talk  
-- Communication and Collaboration  
-- Leadership  
-- Integrity
-
-###  Binarizing Input
-
-Before feeding data into the model, we simplify (binarize) the input:
-- Ratings of 1–3 become `0`
-- Ratings of 4–5 become `1`
-
-This gives a rough estimate of student behavior and performance trends without relying on overly fine-grained data.
-
-###  Output
-
-The model predicts a **percentage score**, which is then converted into a **letter grade** using standard grading thresholds:
+**Project**: [luojonah/palomarhealth_frontend](https://github.com/luojonah/palomarhealth_frontend)  
+**Issues**: [#32](https://github.com/luojonah/palomarhealth_frontend/issues/32), [#28](https://github.com/luojonah/palomarhealth_frontend/issues/28)
 
 
----
+<img src="{{site.baseurl}}/images/flowchart.png" alt="Viralyze Logo" class="logo" />
 
-## 🧠 Backend API
+## Machine Learning Model
 
-We built a REST API using **Flask** to serve the model:
+| Component | Details |
+|-----------|---------|
+| **Model Type** | Linear Regression |
+| **Input Features** | 11 characteristics (1-5 scale) |
+| **Output** | Percentage score + Letter grade |
+| **Training Data** | Student characteristics and actual grades |
 
-- POST `/api/grade/predict`
-- GET `/api/grade/predict` *(JWT-protected)*
+### Input Features
 
-### POST `/predict`
+| Feature | Description | Scale |
+|---------|-------------|-------|
+| Attendance | Class attendance rate | 1-5 |
+| Work Habits | Study consistency | 1-5 |
+| Behavior | Classroom conduct | 1-5 |
+| Timeliness | Assignment submission | 1-5 |
+| Advocacy | Self-advocacy skills | 1-5 |
+| Tech Growth | Technology learning | 1-5 |
+| Tech Sense | Technical understanding | 1-5 |
+| Tech Talk | Technical communication | 1-5 |
+| Communication and Collaboration | Teamwork skills | 1-5 |
+| Leadership | Leadership abilities | 1-5 |
+| Integrity | Academic honesty | 1-5 |
 
-- Accepts JSON with an `inputs` list of 11 values (each between 1 and 5)
-- Returns predicted percent and letter grade
+### Data Processing
 
-### GET `/predict` *(JWT Protected)*
+| Step | Process | Result |
+|------|---------|--------|
+| **Input Binarization** | Ratings 1-3 → 0, Ratings 4-5 → 1 | Simplified binary features |
+| **Grade Mapping** | A=90, B=80, C=70, D=60, F=50 | Numerical targets |
+| **Prediction Range** | Clamp output between 0-100 | Valid percentage scores |
 
-- Returns the **saved grade prediction** from the user's profile
+### Grade Conversion
 
-This ensures that users can retrieve their grade later without needing to re-enter their inputs.
+| Percentage Range | Letter Grade |
+|------------------|--------------|
+| 90-100 | A |
+| 80-89 | B |
+| 70-79 | C |
+| 60-69 | D |
+| 0-59 | F |
 
----
+## API Endpoints
 
-##  Authentication
+| Method | Endpoint | Authentication | Purpose |
+|--------|----------|----------------|---------|
+| POST | `/api/grade/predict` | None | Submit assessment, get prediction |
+| GET | `/api/grade/predict` | JWT Required | Retrieve saved prediction |
 
-We protect the GET endpoint using JWT-based authentication. Only logged-in users can retrieve their saved predictions, which are stored in the database under their user profile.
-
----
-
-##  Frontend Integration
-
-We tackled a few issues to make the frontend fully functional:
-
-###  [Issue #28](https://github.com/luojonah/palomarhealth_frontend/issues/28)  
-We ensured that after a user submits their self-assessment, the **predicted grade is saved to their profile**.
-
-###  [Issue #32](https://github.com/luojonah/palomarhealth_frontend/issues/32)  
-We added logic so that when users **log back in**, their previously saved prediction is displayed.
-
----
-
-##  Tech Stack
-
-- **Frontend**: HTML / Bootstrap (Palomar Health UI)
-- **Backend**: Flask, Flask-RESTful, JWT Authorization
-- **ML**: Scikit-learn (Linear Regression)
-- **Data**: Custom CSV dataset of self-reported academic habits and grades
-
----
-
-#  Raw Backend Code (API + Model)
-
-## `grade_api` and Predict API Resource
-```python
-from flask import Blueprint, request, jsonify, g
-from flask_restful import Api, Resource
-from api.jwt_authorize import token_required
-from model.user import User
-from model.grade_model import GradePredictionModel
-
-grade_api = Blueprint('grade_api', __name__, url_prefix='/api/grade')
-api = Api(grade_api)
-
-model_instance = GradePredictionModel()
-
-class Predict(Resource):
-    def post(self):
-        data = request.get_json()
-
-        if not data or 'inputs' not in data:
-            return {"error": "Missing 'inputs' field in JSON payload. Expected a list of 11 numbers (1-5)."}, 400
-
-        user_input = data['inputs']
-
-        if len(user_input) != 11:
-            return {"error": f"Expected 11 input values, received {len(user_input)}."}, 400
-
-        try:
-            user_input = [int(val) for val in user_input]
-        except ValueError:
-            return {"error": "All input values must be numbers between 1 and 5."}, 400
-
-        if not all(1 <= val <= 5 for val in user_input):
-            return {"error": "Input values should be between 1 and 5."}, 400
-
-        percent, letter = model_instance.predict(user_input)
-
-        return jsonify({
-            'predicted_percent': percent,
-            'predicted_grade': letter
-        })
-
-    @token_required()
-    def get(self):
-        user = g.current_user
-        return jsonify(user.grade_data)
-
-api.add_resource(Predict, '/predict')
+### POST Request Format
+```json
+{
+  "inputs": [4, 5, 3, 4, 2, 5, 4, 3, 4, 5, 4]
+}
 ```
-```python
-import pandas as pd
-from sklearn.linear_model import LinearRegression
 
-class GradePredictionModel:
-    def __init__(self):
-        data = pd.read_csv("datasets/ap_predict_data.csv")
-        data = data.dropna(subset=['Grade'])
-        data.columns = data.columns.str.strip()
-
-        grade_map = {'A': 90, 'B': 80, 'C': 70, 'D': 60, 'F': 50}
-        data['GradePercent'] = data['Grade'].map(grade_map)
-
-        self.features = ['Attendance','Work Habits','Behavior','Timeliness','Advocacy','Tech Growth',
-                         'Tech Sense','Tech Talk','Communication and Collaboration','Leadership','Integrity']
-
-        X = data[self.features]
-        y = data['GradePercent']
-
-        self.model = LinearRegression()
-        self.model.fit(X, y)
-
-    def predict(self, user_input):
-        if len(user_input) != len(self.features):
-            raise ValueError(f"Expected {len(self.features)} inputs, got {len(user_input)}")
-
-        binarized = [0 if x <= 3 else 1 for x in user_input]
-        percent = self.model.predict([binarized])[0]
-        percent = max(0, min(100, percent))
-
-        if percent >= 90:
-            letter = 'A'
-        elif percent >= 80:
-            letter = 'B'
-        elif percent >= 70:
-            letter = 'C'
-        elif percent >= 60:
-            letter = 'D'
-        else:
-            letter = 'F'
-
-        return round(percent, 2), letter
+### Response Format
+```json
+{
+  "predicted_percent": 85.67,
+  "predicted_grade": "B"
+}
 ```
+
+## Technical Implementation
+
+| Component | Technology | Purpose |
+|-----------|------------|---------|
+| **Frontend** | HTML/Bootstrap | User interface |
+| **Backend** | Flask, Flask-RESTful | API server |
+| **Authentication** | JWT | Secure user sessions |
+| **Data Storage** | CSV → Database | User profile persistence |
+
+## Key Features
+
+| Feature | Implementation | Benefit |
+|---------|----------------|---------|
+| **Profile Persistence** | JWT-protected storage | Users can retrieve saved predictions |
+| **Real-time Prediction** | Linear regression model | Instant feedback on assessment |
+| **Input Validation** | Range checking (1-5) | Prevents invalid data |
+| **Grade History** | Database integration | Track prediction over time |
+
+# AP CSP Study System Documentation
+
+## System Overview
+
+The AP Computer Science Principles Study System consists of two integrated tools designed to help students prepare for the AP exam through practice tracking and score prediction.
+
+### Core Components
+
+| Component | Function | Technology |
+|-----------|----------|------------|
+| **Exam Predictor** | Score prediction and practice tracking | HTML5, Vanilla JS, CSS3 |
+| **Study Tracker** | Topic progress monitoring | Bootstrap 5, LocalStorage/API |
+
+## 1. Exam Predictor
+
+### Architecture Flow
+
+<img src="{{site.baseurl}}/images/flowchart1.png" alt="Viralyze Logo" class="logo" />
+
+### Key Features
+
+#### Practice Tracking System
+**MCQ Practice Tests**: 2018, 2020, 2021 exams (70 points each)
+**FRQ Practice**: Create Performance Task (6 points)
+**Time Tracking**: Minutes spent per section
+**Confidence Levels**: Based on number of completed practices
+
+#### Scoring Algorithm
+
+```javascript
+// Core prediction logic
+const compositeScore = (avgMCQ * 0.7) + (practiceFRQ * 5 * 0.3);
+const scaledScore = (compositeScore / 65) * 100;
+
+// AP Score mapping
+if (scaledScore >= 90) apScore = 5;
+else if (scaledScore >= 81) apScore = 4;
+else if (scaledScore >= 42) apScore = 3;
+else if (scaledScore >= 30) apScore = 2;
+```
+
+
+### State Management
+
+| Variable | Purpose | Range |
+|----------|---------|-------|
+| `mcq2018-2021` | Practice test scores | 0-70 |
+| `practicefrq` | FRQ score | 0-6 |
+| `*Time` variables | Time tracking | 0-∞ minutes |
+| `compositeScore` | Weighted total | 0-100 |
+
+## 2. Study Tracker
+
+<img src="{{site.baseurl}}/images/flowchart2.png" alt="Viralyze Logo" width=350 class="logo" />
+
+
+### Data Structure
+
+#### Topics Hierarchy
+```javascript
+const topicsData = [
+  {
+    title: "Big Idea 1: Creative Development",
+    subtopics: [
+      "1.1 Collaboration",
+      "1.2 Program Function and Purpose",
+      // ... more subtopics
+    ]
+  }
+  // ... 5 total big ideas
+];
+```
+
+
+### Backend Integration
+
+### Record Structure
+```javascript
+const studyRecord = {
+  topic: "Big Idea X: Title",
+  subtopic: "X.X Specific Topic",
+  userName: currentUser.name,
+  studied: true,
+  timestamp: new Date().toISOString()
+};
+```
+
+## Key Metrics
+
+| Metric | Exam Predictor | Study Tracker |
+|--------|---------------|---------------|
+| Input Fields | 8 score + 4 time | 30+ subtopic buttons |
+| Calculations | Real-time composite scoring | Progress percentage |
+| Storage | Practice results + predictions | Study completion records |
+| User Feedback | Confidence levels + breakdowns | Statistics dashboard |
+
+## Maintenance Notes
+
+### Regular Updates Required
+- **Score Thresholds**: Adjust based on College Board changes
+- **Topic Content**: Update for curriculum modifications
+- **Browser Compatibility**: Test across modern browsers
+
+### Monitoring Points
+- **API Availability**: Server connection status
+- **Data Integrity**: LocalStorage backup verification  
+- **User Engagement**: Completion rates and usage patterns
