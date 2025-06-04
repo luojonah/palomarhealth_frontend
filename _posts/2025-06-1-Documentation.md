@@ -17,6 +17,30 @@ Machine learning-powered web feature that estimates student grades based on self
 **Issues**: [#32](https://github.com/luojonah/palomarhealth_frontend/issues/32), [#28](https://github.com/luojonah/palomarhealth_frontend/issues/28)
 
 
+## User Stories:
+
+### 1. AP Grade Predictor: Tarun
+As a high school student using the Palomar Health frontend,
+I want to input my ratings for personal and academic behaviors (like attendance, leadership, and tech skills),
+so that I can receive a predicted percentage and letter grade that reflects my performance and helps me understand where I need to improve.
+
+### 2. AP Exam Predictor: Arya 
+As a student preparing for the AP Computer Science Principles exam,
+I want to enter my multiple choice and FRQ practice scores,
+so that the system can calculate a projected AP score based on my performance and give me feedback on how close I am to my goal score.
+
+### 3. Study Tracker: Akshaj
+As a user studying for the AP CSP exam,
+I want to check off subtopics as I study them and save my progress,
+so that I can clearly see what I’ve covered, monitor my progress through the curriculum, and stay organized throughout my exam prep.
+
+### 4. Profile Page: Jonah
+As a logged-in student,
+I want to view a summary of my past grade predictions, AP exam scores, and study progress,
+so that I can track my improvements over time and easily revisit my previous results for motivation and planning.
+
+
+
 <img src="{{site.baseurl}}/images/flowchart.png" alt="Viralyze Logo" class="logo" />
 
 ## Machine Learning Model
