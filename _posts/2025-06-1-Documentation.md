@@ -2,7 +2,7 @@
 title: Feature Documentation
 description: 
 layout: post
-permalink: /documentation
+permalink: /documentation1
 type: ccc
 toc: True
 comments: True
