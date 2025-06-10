@@ -121,7 +121,7 @@ so that I can track my improvements over time and easily revisit my previous res
 
 | Feature | Implementation | Benefit |
 |---------|----------------|---------|
-| **Profile Persistence** | JWT-protected storage | Users can retrieve saved predictions |
+| **Profile Persistence** | JWT-protected storage | Users can retrieve predictions saved |
 | **Real-time Prediction** | Linear regression model | Instant feedback on assessment |
 | **Input Validation** | Range checking (1-5) | Prevents invalid data |
 | **Grade History** | Database integration | Track prediction over time |
