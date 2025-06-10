@@ -20,3 +20,7 @@ With the use of socket.io, I created an interactive chatroom where users could d
 </video>
 
 <img src="{{site.baseurl}}/images/cspcoursepredictor.png" alt="Viralyze Logo" width=350 class="logo" />
+
+<img src="{{site.baseurl}}/images/practiceexaminputs.png" alt="Viralyze Logo" width=350 class="logo" />
+
+<img src="{{site.baseurl}}/images/actualscore.png" alt="Viralyze Logo" width=350 class="logo" />
