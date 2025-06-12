@@ -217,9 +217,9 @@ In AP Computer Science Principles, I didn’t just complete assignments—I laun
 - Delivered content quality scoring via keyword sentiment analysis  
 - Created dashboard with feedback for young content creators  
 
-### 🏥 Palomar Health Optimization (Pilot City Internship)  
+### 🧑‍💻 Open Coding Society 
 *Spring 2025*  
-- Developed machine learning models to forecast healthcare post engagement  
+- Developed machine learning models to analyze grades from past years  
 - Built a study tracker, AP score predictor, and grade estimator  
 - Integrated Flask backend and visual dashboards  
 - Helped improve community outreach through better content timing and strategy  
