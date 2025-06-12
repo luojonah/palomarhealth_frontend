@@ -25,6 +25,7 @@ author: Akshaj Gurugubelli
 | **Key Contributions** | - Created dynamic zoom effects and input validation using DOM manipulation  <br> - Designed engaging UX/UI to enhance gameplay experience  <br> - Strengthened frontend fundamentals including event handling and debugging |
 | **Unique Qualities**  | Fun and educational project that deepened understanding of frontend development and user interaction design.                                                     |
 | **Skills / Tools**    | HTML, CSS, JavaScript, DOM Manipulation, UX/UI Design, Debugging                                                                                                 |
+| **GitHub Link**       | [GitHub Repository](https://github.com/ArhaanM123/flocker_frontend)                                                                                                                                         |
 
 -------
 
@@ -40,6 +41,7 @@ author: Akshaj Gurugubelli
 | **Key Contributions** | - Developed responsive frontend using HTML5, CSS, JavaScript with dynamic input validation<br>- Built backend with Flask and SQLite supporting CRUD<br>- Designed reusable OOP classes with error handling and asynchronous flows<br>- Collaborated in an agile environment using GitHub Issues and project boards<br>- Deployed using Docker, docker-compose, and GitHub Pages with nginx and custom domain |
 | **Unique Qualities**  | Passion for building practical student-focused tools combined with hands-on full-stack and agile methodology experience.                            |
 | **Skills / Tools**    | Flask, SQLite, HTML, CSS, JavaScript, Docker, Agile, GitHub, API keys, SQLalchemy, Full stack, Deployment, AWS                                                                                           |
+| **GitHub Link**       | [GitHub Repository](https://github.com/DNHS-Neptune/neptune_frontend)                                                                                                                                         |
 | **Video Demo**        | [Demo Video](https://www.youtube.com/watch?v=zatW_fikbKA)    
 
 -------
@@ -56,6 +58,7 @@ author: Akshaj Gurugubelli
 | **Key Contributions** | - Applied NLP to categorize and evaluate historical post content<br>- Leveraged time-series analysis to uncover engagement trends<br>- Built predictive models forecasting post performance<br>- Delivered dashboards with actionable insights and optimized schedules<br>- Partnered with Palomar Health to boost social media engagement by 20%+ |
 | **Unique Qualities**  | Bridging content strategy and data science to enable scalable, smarter decision-making for digital platforms.                                        |
 | **Skills / Tools**    | AI, Machine Learning, Python, Javascript, Full Stack, Bootstrap                                            |
+| **GitHub Link**       | [GitHub Repository](https://github.com/luojonah/palomarhealth_frontend)                                                                                                                                         |
 
 -------
 
@@ -71,6 +74,7 @@ author: Akshaj Gurugubelli
 | **Key Contributions** | - Designed and implemented three modular tools integrating statistics, ML, and visualization<br>- Developed adaptable predictive models tailored to varied academic contexts<br>- Enabled personalized study planning and motivation through data analytics<br>- Employed backend and frontend technologies for seamless user experience                                                 |
 | **Unique Qualities**  | Reduces academic uncertainty by delivering personalized forecasts and habit tracking to empower smarter, motivated student learning throughout the year.                                                                                                                                          |
 | **Skills / Tools**    | Python, Pandas, Machine Learning, Scikit-learn, NumPy, Flask, JavaScript, Chart.js, CSV File Handling
+| **GitHub Link**       | [GitHub Repository](https://github.com/tarunrayavarapu/predictorpages)                                                                                                                                         |
 | **Video Demo**        | [Demo Video](https://www.youtube.com/watch?v=LsPoaVVEigg&t=1s)
 
 -------
